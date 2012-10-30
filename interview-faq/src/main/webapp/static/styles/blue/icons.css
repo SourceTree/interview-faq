@@ -1,0 +1,37 @@
+/* Pure Css Icons Styling*/
+.icon a:link, .icon a:visited {display:block; border:0; padding-left:28px; color:#41A8E5; }
+.icon a:hover, .icon a:focus, .icon a:active {color:#814183; background:transparent; }
+.icon:before, .icon:after, .icon a:before, .icon a:after { content:""; position:absolute; top:50%; left:0; }
+.icon a:before, .icon a:after {background:#41A8E5; }
+.icon a:hover:before, .icon a:focus:before, .icon a:active:before {background:#814183; }
+
+/* DOCUMENT ICON */
+#docIcon {position:relative; overflow:hidden; list-style:none; padding-left:20%;}
+.list a:before, .list a:after {left:8px; width:12px; height:2px; border-width:6px 0; border-style:double; border-color:#41A8E5; background:transparent; top: 15px;}
+.list a:after {border: 2px solid #41A8E5; height: 25px; left: 2px; top: 6px; width: 20px;}
+.list a:hover:before, .list a:focus:before, .list a:hover:after, .list a:focus:after {border-color:#814183; background:transparent;}
+.file:after {left:2px; top: 6px; border-style:solid; border-width:3px; border-color:#fff #41A8E5 #41A8E5 #fff; background:transparent;}
+.file:hover:after, .file:focus:after {border-color:#fff #814183 #814183 #fff; background:transparent;}
+
+/* CANCEL ICON */
+.iconActive {cursor: pointer;}
+.cancel-alt {position:relative; overflow:hidden; list-style:none; padding-left:20%; background-color: transparent; color:#41A8E5;}
+.cancel-alt:before, .cancel-alt:after {left:6px; width:5px; height:15px; margin-top:-7px; background:#41A8E5; -webkit-transform:rotate(45deg); -moz-transform:rotate(45deg); -ms-transform:rotate(45deg); -o-transform:rotate(45deg); transform:rotate(45deg);}
+.cancel-alt:after {left:1px; width:15px; height:5px; margin-top:-2px;}
+.cancel-alt:hover:after, .cancel-alt:hover:before, .cancel-alt:focus:after, .cancel-alt:active:after {background-color:#814183;}
+
+/* REPORT ICON */
+.report {position:relative; overflow:hidden; list-style:none; padding-left:20%;}
+.report:before {left:3px; width:7px; height:7px; margin-top:-5px; border-width:7px 0 0 2px; border-style:solid; border-color:#41A8E5; background:transparent; -webkit-transform:skewY(-8deg); -moz-transform:skewY(-8deg); -ms-transform:skewY(-8deg); -o-transform:skewY(-8deg); transform:skewY(-8deg);}
+.report:after {left:9px; width:6px; height:7px; margin-top:-3px; background:#41A8E5; -webkit-transform:skewY(-6deg); -moz-transform:skewY(-6deg); -ms-transform:skewY(-6deg); -o-transform:skewY(-6deg); transform:skewY(-6deg);}
+.report:hover:before, .report:focus:before, .report:active:before {border-color:#814183; background:transparent;}
+.report:hover:after, .report:focus:after, .report:active:after {background:#814183;}
+
+
+/* EDIT ICON */
+#editIcon {position:relative; overflow:hidden; list-style:none; padding:0;  margin:0 0 0.250em; }
+.edit a:before { left:3px; width:5px; height:5px; margin-top:2px; background:#41A8E5; -webkit-transform:skew(-10deg, -10deg);-moz-transform:skew(-10deg, -10deg);  -ms-transform:skew(-10deg, -10deg);  -o-transform:skew(-10deg, -10deg); transform:skew(-10deg, -10deg);}
+.edit a:after { left:3px; width:13px;  height:6px; border-left:1px solid #fff; margin-top:-3px; -webkit-transform:rotate(-45deg); -moz-transform:rotate(-45deg); -ms-transform:rotate(-45deg); -o-transform:rotate(-45deg); transform:rotate(-45deg);}
+.edit a:hover:before,.edit a:focus:before,.edit a:active:before,.edit a:hover:after,.edit a:focus:after,.edit a:active:after { background:#814183; } 
+.file:hover:after, .file:focus:after {border-color:#fff #814183 #814183 #fff; background:transparent;}
+

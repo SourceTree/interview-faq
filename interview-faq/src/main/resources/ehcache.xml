@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+	<diskStore path="java.io.tmpdir" />
+
+	<cache name="questions" eternal="false" maxElementsInMemory="100"
+		timeToLiveSeconds="0" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
+	</cache>
+</ehcache>

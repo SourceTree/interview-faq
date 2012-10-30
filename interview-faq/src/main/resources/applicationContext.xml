@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2012, Source Tree, All Rights Reserved -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	default-autowire="byName" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:redis="http://www.springframework.org/schema/redis"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
+		http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd">
+
+	<context:property-placeholder location="classpath:app.properties" />
+
+	<bean id="appProps"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:app.properties</value>
+				<value>classpath:mail.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<cache:annotation-driven />
+	<context:annotation-config />
+	<tx:annotation-driven />
+
+	<bean id="executorService" class="java.util.concurrent.Executors"
+		factory-method="newFixedThreadPool">
+		<constructor-arg value="10" />
+	</bean>
+
+	<task:executor id="threadPoolTaskExecutor" pool-size="10" />
+
+	<task:annotation-driven executor="executorService" />
+
+	<context:component-scan base-package="org.sourcetree.interview.dao" />
+	<context:component-scan base-package="org.sourcetree.interview.entity" />
+	<context:component-scan base-package="org.sourcetree.interview.service" />
+	<context:component-scan base-package="org.sourcetree.interview.support" />
+
+	<bean id="defaultDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" p:driverClassName="${dbDriverClass}" p:url="${dbURL}"
+		p:username="${dbUser}" p:password="${dbUserPasswd}" p:maxActive="20"
+		p:maxWait="180000" p:validationQuery="select 1 from dual"
+		p:poolPreparedStatements="true" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		p:dataSource-ref="defaultDataSource" p:annotatedPackages="org/sourcetree/interview/entity">
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernateDialect}</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+			</props>
+		</property>
+		<!--<property name="lobHandler"> <bean class="org.springframework.jdbc.support.lob.DefaultLobHandler" 
+			/> </property> <property name="eventListeners"> <map> <entry key="merge"> 
+			<bean class="org.springframework.orm.hibernate4.support.IdTransferringMergeEventListener" 
+			/> </entry> </map> </property> -->
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager" />
+
+	<bean id="redisConnectionPool" class="redis.clients.jedis.JedisPoolConfig"
+		p:timeBetweenEvictionRunsMillis="30000" p:maxWait="3000"
+		p:testOnBorrow="true" p:whenExhaustedAction="2">
+	</bean>
+
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:usePool="${redis.usepool}" p:poolConfig-ref="redisConnectionPool"
+		p:timeout="2000" p:port="${redis.port}" p:hostName="${redis.host}"
+		p:password="${redis.password}" destroy-method="destroy" />
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory" />
+
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory" />
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
+		p:cache-manager-ref="ehcache" />
+
+	<bean id="ehcache"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+		p:config-location="classpath:ehcache.xml" />
+
+	<bean id="hibernateStringEncryptor"
+		class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+		<property name="registeredName" value="stronghibernateEncryptor" />
+		<property name="password" value="${encryptor.key}" />
+	</bean>
+
+	<bean id="responseCachingFilter" class="org.sourcetree.interview.support.CacheFilter">
+		<property name="cacheSeconds" value="0" />
+		<property name="useExpiresHeader" value="true" />
+		<property name="useCacheControlHeader" value="true" />
+		<property name="useCacheControlNoStore" value="true" />
+		<property name="cacheMappings">
+			<props>
+				<!-- cache for one week -->
+				<prop key="/**/*.html">604800</prop>
+				<prop key="/**/*.png">604800</prop>
+				<prop key="/**/*.jpg">604800</prop>
+				<prop key="/**/*.gif">604800</prop>
+				<prop key="/**/*.css">604800</prop>
+				<prop key="/**/*.js">604800</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="shaPasswordEncoder"
+		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<constructor-arg index="0" value="256" />
+	</bean>
+</beans>
