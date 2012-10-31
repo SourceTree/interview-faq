@@ -10,14 +10,16 @@
  */
 package org.sourcetree.interview.entity;
 
-import org.sourcetree.interview.enums.UserRoleEnum;
+import javax.persistence.Entity;
 
+import org.sourcetree.interview.enums.UserRoleEnum;
 
 /**
  * User Entity
  * 
  * @author Venkaiah Chowdary Koneru
  */
+@Entity
 public class User extends AbstractEntity
 {
 	private static final long serialVersionUID = 1L;
