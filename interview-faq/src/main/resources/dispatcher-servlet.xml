@@ -48,7 +48,7 @@
 	<mvc:resources mapping="/static/styles/**" location="/static/styles/" />
 	<mvc:resources mapping="/static/scripts/**" location="/static/scripts/" />
 
-	<mvc:view-controller path="/" view-name="index" />
+	<mvc:view-controller path="/" view-name="home" />
 
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
