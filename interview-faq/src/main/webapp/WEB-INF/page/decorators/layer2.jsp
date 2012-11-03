@@ -14,14 +14,13 @@
 <body
 	<decorator:getProperty property="body.onload" writeEntireProperty="true"/>
 	<decorator:getProperty property="body.onunload" writeEntireProperty="true"/>>
-	<div id="wrapper">
-	<div>
-		<%@include file="/WEB-INF/page/common/banner.jsp"%>
-	</div>
-	<decorator:body />
-</div>
+	<div id="container" class="container">
+		<header class="header clearfix">
+			<%@include file="/WEB-INF/page/common/banner.jsp"%>
+		</header>
+		<decorator:body />
 	<%@include file="/WEB-INF/page/common/footer.jsp"%>
-
+	</div>
 </body>
 	</html>
 </page:applyDecorator>
