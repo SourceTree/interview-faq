@@ -33,8 +33,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class WebContextListener implements ServletContextListener
 {
-	private static final Log LOG = LogFactory
-			.getLog(WebContextListener.class);
+	private static final Log LOG = LogFactory.getLog(WebContextListener.class);
 
 	private static final long SLEEP_TIME = 1000;
 
@@ -44,7 +43,7 @@ public class WebContextListener implements ServletContextListener
 	@Override
 	public void contextDestroyed(ServletContextEvent ctxEvent)
 	{
-		LOG.info("Mi-Trace application shut down\n######################################");
+		LOG.info("Interview FAQ application shut down\n######################################");
 		logContextInitParams(ctxEvent.getServletContext());
 		try
 		{
@@ -66,7 +65,7 @@ public class WebContextListener implements ServletContextListener
 	{
 		ServletContext ctx = ctxEvent.getServletContext();
 
-		LOG.info("Starting Mi-Trace application\n#######################################");
+		LOG.info("Starting Interview FAQ application\n#######################################");
 
 		if (LOG.isDebugEnabled())
 		{
