@@ -12,11 +12,14 @@ package org.sourcetree.interview.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Validator;
 
 import org.apache.log4j.Logger;
 import org.sourcetree.interview.support.AjaxUtils;
 import org.sourcetree.interview.support.NoSuchDataException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -37,6 +40,12 @@ public abstract class BaseController
 
 	@Value("#{appProps['pagination.size']}")
 	private Integer defaultPageSize;
+
+	@Autowired
+	protected MessageSource messageSource;
+
+	@Autowired
+	protected Validator validator;
 
 	/**
 	 * Exception handler for Invalid data requests

@@ -42,7 +42,6 @@
 	<task:annotation-driven executor="executorService" />
 
 	<context:component-scan base-package="org.sourcetree.interview.dao" />
-	<context:component-scan base-package="org.sourcetree.interview.entity" />
 	<context:component-scan base-package="org.sourcetree.interview.service" />
 	<context:component-scan base-package="org.sourcetree.interview.support" />
 
@@ -71,7 +70,7 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager" />
 
-	<bean id="redisConnectionPool" class="redis.clients.jedis.JedisPoolConfig"
+	<!-- <bean id="redisConnectionPool" class="redis.clients.jedis.JedisPoolConfig"
 		p:timeBetweenEvictionRunsMillis="30000" p:maxWait="3000"
 		p:testOnBorrow="true" p:whenExhaustedAction="2">
 	</bean>
@@ -86,7 +85,7 @@
 		p:connection-factory-ref="jedisConnectionFactory" />
 
 	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
-		p:connection-factory-ref="jedisConnectionFactory" />
+		p:connection-factory-ref="jedisConnectionFactory" /> -->
 
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
 		p:cache-manager-ref="ehcache" />
