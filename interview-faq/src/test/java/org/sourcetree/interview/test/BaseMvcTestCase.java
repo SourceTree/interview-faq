@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
@@ -43,8 +42,8 @@ public class BaseMvcTestCase
 	@Autowired
 	protected Jaxb2Marshaller jaxb2Marshaller;
 
-	@Autowired
-	protected RedisTemplate<String, Object> redisTemplate;
+	// @Autowired
+	// protected RedisTemplate<String, Object> redisTemplate;
 
 	@Autowired
 	private BasicDataSource datasource;
@@ -79,6 +78,6 @@ public class BaseMvcTestCase
 	@After
 	public void afterTestMethod() throws Exception
 	{
-		UtilTestCase.afterTestMethod(datasource, redisTemplate);
+		UtilTestCase.afterTestMethod(datasource, null);
 	}
 }

@@ -112,24 +112,17 @@ public class UtilTestCase
 		Statement statement = null;
 
 		// Flush the redis DB
-		try
+		if (redisTemplate != null)
 		{
-			redisTemplate.getConnectionFactory().getConnection().flushDb();
-		}
-		catch (Exception e)
-		{
-			// Do nothing if jedis connection exception occurs.
-			redisTemplate.discard();
-		}
-
-		// Flush the redis DB
-		try
-		{
-			redisTemplate.getConnectionFactory().getConnection().flushDb();
-		}
-		catch (Exception e)
-		{
-			// Do nothing If Jedis connection exception occurs.
+			try
+			{
+				redisTemplate.getConnectionFactory().getConnection().flushDb();
+			}
+			catch (Exception e)
+			{
+				// Do nothing if jedis connection exception occurs.
+				redisTemplate.discard();
+			}
 		}
 
 		try
