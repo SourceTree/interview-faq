@@ -13,41 +13,33 @@ package org.sourcetree.interview.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+
 /**
  * Super class for all the Entity Objects
  * 
  * @author Venkaiah Chowdary Koneru
  * 
  */
+@MappedSuperclass
 public abstract class AbstractEntity implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-
+	@Column(name = "deleted")
 	private Boolean deleted = Boolean.FALSE;
 
+	@Column(name = "created_date")
 	private Date createdDate;
+
+	@Column(name = "modified_date")
 	private Date modifiedDate;
 
+	@Version
+	@Column(name = "version")
 	private Integer version;
-
-	/**
-	 * @return the id
-	 */
-	public Long getId()
-	{
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
 
 	/**
 	 * @return the createdDate

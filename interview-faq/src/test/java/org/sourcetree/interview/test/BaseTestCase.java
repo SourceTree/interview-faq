@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ContextConfiguration;
@@ -44,9 +43,6 @@ public abstract class BaseTestCase
 	@Autowired
 	private BasicDataSource datasource;
 
-	@Autowired
-	private RedisTemplate<String, Object> redisTemplate;
-
 	/**
 	 * to be run before every {@linkplain Test} method.
 	 * 
@@ -68,6 +64,6 @@ public abstract class BaseTestCase
 	@After
 	public void afterTestMethod() throws Exception
 	{
-		UtilTestCase.afterTestMethod(datasource, redisTemplate);
+		UtilTestCase.afterTestMethod(datasource, null);
 	}
 }

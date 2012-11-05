@@ -5,7 +5,7 @@
  * Modification History
  * *************************************************************
  * Date				Author						Comment
- * 04-Nov-2012			Venkaiah Chowdary Koneru						Created
+ * 04-Nov-2012		Venkaiah Chowdary Koneru	Created
  * *************************************************************
  */
 package org.sourcetree.interview.test.controller;
@@ -43,7 +43,7 @@ public class AuthenticationControllerTest extends BaseMvcTestCase
 	@Test
 	public void testProcessLogin() throws Exception
 	{
-		ResultActions resultActions = mockMvc.perform(post("/auth/login"));
+		ResultActions resultActions = mockMvc.perform(post("/admin/login"));
 
 		MvcResult result = resultActions.andReturn();
 		ModelAndView modelAndView = result.getModelAndView();
@@ -55,11 +55,12 @@ public class AuthenticationControllerTest extends BaseMvcTestCase
 		Map<String, Object> modelMap = modelAndView.getModelMap();
 		LoginDTO loginDTO = (LoginDTO) modelMap.get("login");
 
+		assertEquals("login", modelAndView.getViewName());
 		assertNotNull(loginDTO);
 		assertNotNull(loginDTO.getErrors());
-		assertNotNull(loginDTO.getErrors().get("username"));
+		assertNotNull(loginDTO.getErrors().get("email"));
 		assertNotNull(loginDTO.getErrors().get("password"));
-		assertEquals("", loginDTO.getErrors().get("username"));
+		assertEquals("Email Required!", loginDTO.getErrors().get("email"));
 	}
 
 }

@@ -13,11 +13,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<c:set property="title">
+<c:set var="windowTitle" scope="page">
 	<decorator:title />
 </c:set>
 <title><s:message code="window.title"
-		arguments="${title}" /></title>
+		arguments="${windowTitle}" /></title>
 <%-- HTTP 1.1 --%>
 <meta http-equiv="Cache-Control"
 	content="no-cache, no-store, must-revalidate" />

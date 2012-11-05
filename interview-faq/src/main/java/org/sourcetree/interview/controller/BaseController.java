@@ -35,8 +35,7 @@ public abstract class BaseController
 {
 	protected static final Logger LOG = Logger.getLogger(BaseController.class);
 
-	protected static final String LOGIN_FORM_PAGE = "loginForm";
-	protected static final String TRACE_PAGE = "advancedTrace";
+	protected static final String LOGIN_FORM_PAGE = "login";
 
 	@Value("#{appProps['pagination.size']}")
 	private Integer defaultPageSize;

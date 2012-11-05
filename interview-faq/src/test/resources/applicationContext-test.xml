@@ -16,13 +16,13 @@
 		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd
 		http://www.springframework.org/schema/redis http://www.springframework.org/schema/redis/spring-redis.xsd">
 
-	<context:property-placeholder location="classpath:app.properties" />
+	<context:property-placeholder location="classpath:app-test.properties" />
 
 	<bean id="appProps"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
 			<list>
-				<value>classpath:app.properties</value>
+				<value>classpath:app-test.properties</value>
 				<value>classpath:mail.properties</value>
 			</list>
 		</property>
@@ -48,17 +48,21 @@
 	<bean id="defaultDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${dbDriverClass}" p:url="${dbURL}"
 		p:username="${dbUser}" p:password="${dbUserPasswd}" p:maxActive="20"
-		p:maxWait="180000" p:validationQuery="select 1 from dual"
-		p:poolPreparedStatements="true" />
+		p:maxWait="180000" p:poolPreparedStatements="true" />
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-		p:dataSource-ref="defaultDataSource" p:annotatedPackages="org/sourcetree/interview/entity">
+		p:dataSource-ref="defaultDataSource">
+		<property name="annotatedClasses">
+			<list>
+				<value>org.sourcetree.interview.entity.User</value>
+			</list>
+		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernateDialect}</prop>
-				<prop key="hibernate.show_sql">false</prop>
-				<!-- <prop key="hibernate.hbm2ddl.auto">create</prop> -->
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 			</props>
 		</property>
 		<!--<property name="lobHandler"> <bean class="org.springframework.jdbc.support.lob.DefaultLobHandler" 
@@ -70,29 +74,12 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager" />
 
-	<!-- <bean id="redisConnectionPool" class="redis.clients.jedis.JedisPoolConfig"
-		p:timeBetweenEvictionRunsMillis="30000" p:maxWait="3000"
-		p:testOnBorrow="true" p:whenExhaustedAction="2">
-	</bean>
-
-	<bean id="jedisConnectionFactory"
-		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:usePool="${redis.usepool}" p:poolConfig-ref="redisConnectionPool"
-		p:timeout="2000" p:port="${redis.port}" p:hostName="${redis.host}"
-		p:password="${redis.password}" destroy-method="destroy" />
-
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
-		p:connection-factory-ref="jedisConnectionFactory" />
-
-	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
-		p:connection-factory-ref="jedisConnectionFactory" /> -->
-
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
 		p:cache-manager-ref="ehcache" />
 
 	<bean id="ehcache"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-		p:config-location="classpath:ehcache.xml" />
+		p:config-location="classpath:ehcache.xml" p:shared="true" />
 
 	<bean id="hibernateStringEncryptor"
 		class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">

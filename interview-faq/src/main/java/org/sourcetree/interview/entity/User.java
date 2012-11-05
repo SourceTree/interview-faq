@@ -5,13 +5,20 @@
  * Modification History
  * *************************************************************
  * Date				Author						Comment
- * Feb 29, 2012		Venkaiah Chowdary Koneru	Created
+ * Oct 31, 2012		Venkaiah Chowdary Koneru	Created
  * *************************************************************
  */
 package org.sourcetree.interview.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.sourcetree.interview.enums.UserRoleEnum;
 
 /**
@@ -20,16 +27,46 @@ import org.sourcetree.interview.enums.UserRoleEnum;
  * @author Venkaiah Chowdary Koneru
  */
 @Entity
+@Table(name = "user")
+@GenericGenerator(strategy = "native", name = "UserSeq")
 public class User extends AbstractEntity
 {
 	private static final long serialVersionUID = 1L;
 
-	private String name;
-	private String email;
-	private String password;
-	private String identification;
+	@Id
+	@GeneratedValue(generator = "UserSeq")
+	@Column(name = "id")
+	private Long id;
 
+	@Column(name = "name", length = 80)
+	private String name;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "password", length = 80)
+	private String password;
+
+	@Column(name = "role", length = 30)
+	@Enumerated(EnumType.STRING)
 	private UserRoleEnum role;
+
+	/**
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
 	/**
 	 * @return the name
@@ -63,23 +100,6 @@ public class User extends AbstractEntity
 	public void setPassword(String password)
 	{
 		this.password = password;
-	}
-
-	/**
-	 * @return the identification
-	 */
-	public String getIdentification()
-	{
-		return identification;
-	}
-
-	/**
-	 * @param identification
-	 *            the identification to set
-	 */
-	public void setIdentification(String identification)
-	{
-		this.identification = identification;
 	}
 
 	/**
