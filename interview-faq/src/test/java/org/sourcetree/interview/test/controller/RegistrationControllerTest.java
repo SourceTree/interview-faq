@@ -10,8 +10,10 @@
  */
 package org.sourcetree.interview.test.controller;
 
+import static org.springframework.test.web.server.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.server.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
 import java.io.StringReader;
@@ -91,5 +93,75 @@ public class RegistrationControllerTest extends BaseMvcTestCase
 
 		Assert.assertNull(res.getErrors());
 		Assert.assertEquals(OutcomeStatus.SUCCESS, res.getStatus());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.RegistrationController#processRegistration(UserDTO userDTO)}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             in case of errors
+	 */
+	@Test
+	public void testJSONProcessNewPartnerFormRequest_1() throws Exception
+	{
+		// check for mandatory
+		ResultActions ra = mockMvc.perform(post("/register/new")
+				.param("name", "").param("email", "").param("password", "")
+				.param("confirmPassword", "")
+				.accept(MediaType.APPLICATION_JSON));
+
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType("application/json;charset=UTF-8"));
+
+		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
+				.getResponse().getContentAsByteArray(), ResponseDTO.class);
+
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(4, res.getErrors().size());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.RegistrationController#processRegistration(UserDTO userDTO)}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             in case of errors
+	 */
+	@Test
+	public void testJSONProcessNewPartnerFormRequest_2() throws Exception
+	{
+		// check for mandatory
+		ResultActions ra = mockMvc.perform(post("/register/new")
+				.param("name", "Venky").param("email", "venky@gmail.com")
+				.param("password", "password")
+				.param("confirmPassword", "password")
+				.accept(MediaType.APPLICATION_JSON));
+
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType("application/json;charset=UTF-8"));
+
+		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
+				.getResponse().getContentAsByteArray(), ResponseDTO.class);
+
+		Assert.assertNull(res.getErrors());
+		Assert.assertEquals(OutcomeStatus.SUCCESS, res.getStatus());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.RegistrationFormController#regForm()}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             in case of errors
+	 */
+	@Test
+	public void testRegisterForm_1() throws Exception
+	{
+		mockMvc.perform(get("/register/new")).andExpect(status().isOk())
+				.andExpect(forwardedUrl("/WEB-INF/page/regForm.jsp"));
 	}
 }

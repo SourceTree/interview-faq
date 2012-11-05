@@ -13,7 +13,9 @@ package org.sourcetree.interview.test.controller;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.server.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.server.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.server.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.server.result.MockMvcResultMatchers.status;
 
@@ -63,4 +65,17 @@ public class AuthenticationControllerTest extends BaseMvcTestCase
 		assertEquals("Email Required!", loginDTO.getErrors().get("email"));
 	}
 
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.AuthenticationController#loginForm()}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testLoginForm_1() throws Exception
+	{
+		mockMvc.perform(get("/admin/login")).andExpect(status().isOk())
+				.andExpect(forwardedUrl("/WEB-INF/page/login.jsp"));
+	}
 }

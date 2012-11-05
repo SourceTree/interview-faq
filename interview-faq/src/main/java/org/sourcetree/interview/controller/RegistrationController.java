@@ -37,7 +37,7 @@ public class RegistrationController extends BaseController
 	private UserService userService;
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	String loginForm()
+	String regForm()
 	{
 		return "regForm";
 	}

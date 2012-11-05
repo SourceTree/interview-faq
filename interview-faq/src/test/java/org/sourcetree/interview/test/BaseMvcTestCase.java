@@ -10,11 +10,14 @@
  */
 package org.sourcetree.interview.test;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.aspectj.weaver.ast.Test;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.sourcetree.interview.support.JaxbJacksonObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.annotation.DirtiesContext;
@@ -39,11 +42,10 @@ public class BaseMvcTestCase
 {
 	protected MockMvc mockMvc;
 
+	protected JaxbJacksonObjectMapper jaxbJacksonObjectMapper;
+
 	@Autowired
 	protected Jaxb2Marshaller jaxb2Marshaller;
-
-	// @Autowired
-	// protected RedisTemplate<String, Object> redisTemplate;
 
 	@Autowired
 	private BasicDataSource datasource;
@@ -57,6 +59,7 @@ public class BaseMvcTestCase
 	 * @throws Exception
 	 *             in case of errors
 	 */
+	@SuppressWarnings("deprecation")
 	@Before
 	public void setupContext() throws Exception
 	{
@@ -65,6 +68,12 @@ public class BaseMvcTestCase
 				"classpath:dispatcher-test-servlet.xml");
 
 		mockMvc = ctx.build();
+
+		jaxbJacksonObjectMapper = new JaxbJacksonObjectMapper();
+		jaxbJacksonObjectMapper.getSerializationConfig().setDateFormat(
+				new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a"));
+		jaxbJacksonObjectMapper.getDeserializationConfig().setDateFormat(
+				new SimpleDateFormat("MM-dd-yyyy hh:mm:ss a"));
 
 		UtilTestCase.setupContext(datasource);
 	}
