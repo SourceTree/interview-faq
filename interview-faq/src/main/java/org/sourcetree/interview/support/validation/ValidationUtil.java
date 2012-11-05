@@ -60,7 +60,7 @@ public final class ValidationUtil
 		violations = validator.validate(object, SecondGroup.class);
 		for (ConstraintViolation<Object> violation : violations)
 		{
-			if (errors.containsKey(violation.getPropertyPath().toString()))
+			if (!errors.containsKey(violation.getPropertyPath().toString()))
 			{
 				errors.put(violation.getPropertyPath().toString(),
 						messageSource.getMessage(violation.getMessage(), null,
