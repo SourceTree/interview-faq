@@ -34,7 +34,7 @@ public final class AuthorizationUtil
 	}
 
 	/**
-	 * creates a new session for the authorised request.
+	 * creates a new session for the authorized request.
 	 * 
 	 * @param user
 	 *            user entity object
