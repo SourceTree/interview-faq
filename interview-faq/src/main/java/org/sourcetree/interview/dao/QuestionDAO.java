@@ -22,7 +22,11 @@ import org.sourcetree.interview.entity.Question;
  */
 public interface QuestionDAO extends GenericDAO<Question, Long>
 {
-
-	public List<Question> getQuestionsByCategoryId(Long categoryId);
-
+	/**
+	 * Retrieves questions for the passed in category id
+	 * 
+	 * @param categoryId
+	 * @return
+	 */
+	List<Question> getQuestionsByCategoryId(Long categoryId);
 }

@@ -23,6 +23,11 @@ import org.sourcetree.interview.entity.Category;
 public interface CategoryDAO extends GenericDAO<Category, Long>
 {
 
-	public List<Category> getCategoriesByQuestionId(Long questionId);
-
+	/**
+	 * Retrieves all the categories associated with the Question
+	 * 
+	 * @param questionId
+	 * @return
+	 */
+	List<Category> getCategoriesByQuestionId(Long questionId);
 }

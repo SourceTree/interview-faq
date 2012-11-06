@@ -29,15 +29,15 @@ public interface CategoryService
 	 * @param categoryDTO
 	 *            category DTO
 	 */
-	void create(CategoryDTO catergoryDTO);
+	void create(CategoryDTO categoryDTO);
 
 	/**
 	 * update existing category object.
 	 * 
-	 * @param catergoryDTO
+	 * @param categoryDTO
 	 * @param categoryId
 	 */
-	void update(CategoryDTO catergoryDTO, Long categoryId);
+	void update(CategoryDTO categoryDTO, Long categoryId);
 
 	/**
 	 * Find category by id
@@ -45,7 +45,7 @@ public interface CategoryService
 	 * @param categoryId
 	 * @return Category
 	 */
-	public Category findCategoryById(Long categoryId);
+	Category findCategoryById(Long categoryId);
 
 	/**
 	 * Find Categories by question id
@@ -53,7 +53,7 @@ public interface CategoryService
 	 * @param questionId
 	 * @return List of Categories
 	 */
-	public List<Category> getCategoriesByQuestionId(Long questionId);
+	List<Category> getCategoriesByQuestionId(Long questionId);
 
 	/**
 	 * Delete Category record
@@ -61,6 +61,6 @@ public interface CategoryService
 	 * @param categoryId
 	 * @return
 	 */
-	public boolean deleteCategoryById(Long categoryId);
+	boolean deleteCategoryById(Long categoryId);
 
 }

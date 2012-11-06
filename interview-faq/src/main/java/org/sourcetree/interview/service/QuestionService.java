@@ -44,7 +44,7 @@ public interface QuestionService
 	 * @param questionId
 	 * @return Question
 	 */
-	public Question findQuestionById(Long questionId);
+	Question findQuestionById(Long questionId);
 
 	/**
 	 * Find Questions by category id
@@ -52,7 +52,7 @@ public interface QuestionService
 	 * @param categoryId
 	 * @return List of Questions
 	 */
-	public List<Question> getQuestionsByCategoryId(Long categoryId);
+	List<Question> getQuestionsByCategoryId(Long categoryId);
 
 	/**
 	 * Delete question by id
@@ -60,6 +60,6 @@ public interface QuestionService
 	 * @param questionId
 	 * @return Boolean
 	 */
-	public boolean deleteQuestionById(Long questionId);
+	boolean deleteQuestionById(Long questionId);
 
 }

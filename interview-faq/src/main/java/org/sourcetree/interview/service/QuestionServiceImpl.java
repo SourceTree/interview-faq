@@ -53,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService
 	@Transactional(readOnly = false)
 	public void update(QuestionDTO questionDTO, Long questionId)
 	{
-		Question question = questionDAO.find(questionId);
+		Question question = findQuestionById(questionId);
 		if (question != null)
 		{
 			question.setQuestion(questionDTO.getQuestion());

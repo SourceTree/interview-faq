@@ -19,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.sourcetree.interview.entity.AbstractEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -34,8 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  * @author Venkaiah Chowdary Koneru
  */
-public abstract class GenericDAOImpl<T, ID extends Serializable> implements
-		GenericDAO<T, ID>
+public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serializable>
+		implements GenericDAO<T, ID>
 {
 	@Autowired
 	private SessionFactory sessionFactory;

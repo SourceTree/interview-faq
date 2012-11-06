@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService
 	@Transactional(readOnly = false)
 	public void update(CategoryDTO catergoryDTO, Long categoryId)
 	{
-		Category category = categoryDAO.find(categoryId);
+		Category category = findCategoryById(categoryId);
 		if (category != null)
 		{
 			category.setCategoryName(catergoryDTO.getCategoryName());

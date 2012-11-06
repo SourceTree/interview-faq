@@ -13,6 +13,8 @@ package org.sourcetree.interview.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.sourcetree.interview.entity.AbstractEntity;
+
 /**
  * Interface for a Data Access Object that can be used for a single specified
  * type domain object. A single instance implementing this interface can be used
@@ -27,7 +29,7 @@ import java.util.List;
  * 
  * @author Venkaiah Chowdary Koneru
  */
-public interface GenericDAO<T, ID extends Serializable>
+public interface GenericDAO<T extends AbstractEntity, ID extends Serializable>
 {
 	/**
 	 * Entity passed to this method will be saved to the session.
