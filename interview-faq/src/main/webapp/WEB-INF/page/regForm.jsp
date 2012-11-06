@@ -17,11 +17,11 @@
 		<h2><s:message code="registerForm.title"/></h2>
 		<input name="clientType" id="clientType" type="hidden" value="internal">
 		<p><label id="label_name" for="name"><s:message code="registerForm.fullname"/><span class="required">*</span></label>
-		<input type="text" id="name" maxlength="80" name="name"/>
+		<input type="text" id="name" maxlength="80" name="name" title="<s:message code="registerForm.fullname"/>"/>
 		<span id="error_name"></span></p>
 		
 		<p><label id="label_email" for="email"><s:message code="registerForm.email"/><span class="required">*</span></label>
-		<input type="text" id="email" maxlength="220" name="email"/>
+		<input type="text" id="email" maxlength="220" name="emails" title="<s:message code="registerForm.email"/>"/>
 		<span id="error_email"></span></p>
 		
 		<p><label id="label_password" for="password"><s:message code="registerForm.password"/><span class="required">*</span></label>

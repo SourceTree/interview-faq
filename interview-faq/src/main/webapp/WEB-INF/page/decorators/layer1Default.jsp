@@ -5,7 +5,7 @@
 --%><%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--[if IE 6]><html lang="en" class="no-js ie6"><![endif]-->
 <!--[if (gt IE 6)|!(IE)]><!-->
 <html lang="en" class="no-js">
