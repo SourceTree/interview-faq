@@ -19,5 +19,18 @@ package org.sourcetree.interview.enums;
  */
 public enum OutcomeStatus
 {
-	SUCCESS, FAILURE, EXCEPTION, INSERT_ERROR
+	/**
+	 * Success status
+	 */
+	SUCCESS,
+
+	/**
+	 * Error/Failure status
+	 */
+	FAILURE,
+
+	/**
+	 * Exception status
+	 */
+	EXCEPTION
 }
