@@ -10,8 +10,7 @@
  */
 package org.sourcetree.interview.dto;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -29,7 +28,7 @@ public class QuestionDTO extends BaseDTO
 	@NotEmpty(message = "question.null")
 	private String question;
 
-	private Set<Category> categories = new HashSet<Category>();
+	private List<Category> categories;
 
 	/**
 	 * @return the question
@@ -51,7 +50,7 @@ public class QuestionDTO extends BaseDTO
 	/**
 	 * @return the categories
 	 */
-	public Set<Category> getCategories()
+	public List<Category> getCategories()
 	{
 		return categories;
 	}
@@ -60,7 +59,7 @@ public class QuestionDTO extends BaseDTO
 	 * @param categories
 	 *            the categories to set
 	 */
-	public void setCategories(Set<Category> categories)
+	public void setCategories(List<Category> categories)
 	{
 		this.categories = categories;
 	}

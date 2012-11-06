@@ -10,8 +10,7 @@
  */
 package org.sourcetree.interview.entity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,8 +38,8 @@ public class Category extends AbstractEntity
 
 	@Id
 	@GeneratedValue(generator = "CategorySeq")
-	@Column(name = "categoryId")
-	private Long categoryId;
+	@Column(name = "id")
+	private Long id;
 
 	@Column(name = "name", length = 80)
 	private String categoryName;
@@ -48,16 +47,16 @@ public class Category extends AbstractEntity
 	@Column(name = "categoryDescription", length = 150, nullable = true)
 	private String categoryDescription;
 
-	private Set<Question> questions = new HashSet<Question>();
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "CATEGORY_QUESTION", joinColumns = @JoinColumn(
+			name = "category_id"), inverseJoinColumns = @JoinColumn(
+			name = "question_id"))
+	private List<Question> questions;
 
 	/**
 	 * @return the questions
 	 */
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "CATEGORY_QUESTION", joinColumns = @JoinColumn(
-			name = "categoryId"), inverseJoinColumns = @JoinColumn(
-			name = "questionId"))
-	public Set<Question> getQuestions()
+	public List<Question> getQuestions()
 	{
 		return questions;
 	}
@@ -66,26 +65,26 @@ public class Category extends AbstractEntity
 	 * @param questions
 	 *            the questions to set
 	 */
-	public void setQuestions(Set<Question> questions)
+	public void setQuestions(List<Question> questions)
 	{
 		this.questions = questions;
 	}
 
 	/**
-	 * @return the categoryId
+	 * @return the id
 	 */
-	public Long getCategoryId()
+	public Long getId()
 	{
-		return categoryId;
+		return id;
 	}
 
 	/**
-	 * @param categoryId
-	 *            the categoryId to set
+	 * @param id
+	 *            the id to set
 	 */
-	public void setCategoryId(Long categoryId)
+	public void setId(Long id)
 	{
-		this.categoryId = categoryId;
+		this.id = id;
 	}
 
 	/**
