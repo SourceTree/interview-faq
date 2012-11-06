@@ -17,5 +17,13 @@ package org.sourcetree.interview.enums;
  */
 public enum UserRoleEnum
 {
-	ADMIN, SECONDARY_ADMIN
+	/**
+	 * Admin User
+	 */
+	ADMIN,
+
+	/**
+	 * Secondary Admin User
+	 */
+	SECONDARY_ADMIN
 }
