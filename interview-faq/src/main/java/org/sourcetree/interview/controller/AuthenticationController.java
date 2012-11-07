@@ -95,6 +95,6 @@ public class AuthenticationController extends BaseController
 			return LOGIN_FORM_PAGE;
 		}
 
-		return "adminHome";
+		return "admin/console";
 	}
 }
