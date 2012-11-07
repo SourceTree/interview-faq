@@ -1,7 +1,5 @@
 <%--
-
 	Copyright © 2012, Source Tree, All Rights Reserved
-
 --%><%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
@@ -17,6 +15,8 @@
 			<c:redirect url="/" />
 		</c:when>
 		<c:otherwise>
+		<div class="col_25">&nbsp;</div>
+		<div class="col_75">
 				<form id="loginForm" name="loginForm" method="post"
 					class="cleanform" action="<c:url value="/admin/login"/>">
 					<h2><s:message code="loginForm.title"/></h2>
@@ -45,17 +45,6 @@
 									<span class="warning"><c:out
 											value="${login.errors['password']}" /></span>
 								</c:if></p>
-							
-							<p><label id="label_password" for="select_chioce"><s:message
-										code="loginForm.password" /><span class="required">*</span></label> 
-								<select id="select_choice" name="select_chioce">
-									<option value="123">Value1</option>
-									<option value="2">Value 2</option>
-								</select>
-								<c:if test="${not empty login && not empty login.errors}">
-									<span class="warning"><c:out
-											value="${login.errors['password']}" /></span>
-								</c:if></p>
 							<p>
 								<button type="submit" id="btnSubmit" name="btnSubmit">
 									<s:message code="loginForm.btn.login" />
@@ -65,6 +54,7 @@
 									<s:message code="loginForm.btn.reset" />
 								</button></p>
 				</form>
+			</div>
 		</c:otherwise>
 	</c:choose>
 	<script type="text/javascript">
