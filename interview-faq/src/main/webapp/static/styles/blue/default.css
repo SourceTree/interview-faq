@@ -8,6 +8,7 @@ ul li,ol li{padding:0 0 .4em 0}
 .container{background-color:#fff; margin:0 auto;margin-top: 5px;}
 .header{padding:30px 0 10px 0;}
 .logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;}
+#main{border:1px solid #DDDDE0; border-radius:8px;margin-bottom:10px;}
 .menu_main{width:50%;float:right;text-align:right;margin:.3em 0 0 0;font-size:12px}
 .menu_main li{display:inline-block;margin:0 auto;}
 .menu_main li.active,.menu_main li.active a{text-decoration:none;}
@@ -15,12 +16,8 @@ ul li,ol li{padding:0 0 .4em 0}
 .hero{background:#fff;padding:15px 0 15px 2%;margin:0 0 15px 0;}
 .hero h1{font-size:24px;font-size:18px;color:#3d3d3d}
 .article{background:#fff;padding:15px 0 15px 2%;}
-.footer{padding:1em 3% 3em 3%;font-size:12px;background-color: #53C9F6;color:#FFF;}
-.copyright{float:left;padding-top:4px;line-height:15px;}
-.menu_bottom{width:50%;float:right;text-align:right;margin:0;padding:0;font-size:12px}
-.menu_bottom a,.menu_bottom a:hover{color:#0085c5}
-.menu_bottom li{display:inline-block;margin:0 0 0 4px}
-.menu_bottom li.active,.menu_bottom li.active a{color:#666;text-decoration:none;cursor:default}
+.footer{padding:1em 3% 3em 3%;background-color: #53C9F6;color:#FFF;}
+.copyright{float:left;padding-top:4px;}
 h1{font-size:22px}
 h1,h2,h3,h4{font-weight:normal}
 h5,h6{font-weight:bold}
@@ -67,14 +64,18 @@ a.button{color:auto}
 .cleanform fieldset {border:none; padding:0; width:100%; overflow:hidden;}
 .cleanform label {display:block; position:relative;}
 .cleanform .message{min-height:253px;}
-.cleanform input, .cleanform textarea, .cleanform select {padding:11px 15px 10px;margin:0;font: 12px Arial, Helvetica, sans-serif;background: #fff;outline:none;
+.cleanform input, .cleanform textarea, .cleanform select {padding:10px;margin:0;background: #fff;outline:none;
 border:1px solid #dddde0;width:314px;border-radius:8px;}
 .cleanform select{width:346px;}
 .cleanform .area .error {float:none;}
 .cleanform textarea {width:548px;height:207px;resize:none;overflow:auto;}
 .buttons-wrapper{text-align:right; position:relative;}
-.cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;font-size:14px;padding:11px 15px 10px;cursor:pointer;background-color: #52C7F5;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;-webkit-transition:all 0.2s ease;-moz-transition:all 0.2s ease;-o-transition:all 0.2s ease;transition:all 0.2s ease;}
+.cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;padding:10px;cursor:pointer;background-color: #52C7F5;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;-webkit-transition:all 0.2s ease;-moz-transition:all 0.2s ease;-o-transition:all 0.2s ease;transition:all 0.2s ease;}
 .cleanform button:hover{background:#178AB6;}
+.search{text-align: center;}
+.search input{width:60%;min-width:300px;}
+.search button{background:url(../../images/searcgbtn_bg.gif) 0 bottom repeat-x #FF9D1C;border:1px solid #FF9D1C}
+.search button:hover{background-position: 0 -108px;color: black;background-color: #FFD03B;border:1px solid #FFD03B;}
 @media only screen and (max-width:480px){/* Smartphone */.header{margin-bottom:0}
 body{min-width:360px;}
 .logo{display:block;float:none;text-align:center}
@@ -82,11 +83,9 @@ body{min-width:360px;}
 .menu_main a{display:inline-block;padding:7px}
 .copyright{width:100%;float:none;text-align:center}
 .footer{padding-bottom:0;}
-.menu_bottom{width:100%;float:none;text-align:center;margin:1em 0 0 0;padding:0}
-.menu_bottom a{display:inline-block;padding:6px}
 .form textarea{width:100%}
 .form label{padding:10px 0 8px 0}
-#cleanform input, #cleanform textarea{width:268px;}
+.cleanform input, .cleanform textarea{width:268px;}
 }
 @media only screen and (max-width:768px){/* Tablet */.col_25,.col_33,.col_66,.col_50,.col_75{width:98%;float:none}
 .col_12{display:none;}

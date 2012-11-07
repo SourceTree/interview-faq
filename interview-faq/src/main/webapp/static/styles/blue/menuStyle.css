@@ -7,7 +7,7 @@ ul.sf-menu li:hover li ul,ul.sf-menu li.sfHover li ul {top:-999px; display:none;
 ul.sf-menu li li:hover ul,ul.sf-menu li li.sfHover ul {left:100%; top:0;}
 ul.sf-menu>li { display:inline-block; padding:0px 0px 0px 0px; border-left:1px solid #289dc9; width:106px; background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58c9f5;}
 ul.sf-menu>li:first-child { border-left:transparent;}
-ul.sf-menu>li>a {text-decoration:none;font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:20px; letter-spacing:0px; color:#fff; padding:14px 0px 12px 0px;  text-align:center;}
+ul.sf-menu>li>a {text-decoration:none;font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:20px; letter-spacing:0px; color:#fff; padding:10px 0px 10px 0px;  text-align:center;}
 .first-button { border-radius:8px 0 0 8px;}
 .last-button { border-radius:0 8px 8px 0 !important; }
 ul.sf-menu>li.current , ul.sf-menu>li.sfHover , ul.sf-menu>li:hover {background:#178ab6; }
