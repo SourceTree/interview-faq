@@ -37,6 +37,11 @@ public class CategoryController extends BaseController
 	@Autowired
 	private CategoryService categoryService;
 
+	/**
+	 * Category Form
+	 * 
+	 * @return
+	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
@@ -57,6 +62,8 @@ public class CategoryController extends BaseController
 	 */
 
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
 	@ResponseBody
 	public ResponseDTO processCategory(@ModelAttribute CategoryDTO categoryDTO)
 	{
