@@ -12,6 +12,7 @@ package org.sourcetree.interview.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dao.UserDAO;
 import org.sourcetree.interview.dto.UserDTO;
 import org.sourcetree.interview.entity.User;
@@ -71,5 +72,29 @@ public class UserServiceImpl implements UserService
 	public User getUser(String userName)
 	{
 		return userDAO.findByParameter("email", userName);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.sourcetree.interview.service.UserService#isValidLogin()
+	 */
+	@Override
+	public boolean isValidPassword(String email, String password,
+			String requestPassword)
+	{
+		if (StringUtils.isBlank(email) || StringUtils.isBlank(password)
+				|| StringUtils.isBlank(requestPassword))
+		{
+			return false;
+		}
+
+		if (password.equals(shaPasswordEncoder.encodePassword(requestPassword,
+				email)))
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

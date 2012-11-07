@@ -47,4 +47,20 @@ public interface UserService
 	 * @return <code>{@linkplain User}
 	 */
 	User getUser(String email);
+
+	/**
+	 * checks whether the passed in email and password combination is valid or
+	 * not.
+	 * 
+	 * @param email
+	 *            retrieved from entity
+	 * @param password
+	 *            hashed password retrieved from entity
+	 * @param requestPassword
+	 *            plain text (un-hashed or un-encrypted) password received with
+	 *            the request
+	 * @return true or false
+	 */
+	boolean isValidPassword(String email, String password,
+			String requestPassword);
 }

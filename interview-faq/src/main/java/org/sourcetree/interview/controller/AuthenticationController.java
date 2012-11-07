@@ -23,7 +23,6 @@ import org.sourcetree.interview.support.CoreUtil;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,9 +42,6 @@ public class AuthenticationController extends BaseController
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private ShaPasswordEncoder shaPasswordEncoder;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	String loginForm()
@@ -79,9 +75,8 @@ public class AuthenticationController extends BaseController
 
 		if (user != null
 				&& user.getEmail().equalsIgnoreCase(loginDTO.getEmail())
-				&& user.getPassword().equals(
-						shaPasswordEncoder.encodePassword(
-								loginDTO.getPassword(), user.getEmail())))
+				&& userService.isValidPassword(user.getEmail(),
+						user.getPassword(), loginDTO.getPassword()))
 		{
 			AuthorizationUtil.createNewAuthorizedSession(user, session,
 					inactiveTimeOutInMinutes);
