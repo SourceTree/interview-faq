@@ -65,7 +65,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('input').attr("autocomplete", "off");
-
+			
 			<c:if test="${not defaultfocus}">
 			$("input:visible:enabled:first").focus();
 			</c:if>
