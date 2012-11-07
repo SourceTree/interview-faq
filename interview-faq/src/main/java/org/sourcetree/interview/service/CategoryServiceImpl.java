@@ -10,6 +10,7 @@
  */
 package org.sourcetree.interview.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.sourcetree.interview.dao.CategoryDAO;
@@ -42,6 +43,7 @@ public class CategoryServiceImpl implements CategoryService
 		category.setCategoryName(catergoryDTO.getCategoryName());
 		category.setCategoryDescription(catergoryDTO.getCategoryDescription());
 		category.setQuestions(catergoryDTO.getQuestions());
+		category.setCreatedDate(new Date());
 		categoryDAO.save(category);
 
 	}
@@ -92,5 +94,14 @@ public class CategoryServiceImpl implements CategoryService
 	public boolean deleteCategoryById(Long categoryId)
 	{
 		return categoryDAO.deleteById(categoryId);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean categoryNameExists(String categoryName)
+	{
+		return categoryDAO.existsByParameter("categoryName", categoryName);
 	}
 }

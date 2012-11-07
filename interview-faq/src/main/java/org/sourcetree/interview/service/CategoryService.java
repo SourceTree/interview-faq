@@ -63,4 +63,11 @@ public interface CategoryService
 	 */
 	boolean deleteCategoryById(Long categoryId);
 
+	/**
+	 * @param categoryName
+	 *            categoryName to check
+	 * @return true if a record with same email exists
+	 */
+	boolean categoryNameExists(String categoryName);
+
 }
