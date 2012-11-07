@@ -47,8 +47,7 @@ public class UserServiceImpl implements UserService
 		User user = new User();
 
 		user.setEmail(userDTO.getEmail().trim().toLowerCase());
-		user.setPassword(shaPasswordEncoder.encodePassword(
-				userDTO.getPassword(), user.getEmail()));
+		user.setPassword(hashPassword(userDTO.getEmail(), userDTO.getPassword()));
 		user.setRole(UserRoleEnum.ADMIN);
 		user.setCreatedDate(new Date());
 		user.setName(userDTO.getName());
@@ -74,10 +73,8 @@ public class UserServiceImpl implements UserService
 		return userDAO.findByParameter("email", userName);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.sourcetree.interview.service.UserService#isValidLogin()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isValidPassword(String email, String password,
@@ -89,12 +86,20 @@ public class UserServiceImpl implements UserService
 			return false;
 		}
 
-		if (password.equals(shaPasswordEncoder.encodePassword(requestPassword,
-				email)))
+		if (password.equals(hashPassword(email, requestPassword)))
 		{
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String hashPassword(String salt, String token)
+	{
+		return shaPasswordEncoder.encodePassword(token, salt);
 	}
 }

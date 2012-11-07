@@ -57,10 +57,21 @@ public interface UserService
 	 * @param password
 	 *            hashed password retrieved from entity
 	 * @param requestPassword
-	 *            plain text (un-hashed or un-encrypted) password received with
-	 *            the request
+	 *            raw (un-hashed or un-encrypted) password received with the
+	 *            request
 	 * @return true or false
 	 */
 	boolean isValidPassword(String email, String password,
 			String requestPassword);
+
+	/**
+	 * use this to get the hash string for the passed in token.
+	 * 
+	 * @param salt
+	 *            salt for hashing
+	 * @param token
+	 *            token which is to be hashed
+	 * @return hashed string for the passed in token
+	 */
+	String hashPassword(String salt, String token);
 }
