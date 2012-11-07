@@ -1,0 +1,49 @@
+.sf-menu {float:left; padding-bottom:0px; }
+.sf-menu ul {position:absolute; top:-999px; display:none; }
+.sf-menu li {position:relative; float:left;}
+.sf-menu a {display:block; }
+.sf-menu li:hover ul,.sf-menu li.sfHover ul {z-index:399}
+ul.sf-menu li:hover li ul,ul.sf-menu li.sfHover li ul {top:-999px; display:none;}
+ul.sf-menu li li:hover ul,ul.sf-menu li li.sfHover ul {left:100%; top:0;}
+ul.sf-menu>li { display:inline-block; padding:0px 0px 0px 0px; border-left:1px solid #289dc9; width:106px; background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58c9f5;}
+ul.sf-menu>li:first-child { border-left:transparent;}
+ul.sf-menu>li>a {text-decoration:none;font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:20px; letter-spacing:0px; color:#fff; padding:14px 0px 12px 0px;  text-align:center;}
+.first-button { border-radius:8px 0 0 8px;}
+.last-button { border-radius:0 8px 8px 0 !important; }
+ul.sf-menu>li.current , ul.sf-menu>li.sfHover , ul.sf-menu>li:hover {background:#178ab6; }
+ul.sf-menu>li.current>a, ul.sf-menu>li.sfHover>a, ul.sf-menu>li>a:hover {text-decoration:none; color:#fff;  }
+ul.sf-menu>li.sfHover>a.sf-with-ul>span.sf-sub-indicator {background:url(../../images/submenu_arrow.png) 0 0 no-repeat; position:absolute; left:62px; top:50px; width:11px; height:9px;}
+ul.sf-menu>li>ul {width:135px; background:#1689b6; padding:20px 0px 29px 0px; left:3px; top:59px; z-index:999; position:absolute;  }
+ul.sf-menu>li>ul>li, ul.sf-menu>li.sfHover>ul>li { text-align:center; display:block; width:100%;}
+ul.sf-menu>li.sfHover>ul>li>a {text-decoration:none;font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:14px; line-height:17px; color:#fff; margin:6px 0 7px 0px; display:inline-block;}
+ul.sf-menu>li.sfHover>ul>li:hover, ul.sf-menu li.sfHover>ul>li.sfHover{}
+ul.sf-menu>li.sfHover>ul>li>a:hover, ul.sf-menu li.sfHover>ul>li.sfHover a{ color:#53c9f6; text-decoration:none;}
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul { left:140px; top:10px; width:135px; background:#53c9f6; padding:20px 0px 29px 0px; z-index:100; }
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li, ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li { text-align:center; display:block; width:100%;}
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li:first-child, ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li:first-child {}
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li>a { font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:14px; line-height:17px; color:#fff; margin:6px 0 7px 0px; display:inline-block;}
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li:hover { }
+ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li>a:hover {color:#1689b6; text-decoration:none;}
+#responsive_menu{display:none;color:#fff;background-color: #58c9f5;cursor: pointer;}
+@media only screen and (max-width: 768px){
+	nav{padding-right:0px;}
+	.sf-menu > li > a {padding:114px 5px 0;}
+	.sf-menu > li > a .menu-arrow{display:inline-block; width:7px; height:4px; overflow:hidden; text-indent:-999em; font-size:0; line-height:0; background:url(../../images/menu_arrow.gif) center top no-repeat; margin-left:5px; vertical-align:middle;}
+	.sf-menu ul {min-width:150px;}
+	.sf-menu ul .menu-arrow{display:inline;}
+	.sf-menu li li:hover ul, .sf-menu li li.sfHover ul {left:150px;}
+}
+
+@media only screen and (max-width:480px) {
+	#responsive_menu{display:block;}
+	/*menu*/
+	.sf-menu{display:none; position:absolute; top:154px; right:0; min-width:130px; z-index:999;}
+	.sf-menu > li {float:none; padding:0; margin-right:0; padding:1px; background:#e6e6e6;}
+	.sf-menu > li > a {border-top:1px solid #f4f4f4; border-left:1px solid #f4f4f4; color:#2d2d2d; padding:7px 15px 8px; background:transparent;}
+	.sf-menu > li.sfHover > a,.sf-menu > li > a:hover , .sf-menu > li.current > a {color:#41b3de;}
+	.menu > li > a .menu-arrow{display:inline; width:auto; height:auto; text-indent:0; font-size:inherit; line-height:inherit; background:none; margin-left:0; vertical-align:inherit;}
+	/***submenu***/
+	.sf-menu ul {right:131px; left:auto !important; top:1px !important; min-width:152px; padding-top:0; background:none;}
+	/***submenu***/
+	.sf-menu ul ul {position:static; width:auto;}
+}

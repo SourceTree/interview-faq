@@ -1,23 +1,22 @@
 @import url("../default.css");
 /* Skin "Simple" by Renat Rafikov */
-body{background:#fff;font-family:Helvetica, arial, freesans, clean, sans-serif;color:#333;}
-a{color:#07BEF2}
-a:hover{text-decoration:none; color:#333;}
-a:visited{color:#07BEF2;}
+body{background:#53C9F6;font-size:13px;font-family:Helvetica, arial, freesans, clean, sans-serif;color:#6D6D6D;line-height: 19px;}
+a{color:#53C9F6;}
+a:hover{text-decoration:none;}
+a:visited{color:#53C9F6;}
 ul li,ol li{padding:0 0 .4em 0}
-.container{max-width:1300px;margin:0 auto}
-.header{padding:30px 0 10px 0;border-bottom: 1px solid #CACACA;}
-.logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff}
+.container{background-color:#fff; margin:0 auto;margin-top: 5px;}
+.header{padding:30px 0 10px 0;}
+.logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;}
 .menu_main{width:50%;float:right;text-align:right;margin:.3em 0 0 0;font-size:12px}
-.menu_main a,.menu_main a:hover{color:#222;text-decoration: none;}
-.menu_main li{display:inline-block;margin:0 0 0 4px}
-.menu_main li.active,.menu_main li.active a{color:#000;text-decoration:none;cursor:default}
+.menu_main li{display:inline-block;margin:0 auto;}
+.menu_main li.active,.menu_main li.active a{text-decoration:none;}
 .info{padding:0 1% 1em 1%}
-.hero{background:#fff;padding:15px 0 15px 2%;margin:0 0 15px 0}
+.hero{background:#fff;padding:15px 0 15px 2%;margin:0 0 15px 0;}
 .hero h1{font-size:24px;font-size:18px;color:#3d3d3d}
 .article{background:#fff;padding:15px 0 15px 2%;}
-.footer{padding:1em 3% 3em 3%;color:#FFF;font-size:12px;border-top:1px solid;background-color: #B3B3B3;}
-.copyright{width:49%;float:left;text-shadow:1px 1px 1px #fff}
+.footer{padding:1em 3% 3em 3%;font-size:12px;background-color: #53C9F6;color:#FFF;}
+.copyright{float:left;padding-top:4px;line-height:15px;}
 .menu_bottom{width:50%;float:right;text-align:right;margin:0;padding:0;font-size:12px}
 .menu_bottom a,.menu_bottom a:hover{color:#0085c5}
 .menu_bottom li{display:inline-block;margin:0 0 0 4px}
@@ -26,9 +25,6 @@ h1{font-size:22px}
 h1,h2,h3,h4{font-weight:normal}
 h5,h6{font-weight:bold}
 .form label{display:inline-block;padding:0 0 4px 0}
-a.button,.button{border:0;text-align:center;text-decoration:none;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;-webkit-box-shadow:#999 0 0 1px;-moz-box-shadow:#999 0 0 1px;box-shadow:#999 0 0 1px;background:#4aa6d6;background:-webkit-gradient(linear,0 0,0 bottom,from(#1f7daa),to(#4aa6d6));background:-webkit-linear-gradient(#1f7daa,#4aa6d6);background:-moz-linear-gradient(#1f7daa,#4aa6d6);background:-ms-linear-gradient(#1f7daa,#4aa6d6);background:-o-linear-gradient(#1f7daa,#4aa6d6);background:linear-gradient(#1f7daa,#4aa6d6);color:#fff;padding:10px 20px;font-family:verdana,sans-serif;text-shadow:1px 1px 1px #12455d;display:inline-block}
-a.button:hover,.button:hover{color:#fff;background:-webkit-gradient(linear,0 0,0 bottom,from(#4aa6d6),to(#1f7daa));background:-webkit-linear-gradient(#4aa6d6,#1f7daa);background:-moz-linear-gradient(#4aa6d6,#1f7daa);background:-ms-linear-gradient(#4aa6d6,#1f7daa);background:-o-linear-gradient(#4aa6d6,#1f7daa);background:linear-gradient(#4aa6d6,#1f7daa)}
-a.button:active,.button:active{color:#093950;text-shadow:1px 1px 1px #7ac8f0;-webkit-box-shadow:#093950 0 2px 3px inset;-moz-box-shadow:#093950 0 2px 3px inset;box-shadow:#093950 0 2px 3px inset}
 .table{width:100%}
 .table th{padding:5px 7px;font-weight:bold;text-align:left;font-size:.9em;border-bottom:1px solid #ddd}
 .table td{padding:9px 7px;border-left:1px solid #ddd}
@@ -71,15 +67,16 @@ a.button{color:auto}
 .cleanform fieldset {border:none; padding:0; width:100%; overflow:hidden;}
 .cleanform label {display:block; position:relative;}
 .cleanform .message{min-height:253px;}
-.cleanform input, .cleanform textarea {padding:11px 15px 10px;margin:0;font: 12px Arial, Helvetica, sans-serif;color:#b3b3b3;background: #fff;outline:none;
-border:1px solid #dddde0;width:314px;border-radius:2px;}
+.cleanform input, .cleanform textarea, .cleanform select {padding:11px 15px 10px;margin:0;font: 12px Arial, Helvetica, sans-serif;background: #fff;outline:none;
+border:1px solid #dddde0;width:314px;border-radius:8px;}
+.cleanform select{width:346px;}
 .cleanform .area .error {float:none;}
 .cleanform textarea {width:548px;height:207px;resize:none;overflow:auto;}
 .buttons-wrapper{text-align:right; position:relative;}
-.buttons-wrapper a {cursor:pointer;}
-.buttons-wrapper a[data-type="reset"]{margin-right:15px;}
-
+.cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;font-size:14px;padding:11px 15px 10px;cursor:pointer;background-color: #52C7F5;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;-webkit-transition:all 0.2s ease;-moz-transition:all 0.2s ease;-o-transition:all 0.2s ease;transition:all 0.2s ease;}
+.cleanform button:hover{background:#178AB6;}
 @media only screen and (max-width:480px){/* Smartphone */.header{margin-bottom:0}
+body{min-width:360px;}
 .logo{display:block;float:none;text-align:center}
 .menu_main{width:100%;text-align:center;float:none;padding:0;margin:1em 0 0 0}
 .menu_main a{display:inline-block;padding:7px}
