@@ -43,7 +43,7 @@ public class AuthenticationControllerTest extends BaseMvcTestCase
 	 * @throws Exception
 	 */
 	@Test
-	public void testProcessLogin() throws Exception
+	public void testProcessLogin_1() throws Exception
 	{
 		ResultActions resultActions = mockMvc.perform(post("/admin/login"));
 
@@ -63,6 +63,24 @@ public class AuthenticationControllerTest extends BaseMvcTestCase
 		assertNotNull(loginDTO.getErrors().get("email"));
 		assertNotNull(loginDTO.getErrors().get("password"));
 		assertEquals("Email Required!", loginDTO.getErrors().get("email"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.AuthenticationController#processLogin(org.sourcetree.interview.dto.LoginDTO, org.springframework.ui.Model)}
+	 * . testing successful login strategy.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testProcessLogin_2() throws Exception
+	{
+		ResultActions resultActions = mockMvc.perform(post("/admin/login")
+				.param("email", "admin@faqmasters.com").param("password",
+						"password"));
+
+		resultActions.andExpect(status().isOk()).andExpect(
+				forwardedUrl("/WEB-INF/page/admin/console.jsp"));
 	}
 
 	/**

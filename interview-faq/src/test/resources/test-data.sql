@@ -1,1 +1,1 @@
-INSERT INTO user (id, version, deleted, created_date, modified_date, name, email, password, role) VALUES  (1, 0, 0, '2012-06-01 16:02:49', NULL, 'Administrator', 'admin@faqmasters.com', '611df2b75eecf9996a0a710b313553ac1d870e912efbd0672e3b5f81a2566bcd', 'ADMIN');
+INSERT INTO user (id, version, deleted, created_date, modified_date, name, email, password, role) VALUES  (1, 0, 0, '2012-06-01 16:02:49', NULL, 'Administrator', 'admin@faqmasters.com', '6f87c6a32d765bbfb7113732e046a71d9537cbea3cd2c145c5cf08c95997b88b', 'ADMIN');
