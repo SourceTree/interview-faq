@@ -7,11 +7,14 @@
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
 <div class="col_12">&nbsp;</div>
 <div class="col_75">
-	<div class="logo">The great Logo</div>
+	<div class="logo" style="border: 1px solid;">The great Logo</div>
+	
+	<div class="clearfix"></div>
 	<nav class="menu_main">
 		<div id="responsive_menu">Menu</div>
 		<ul class="sf-menu responsive-menu sf-js-enabled">
-			<li class="first-button"><a href="#about">About</a></li>
+			<li class="first-button"><a href="<c:url value="/"/>">Home</a></li>
+			<li><a href="#about">About Us</a></li>
 			<li class="last-button"><a href="#contact">Contact Us</a></li>
 			
 			<%--Sample code for sub menu 
@@ -23,7 +26,6 @@
 		</ul>
 		<div class="clearfix"></div>
 	</nav>
-	<div class="clearfix"></div>
 </div>
 <div class="col_12">&nbsp;</div>
 <div class="clearfix"></div>
