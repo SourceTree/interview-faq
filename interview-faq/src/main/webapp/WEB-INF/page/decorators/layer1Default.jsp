@@ -36,6 +36,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <%-- <script src="<c:url value="/static/scripts/jquery/1.7.1/jquery.min.js"/>"
 	type="text/javascript"></script>--%>
+<script src="<c:url value="/static/scripts/jquery/superfish.js"/>"
+	type="text/javascript"></script>
 <decorator:head />
 <meta name="author" content="Source Tree" />
 <meta content="index, follow" name="robots" />
@@ -80,6 +82,67 @@
 				alert("Illegal character(s) found within the request. To protect the server against from any illegal activity, the request has been rejected.");
 			}
 		}
+		
+		$(function(){
+			// IPad/IPhone
+				var viewportmeta = document.querySelector && document.querySelector('meta[name="viewport"]'),
+				ua = navigator.userAgent,
+
+				gestureStart = function () {viewportmeta.content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";},
+
+				scaleFix = function () {
+					if (viewportmeta && /iPhone|iPad/.test(ua) && !/Opera Mini/.test(ua)) {
+						viewportmeta.content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+						document.addEventListener("gesturestart", gestureStart, false);
+					}
+				};
+				
+				scaleFix();
+				// Menu Android
+				var userag = navigator.userAgent.toLowerCase();
+				var isAndroid = userag.indexOf("android") > -1; 
+				if(isAndroid) {
+					$('.sf-menu').responsiveMenu({autoArrows:true});
+				}
+			});
+		
+		(function($) {
+			$.fn.responsiveMenu = function(options) {
+				var defaults = {autoArrows: false}
+				var options = $.extend(defaults, options);
+				return this.each(function() {
+					var $this = $(this);
+					var $window = $(window);
+					var setClass = function() {
+						if ($window.width() > 480) {$this.addClass('dropdown').removeClass('accordion').find('li:has(ul)').removeClass('accorChild');}
+						else {$this.addClass('accordion').find('li:has(ul)').addClass('accorChild').parent().removeClass('dropdown');}
+					}
+					$window.resize(function() {
+						setClass();
+						$this.find('ul').css('display', 'none');
+					});
+					setClass();
+					$this
+						.addClass('responsive-menu')
+						.find('li.current a')
+						.live('click', function(e) {
+							var $a = $(this);
+							var container = $a.next('ul,div');
+							if ($this.hasClass('accordion') && container.length > 0) {
+								container.slideToggle();
+								return false;
+							}
+						})
+						.stop()
+						.siblings('ul').parent('li').addClass('hasChild');
+					if (options.autoArrows) {
+						$('.hasChild > a', $this)
+						.find('strong').append('<span class="arrow">&nbsp;</span>');
+					}
+				});
+			}
+		})(jQuery);
+		
 	</script>
 </body>
 </html>

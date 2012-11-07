@@ -45,8 +45,18 @@
 									<span class="warning"><c:out
 											value="${login.errors['password']}" /></span>
 								</c:if></p>
-
-							<p><label for="submit"></label>
+							
+							<p><label id="label_password" for="select_chioce"><s:message
+										code="loginForm.password" /><span class="required">*</span></label> 
+								<select id="select_choice" name="select_chioce">
+									<option value="123">Value1</option>
+									<option value="2">Value 2</option>
+								</select>
+								<c:if test="${not empty login && not empty login.errors}">
+									<span class="warning"><c:out
+											value="${login.errors['password']}" /></span>
+								</c:if></p>
+							<p>
 								<button type="submit" id="btnSubmit" name="btnSubmit">
 									<s:message code="loginForm.btn.login" />
 								</button>
