@@ -31,6 +31,14 @@ public interface QuestionService
 	void create(QuestionDTO questionDTO);
 
 	/**
+	 * Update Question. if a null value is found for id of Question DTO, it
+	 * thorws invalid argument exception
+	 * 
+	 * @param questionDTO
+	 */
+	void update(QuestionDTO questionDTO);
+
+	/**
 	 * Update Question
 	 * 
 	 * @param questionDTO

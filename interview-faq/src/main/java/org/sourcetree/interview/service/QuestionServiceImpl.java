@@ -47,9 +47,8 @@ public class QuestionServiceImpl implements QuestionService
 	public void create(QuestionDTO questionDTO)
 	{
 		Question question = new Question();
-		question.setQuestion(questionDTO.getQuestion());
-		question.setCategories(processCategoryDto(questionDTO.getCategoryDTOs()));
-		question.setAnswer(questionDTO.getAnswer());
+
+		copyDTOtoEntity(questionDTO, question);
 
 		questionDAO.save(question);
 
@@ -60,20 +59,31 @@ public class QuestionServiceImpl implements QuestionService
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void update(QuestionDTO questionDTO, Long questionId)
+	public void update(QuestionDTO questionDTO)
 	{
-		Question question = findQuestionById(questionId);
-		if (question != null)
+		if (questionDTO.getId() != null)
 		{
-			question.setQuestion(questionDTO.getQuestion());
-
-			question.setCategories(processCategoryDto(questionDTO
-					.getCategoryDTOs()));
-			question.setAnswer(questionDTO.getAnswer());
-
-			questionDAO.update(question);
+			Question question = findQuestionById(questionDTO.getId());
+			if (question != null)
+			{
+				copyDTOtoEntity(questionDTO, question);
+				questionDAO.update(question);
+			}
+			return;
 		}
 
+		throw new IllegalArgumentException("Invalid ID for the Question.");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Transactional(readOnly = false)
+	public void update(QuestionDTO questionDTO, Long questionId)
+	{
+		questionDTO.setId(questionId);
+		update(questionDTO);
 	}
 
 	/**
@@ -110,9 +120,9 @@ public class QuestionServiceImpl implements QuestionService
 	 * @param categoryDTOs
 	 * @return category list
 	 */
-	private List<Category> processCategoryDto(List<CategoryDTO> categoryDTOs)
+	private List<Category> processCategoryDto(
+			final List<CategoryDTO> categoryDTOs)
 	{
-
 		if (CoreUtil.isEmpty(categoryDTOs))
 		{
 			List<Category> categories = new ArrayList<Category>();
@@ -126,4 +136,24 @@ public class QuestionServiceImpl implements QuestionService
 		return null;
 	}
 
+	/**
+	 * copies Question DTO data into Question entity
+	 * 
+	 * @param questionDTO
+	 *            Question DTO. cannot be empty
+	 * @param question
+	 *            Question entity. cannot be empty
+	 */
+	private void copyDTOtoEntity(final QuestionDTO questionDTO,
+			final Question question)
+	{
+		if (question != null && questionDTO != null)
+		{
+			question.setQuestion(questionDTO.getQuestion());
+
+			question.setCategories(processCategoryDto(questionDTO
+					.getCategoryDTOs()));
+			question.setAnswer(questionDTO.getAnswer());
+		}
+	}
 }
