@@ -33,7 +33,7 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 	private static final Map<String, String> CATEGORY_ALL = new HashMap<String, String>();
 	static
 	{
-		CATEGORY_ALL.put("name", "category.name");
+		CATEGORY_ALL.put("categoryName", "category.categoryName");
 		CATEGORY_ALL.put("id", "category.id");
 	}
 
