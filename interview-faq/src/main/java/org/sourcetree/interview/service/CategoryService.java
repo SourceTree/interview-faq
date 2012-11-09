@@ -70,4 +70,10 @@ public interface CategoryService
 	 */
 	boolean categoryNameExists(String categoryName);
 
+	/**
+	 * 
+	 * @return List of category DTO
+	 */
+	List<CategoryDTO> findAllCategories();
+
 }

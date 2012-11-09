@@ -10,11 +10,16 @@
  */
 package org.sourcetree.interview.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dao.QuestionDAO;
+import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.QuestionDTO;
+import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.entity.Question;
+import org.sourcetree.interview.support.CoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +36,9 @@ public class QuestionServiceImpl implements QuestionService
 	@Autowired
 	private QuestionDAO questionDAO;
 
+	@Autowired
+	private CategoryDAO categoryDAO;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -40,7 +48,8 @@ public class QuestionServiceImpl implements QuestionService
 	{
 		Question question = new Question();
 		question.setQuestion(questionDTO.getQuestion());
-		question.setCategories(questionDTO.getCategories());
+		question.setCategories(processCategoryDto(questionDTO.getCategoryDTOs()));
+		question.setAnswer(questionDTO.getAnswer());
 
 		questionDAO.save(question);
 
@@ -57,7 +66,10 @@ public class QuestionServiceImpl implements QuestionService
 		if (question != null)
 		{
 			question.setQuestion(questionDTO.getQuestion());
-			question.setCategories(questionDTO.getCategories());
+
+			question.setCategories(processCategoryDto(questionDTO
+					.getCategoryDTOs()));
+			question.setAnswer(questionDTO.getAnswer());
 
 			questionDAO.update(question);
 		}
@@ -90,6 +102,28 @@ public class QuestionServiceImpl implements QuestionService
 	public boolean deleteQuestionById(Long questionId)
 	{
 		return questionDAO.deleteById(questionId);
+	}
+
+	/**
+	 * To Convert from DTO list to Entity list
+	 * 
+	 * @param categoryDTOs
+	 * @return category list
+	 */
+	private List<Category> processCategoryDto(List<CategoryDTO> categoryDTOs)
+	{
+
+		if (CoreUtil.isEmpty(categoryDTOs))
+		{
+			List<Category> categories = new ArrayList<Category>();
+			for (CategoryDTO categoryDto : categoryDTOs)
+			{
+				Category category = categoryDAO.find(categoryDto.getId());
+				categories.add(category);
+			}
+			return categories;
+		}
+		return null;
 	}
 
 }

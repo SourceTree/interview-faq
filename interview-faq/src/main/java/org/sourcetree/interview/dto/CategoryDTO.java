@@ -15,7 +15,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.sourcetree.interview.entity.Question;
 
 /**
  * @author Chalam Pavuluri
@@ -25,12 +24,14 @@ public class CategoryDTO extends BaseDTO
 {
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+
 	@NotEmpty(message = "categoryName.null")
 	private String categoryName;
 
 	private String categoryDescription;
 
-	private List<Question> questions;
+	private List<QuestionDTO> questionDtos;
 
 	/**
 	 * @return the categoryName
@@ -67,20 +68,37 @@ public class CategoryDTO extends BaseDTO
 	}
 
 	/**
-	 * @return the questions
+	 * @return the questionDtos
 	 */
-	public List<Question> getQuestions()
+	public List<QuestionDTO> getQuestionDtos()
 	{
-		return questions;
+		return questionDtos;
 	}
 
 	/**
-	 * @param questions
-	 *            the questions to set
+	 * @param questionDtos
+	 *            the questionDtos to set
 	 */
-	public void setQuestions(List<Question> questions)
+	public void setQuestionDtos(List<QuestionDTO> questionDtos)
 	{
-		this.questions = questions;
+		this.questionDtos = questionDtos;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 
 }

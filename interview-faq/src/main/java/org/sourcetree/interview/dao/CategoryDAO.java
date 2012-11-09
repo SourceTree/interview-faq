@@ -12,6 +12,7 @@ package org.sourcetree.interview.dao;
 
 import java.util.List;
 
+import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.entity.Category;
 
 /**
@@ -30,4 +31,11 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	 * @return
 	 */
 	List<Category> getCategoriesByQuestionId(Long questionId);
+
+	/**
+	 * Retrieve all Non- Deleted categories
+	 * 
+	 * @return Category DTO List
+	 */
+	List<CategoryDTO> getAllCategoryDTOs();
 }

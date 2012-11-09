@@ -42,7 +42,6 @@ public class CategoryServiceImpl implements CategoryService
 		Category category = new Category();
 		category.setCategoryName(catergoryDTO.getCategoryName());
 		category.setCategoryDescription(catergoryDTO.getCategoryDescription());
-		category.setQuestions(catergoryDTO.getQuestions());
 		category.setCreatedDate(new Date());
 		categoryDAO.save(category);
 
@@ -61,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService
 			category.setCategoryName(catergoryDTO.getCategoryName());
 			category.setCategoryDescription(catergoryDTO
 					.getCategoryDescription());
-			category.setQuestions(catergoryDTO.getQuestions());
 			categoryDAO.update(category);
 
 		}
@@ -104,4 +102,15 @@ public class CategoryServiceImpl implements CategoryService
 	{
 		return categoryDAO.existsByParameter("categoryName", categoryName);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CategoryDTO> findAllCategories()
+	{
+
+		return categoryDAO.getAllCategoryDTOs();
+	}
+
 }

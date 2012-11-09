@@ -15,7 +15,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.sourcetree.interview.entity.Category;
 
 /**
  * @author Chalam Pavuluri
@@ -25,10 +24,19 @@ public class QuestionDTO extends BaseDTO
 {
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+
 	@NotEmpty(message = "question.null")
 	private String question;
 
-	private List<Category> categories;
+	private List<CategoryDTO> categoryDTOs;
+
+	@NotEmpty(message = "answer.null")
+	private String answer;
+
+	private String categories[];
+
+	private Long ids[];
 
 	/**
 	 * @return the question
@@ -48,9 +56,60 @@ public class QuestionDTO extends BaseDTO
 	}
 
 	/**
+	 * @return the id
+	 */
+	public Long getId()
+	{
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	/**
+	 * @return the categoryDTOs
+	 */
+	public List<CategoryDTO> getCategoryDTOs()
+	{
+		return categoryDTOs;
+	}
+
+	/**
+	 * @param categoryDTOs
+	 *            the categoryDTOs to set
+	 */
+	public void setCategoryDTOs(List<CategoryDTO> categoryDTOs)
+	{
+		this.categoryDTOs = categoryDTOs;
+	}
+
+	/**
+	 * @return the answer
+	 */
+	public String getAnswer()
+	{
+		return answer;
+	}
+
+	/**
+	 * @param answer
+	 *            the answer to set
+	 */
+	public void setAnswer(String answer)
+	{
+		this.answer = answer;
+	}
+
+	/**
 	 * @return the categories
 	 */
-	public List<Category> getCategories()
+	public String[] getCategories()
 	{
 		return categories;
 	}
@@ -59,9 +118,26 @@ public class QuestionDTO extends BaseDTO
 	 * @param categories
 	 *            the categories to set
 	 */
-	public void setCategories(List<Category> categories)
+	public void setCategories(String[] categories)
 	{
 		this.categories = categories;
+	}
+
+	/**
+	 * @return the ids
+	 */
+	public Long[] getIds()
+	{
+		return ids;
+	}
+
+	/**
+	 * @param ids
+	 *            the ids to set
+	 */
+	public void setIds(Long[] ids)
+	{
+		this.ids = ids;
 	}
 
 }

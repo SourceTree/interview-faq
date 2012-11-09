@@ -43,6 +43,9 @@ public class Question extends AbstractEntity
 	@Column(name = "question", length = 200)
 	private String question;
 
+	@Column(name = "answer", length = 300)
+	private String answer;
+
 	@ManyToMany
 	@JoinTable(name = "CATEGORY_QUESTION", joinColumns = @JoinColumn(
 			name = "question_id"), inverseJoinColumns = @JoinColumn(
@@ -98,6 +101,23 @@ public class Question extends AbstractEntity
 	public void setQuestion(String question)
 	{
 		this.question = question;
+	}
+
+	/**
+	 * @return the answer
+	 */
+	public String getAnswer()
+	{
+		return answer;
+	}
+
+	/**
+	 * @param answer
+	 *            the answer to set
+	 */
+	public void setAnswer(String answer)
+	{
+		this.answer = answer;
 	}
 
 }
