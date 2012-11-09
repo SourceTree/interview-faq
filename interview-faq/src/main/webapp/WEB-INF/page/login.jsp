@@ -29,18 +29,16 @@
 						<input name="clientType" id="clientType" type="hidden"
 							value="internal">
 						<p>
-							<label id="label_email" for="email"><s:message
-										code="loginForm.email" /><span class="required">*</span></label> <input
-								type="text" id="email" maxlength="220" name="email"
-								value="<c:if test="${not empty login}"><c:out value="${login.email}"/></c:if>" />
+							<input type="text" id="email" maxlength="220" name="email"
+								value="<c:if test="${not empty login}"><c:out value="${login.email}"/></c:if>" placeholder="<s:message
+										code="loginForm.email" />"/>
 								<c:if test="${not empty login && not empty login.errors}">
 									<span class="warning"><c:out
 											value="${login.errors['email']}" /></span>
 								</c:if></p>
 
-							<p><label id="label_password" for="password"><s:message
-										code="loginForm.password" /><span class="required">*</span></label> <input
-								type="password" id="password" maxlength="80" name="password" />
+							<p><input type="password" id="password" maxlength="80" name="password" placeholder="<s:message
+										code="loginForm.password" />"/>
 								<c:if test="${not empty login && not empty login.errors}">
 									<span class="warning"><c:out
 											value="${login.errors['password']}" /></span>

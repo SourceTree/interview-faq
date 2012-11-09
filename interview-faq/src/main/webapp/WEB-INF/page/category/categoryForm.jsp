@@ -16,12 +16,12 @@
 	<form id="categoryForm" name="categoryForm" method="post" class="cleanform" action="<c:url value="/category/new"/>">
 		<h2><s:message code="categoryForm.title"/></h2>
 		<input name="clientType" id="clientType" type="hidden" value="internal">
-		<p><label id="label_categoryName" for="categoryName"><s:message code="categoryForm.name"/><span class="required">*</span></label>
-		<input type="text" id="categoryName" maxlength="80" name="categoryName"/>
+		<p>
+		<input type="text" id="categoryName" maxlength="80" name="categoryName" title="<s:message code="categoryForm.name"/>" placeholder="<s:message code="categoryForm.name"/>"/>
 		<span id="error_categoryName"></span></p>
 		
-		<p><label id="label_categoryDescription" for="categoryDescription"><s:message code="categoryForm.description"/></label>
-		<input type="text" id="categoryDescription" maxlength="150" name="categoryDescription"/>
+		<p>
+		<input type="text" id="categoryDescription" maxlength="150" name="categoryDescription" placeholder="<s:message code="categoryForm.description"/>" title="<s:message code="categoryForm.description"/>"/>
 		<span id="error_categoryDescription"></span></p>
 		
 		<p><label for="submit"></label>

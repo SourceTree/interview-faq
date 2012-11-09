@@ -16,20 +16,20 @@
 	<form id="regForm" name="regForm" method="post" class="cleanform" action="<c:url value="/register/new"/>">
 		<h2><s:message code="registerForm.title"/></h2>
 		<input name="clientType" id="clientType" type="hidden" value="internal">
-		<p><label id="label_name" for="name"><s:message code="registerForm.fullname"/><span class="required">*</span></label>
-		<input type="text" id="name" maxlength="80" name="name" title="<s:message code="registerForm.fullname"/>"/>
+		<p>
+		<input type="text" id="name" maxlength="80" name="name" title="<s:message code="registerForm.fullname"/>" placeholder="<s:message code="registerForm.fullname"/>"/>
 		<span id="error_name"></span></p>
 		
-		<p><label id="label_email" for="email"><s:message code="registerForm.email"/><span class="required">*</span></label>
-		<input type="text" id="email" maxlength="220" name="emails" title="<s:message code="registerForm.email"/>"/>
+		<p>
+		<input type="text" id="email" maxlength="220" name="email" title="<s:message code="registerForm.email"/>" placeholder="<s:message code="registerForm.email"/>"/>
 		<span id="error_email"></span></p>
 		
-		<p><label id="label_password" for="password"><s:message code="registerForm.password"/><span class="required">*</span></label>
-		<input type="password" id="password" maxlength="80" name="password"/>
+		<p>
+		<input type="password" id="password" maxlength="80" name="password" placeholder="<s:message code="registerForm.password"/>" title="<s:message code="registerForm.password"/>"/>
 		<span id="error_password"></span></p>
 		
-		<p><label id="label_confirmPassword" for="confirmPassword"><s:message code="registerForm.confirm.password"/><span class="required">*</span></label>
-		<input type="password" id="confirmPassword" name="confirmPassword" maxlength="80"/>
+		<p>		
+		<input type="password" id="confirmPassword" name="confirmPassword" maxlength="80" placeholder="<s:message code="registerForm.confirm.password"/>" title="<s:message code="registerForm.confirm.password"/>"/>
 		<span id="error_confirmPassword"></span></p>
 		
 		<p><label for="submit"></label>
