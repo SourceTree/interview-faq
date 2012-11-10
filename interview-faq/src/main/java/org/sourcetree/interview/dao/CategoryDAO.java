@@ -13,6 +13,7 @@ package org.sourcetree.interview.dao;
 import java.util.List;
 
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.entity.Category;
 
 /**
@@ -35,9 +36,12 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	/**
 	 * Retrieve all Non- Deleted categories
 	 * 
+	 * @param listProp
+	 *            Listing property object. can be null.
+	 * 
 	 * @return Category DTO List
 	 */
-	List<CategoryDTO> getAllCategoryDTOs();
+	List<CategoryDTO> getAllCategoryDTOs(ListProp listProp);
 
 	/**
 	 * Retrieves the category as DTO object with ignore case.

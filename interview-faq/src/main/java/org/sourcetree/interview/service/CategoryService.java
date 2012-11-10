@@ -13,6 +13,7 @@ package org.sourcetree.interview.service;
 import java.util.List;
 
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.entity.Category;
 
 /**
@@ -75,6 +76,13 @@ public interface CategoryService
 	 * @return List of category DTO
 	 */
 	List<CategoryDTO> findAllCategories();
+
+	/**
+	 * 
+	 * @param listProp
+	 * @return List of category DTO
+	 */
+	List<CategoryDTO> findAllCategories(ListProp listProp);
 
 	/**
 	 * get category as a DTO object based on name

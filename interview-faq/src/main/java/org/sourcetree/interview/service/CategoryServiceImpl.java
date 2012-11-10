@@ -16,6 +16,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,7 +119,16 @@ public class CategoryServiceImpl implements CategoryService
 	public List<CategoryDTO> findAllCategories()
 	{
 
-		return categoryDAO.getAllCategoryDTOs();
+		return findAllCategories(null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CategoryDTO> findAllCategories(ListProp listProp)
+	{
+		return categoryDAO.getAllCategoryDTOs(listProp);
 	}
 
 	/**

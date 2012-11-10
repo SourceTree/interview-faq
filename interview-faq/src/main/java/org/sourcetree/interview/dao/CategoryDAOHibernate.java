@@ -18,6 +18,7 @@ import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.sourcetree.interview.AppConstants;
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.support.HibernateUtil;
 import org.springframework.stereotype.Repository;
@@ -71,14 +72,14 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 	 */
 	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
-	public List<CategoryDTO> getAllCategoryDTOs()
+	public List<CategoryDTO> getAllCategoryDTOs(ListProp listProp)
 	{
 		StringBuilder queryStr = new StringBuilder(" from ");
 		queryStr.append(getEntityClass().getName()).append(" as category");
 		queryStr.append(" where category.deleted=").append(Boolean.FALSE);
 
 		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
-				null, CATEGORY_DTO_ALL, queryStr.toString(), null, null,
+				null, CATEGORY_DTO_ALL, queryStr.toString(), null, listProp,
 				CategoryDTO.class);
 	}
 
