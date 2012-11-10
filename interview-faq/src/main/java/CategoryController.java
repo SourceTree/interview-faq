@@ -1,5 +1,3 @@
-package org.sourcetree.interview.controller;
-
 /*
  * Copyright © 2012, Source Tree, All Rights Reserved
  * 
@@ -10,6 +8,7 @@ package org.sourcetree.interview.controller;
  * Nov 6, 2012		Venkaiah Chowdary Koneru	Created
  * *************************************************************
  */
+
 
 import java.util.Map;
 
@@ -66,6 +65,7 @@ public class CategoryController extends BaseController
 	public String categoryDetailsForm(SessionAttributes sessionAttributes,
 			@PathVariable String name, Model model)
 	{
+		System.out.println("Name" + name);
 		model.addAttribute("category",
 				categoryService.findCategoryByParam(name));
 		if (sessionAttributes.getRole() == UserRoleEnum.ADMIN)
