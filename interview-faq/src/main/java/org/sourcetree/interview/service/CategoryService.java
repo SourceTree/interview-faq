@@ -68,12 +68,20 @@ public interface CategoryService
 	 *            categoryName to check
 	 * @return true if a record with same email exists
 	 */
-	boolean categoryNameExists(String categoryName);
+	boolean isCategoryExists(String categoryName);
 
 	/**
 	 * 
 	 * @return List of category DTO
 	 */
 	List<CategoryDTO> findAllCategories();
+
+	/**
+	 * get category based given param
+	 * 
+	 * @param param
+	 * @return
+	 */
+	CategoryDTO findCategoryByParam(String param);
 
 }

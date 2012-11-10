@@ -17,11 +17,15 @@ import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
+import org.sourcetree.interview.support.SessionAttributes;
+import org.sourcetree.interview.support.annotation.InjectSessionAttributes;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +54,22 @@ public class CategoryController extends BaseController
 		return "category/categoryForm";
 	}
 
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	@InjectSessionAttributes
+	public String categoryDetailsForm(SessionAttributes sessionAttributes,
+			@PathVariable String name, Model model)
+	{
+		System.out.println("Name" + name);
+		model.addAttribute("category",
+				categoryService.findCategoryByParam(name));
+		if (sessionAttributes.getRole() == UserRoleEnum.ADMIN)
+		{
+			return "category/categoryEdit";
+		}
+
+		return "category/categoryDetails";
+	}
+
 	/**
 	 * to handle new partner request. this method will be invoked in the event
 	 * of form submissions from the client which will contains the
@@ -60,7 +80,6 @@ public class CategoryController extends BaseController
 	 * @return <code>{@linkplain categoryDTO}</code> - response will be
 	 *         Serialised to either XML/JSON/text base on the request headers
 	 */
-
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
@@ -74,7 +93,7 @@ public class CategoryController extends BaseController
 
 		if ((!errors.isEmpty() && !errors.containsKey("categoryName") || errors
 				.isEmpty())
-				&& categoryService.categoryNameExists(categoryDTO
+				&& categoryService.isCategoryExists(categoryDTO
 						.getCategoryName().trim()))
 		{
 			errors.put("categoryName",
@@ -93,4 +112,5 @@ public class CategoryController extends BaseController
 
 		return response;
 	}
+
 }

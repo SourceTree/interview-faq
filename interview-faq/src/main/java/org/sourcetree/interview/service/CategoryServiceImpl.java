@@ -98,7 +98,7 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean categoryNameExists(String categoryName)
+	public boolean isCategoryExists(String categoryName)
 	{
 		return categoryDAO.existsByParameter("categoryName", categoryName);
 	}
@@ -111,6 +111,15 @@ public class CategoryServiceImpl implements CategoryService
 	{
 
 		return categoryDAO.getAllCategoryDTOs();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public CategoryDTO findCategoryByParam(String param)
+	{
+		return null;
 	}
 
 }
