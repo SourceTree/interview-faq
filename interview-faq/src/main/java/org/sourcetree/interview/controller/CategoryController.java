@@ -54,6 +54,12 @@ public class CategoryController extends BaseController
 		return "category/categoryForm";
 	}
 
+	/**
+	 * @param sessionAttributes
+	 * @param name
+	 * @param model
+	 * @return category page
+	 */
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
 	@InjectSessionAttributes
 	public String categoryDetailsForm(SessionAttributes sessionAttributes,
