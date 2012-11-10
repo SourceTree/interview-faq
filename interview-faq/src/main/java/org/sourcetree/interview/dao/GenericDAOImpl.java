@@ -15,11 +15,16 @@ import static org.sourcetree.interview.AppConstants.SUPPRESS_WARNINGS_UNCHECKED;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.dialect.Dialect;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.sourcetree.interview.entity.AbstractEntity;
+import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -40,6 +45,17 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 {
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	private Dialect dialect;
+
+	/**
+	 * executed by spring after properties set to set the dialect.
+	 */
+	@PostConstruct
+	public void afterConstruct()
+	{
+		dialect = ((SessionFactoryImplementor) sessionFactory).getDialect();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -90,7 +106,22 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 	@Override
 	public T findByParameter(String key, Object value)
 	{
-		return findByParameter(key, value, false);
+		return findByParameter(key, value, false, false);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public T findByParameter(String key, Object value,
+			QueryCriteriaTypeEnum queryCriteriaTypeEnum)
+	{
+		if (queryCriteriaTypeEnum == QueryCriteriaTypeEnum.DELETED)
+		{
+			return findByParameter(key, value, true, false);
+		}
+
+		return findByParameter(key, value, false, true);
 	}
 
 	/**
@@ -98,13 +129,25 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 	 */
 	@SuppressWarnings(SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
-	public T findByParameter(String key, Object value, boolean retreiveDeleted)
+	public T findByParameter(String key, Object value, boolean retreiveDeleted,
+			boolean ignoreCase)
 	{
 		if (!StringUtils.isBlank(key) && value != null)
 		{
 			StringBuilder queryStr = new StringBuilder("from ");
 			queryStr.append(getEntityClass().getName()).append(" as _etc_");
-			queryStr.append(" where _etc_.").append(key).append("= :VAL");
+			queryStr.append(" where ");
+
+			if (!ignoreCase)
+			{
+				queryStr.append("_etc_.").append(key).append("= :VAL");
+			}
+			else
+			{
+				queryStr.append(dialect.getLowercaseFunction()).append("(")
+						.append("_etc_.").append(key).append(")");
+				queryStr.append("= :VAL");
+			}
 
 			if (!retreiveDeleted)
 			{
@@ -113,11 +156,19 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 
 			Query query = sessionFactory.getCurrentSession().createQuery(
 					queryStr.toString());
-			query.setParameter("VAL", value);
 
 			if (!retreiveDeleted)
 			{
 				query.setParameter("DELETED", Boolean.FALSE);
+			}
+
+			if (!ignoreCase)
+			{
+				query.setParameter("VAL", value);
+			}
+			else
+			{
+				query.setParameter("VAL", value.toString().toLowerCase());
 			}
 
 			return (T) query.uniqueResult();
@@ -178,7 +229,7 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 	@Override
 	public boolean existsByParameter(String key, String value)
 	{
-		return existsByParameter(key, value, false);
+		return existsByParameter(key, value, false, false);
 	}
 
 	/**
@@ -186,11 +237,26 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 	 */
 	@Override
 	public boolean existsByParameter(String key, String value,
-			boolean excludeDeleted)
+			QueryCriteriaTypeEnum queryCriteriaTypeEnum)
+	{
+		if (queryCriteriaTypeEnum == QueryCriteriaTypeEnum.DELETED)
+		{
+			return existsByParameter(key, value, true, false);
+		}
+
+		return existsByParameter(key, value, false, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean existsByParameter(String key, String value,
+			boolean excludeDeleted, boolean ignoreCase)
 	{
 		if (!StringUtils.isBlank(key) && !StringUtils.isBlank(value))
 		{
-			T entity = findByParameter(key, value, !excludeDeleted);
+			T entity = findByParameter(key, value, !excludeDeleted, ignoreCase);
 
 			if (entity != null)
 			{
@@ -203,9 +269,17 @@ public abstract class GenericDAOImpl<T extends AbstractEntity, ID extends Serial
 	/**
 	 * @return the sessionFactory
 	 */
-	public SessionFactory getSessionFactory()
+	protected SessionFactory getSessionFactory()
 	{
-		return sessionFactory;
+		return this.sessionFactory;
+	}
+
+	/**
+	 * @return the dialect
+	 */
+	protected Dialect getDialect()
+	{
+		return this.dialect;
 	}
 
 	/**

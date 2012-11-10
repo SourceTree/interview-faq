@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.sourcetree.interview.entity.AbstractEntity;
+import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
 
 /**
  * Interface for a Data Access Object that can be used for a single specified
@@ -76,6 +77,7 @@ public interface GenericDAO<T extends AbstractEntity, ID extends Serializable>
 	T find(ID id);
 
 	/**
+	 * Get the entity with the specified value from the datastore.
 	 * 
 	 * @param key
 	 *            entity property to check
@@ -86,6 +88,24 @@ public interface GenericDAO<T extends AbstractEntity, ID extends Serializable>
 	T findByParameter(String key, Object value);
 
 	/**
+	 * Get the entity with the specified value from the datastore. If
+	 * <code>queryCriteriaTypeEnum</code> is IGNORE_CASE then Value must be of
+	 * type String
+	 * 
+	 * @param key
+	 *            entity property to check
+	 * @param value
+	 *            string value of the property to check against
+	 * @param queryCriteriaTypeEnum
+	 *            DELETED = to retrieve deleted, IGNORE_CASE = to retrieve by
+	 *            ignoring case.
+	 * @return entity object for the specified key with value
+	 */
+	T findByParameter(String key, Object value,
+			QueryCriteriaTypeEnum queryCriteriaTypeEnum);
+
+	/**
+	 * Get the entity with the specified value from the datastore.
 	 * 
 	 * @param key
 	 *            entity property to check
@@ -93,9 +113,12 @@ public interface GenericDAO<T extends AbstractEntity, ID extends Serializable>
 	 *            string value of the property to check against
 	 * @param retreiveDeleted
 	 *            to include deleted data from datastore or not
+	 * @param ignoreCase
+	 *            to include ignore case criteria in query
 	 * @return entity object for the specified key with value
 	 */
-	T findByParameter(String key, Object value, boolean retreiveDeleted);
+	T findByParameter(String key, Object value, boolean retreiveDeleted,
+			boolean ignoreCase);
 
 	/**
 	 * Get a list of all the objects of the specified type.
@@ -131,11 +154,29 @@ public interface GenericDAO<T extends AbstractEntity, ID extends Serializable>
 	 * @param key
 	 *            entity property to check
 	 * @param value
-	 *            value of the property to check against
-	 * @param excludeDeleted
-	 *            to include deleted data from datastore or not
+	 *            string value of the property to check against
+	 * @param queryCriteriaTypeEnum
+	 *            DELETED = to exclude deleted, 1 = to check by ignoring case
 	 * @return <code>true</code> if the object is found in the datastore and
 	 *         <code>false</code> if the item is not found.
 	 */
-	boolean existsByParameter(String key, String value, boolean excludeDeleted);
+	boolean existsByParameter(String key, String value,
+			QueryCriteriaTypeEnum queryCriteriaTypeEnum);
+
+	/**
+	 * Checks whether the specified type exists for the passed-in key with value
+	 * 
+	 * @param key
+	 *            entity property to check
+	 * @param value
+	 *            value of the property to check against
+	 * @param excludeDeleted
+	 *            to include deleted data from datastore or not
+	 * @param ignoreCase
+	 *            to check the existence of passed in value by ignore case
+	 * @return <code>true</code> if the object is found in the datastore and
+	 *         <code>false</code> if the item is not found.
+	 */
+	boolean existsByParameter(String key, String value, boolean excludeDeleted,
+			boolean ignoreCase);
 }
