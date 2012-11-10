@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.JDBCException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -55,7 +54,7 @@ public class UtilTestCase
 			lineNo = 0L;
 			reader = new BufferedReader(new FileReader(file));
 
-			for (String sql = reader.readLine(); !StringUtils.isBlank(sql); sql = reader
+			for (String sql = reader.readLine(); sql != null; sql = reader
 					.readLine())
 			{
 				String trimmedSql;
