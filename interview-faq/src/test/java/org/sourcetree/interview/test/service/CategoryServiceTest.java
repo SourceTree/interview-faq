@@ -50,9 +50,9 @@ public class CategoryServiceTest extends BaseTestCase
 	 * .
 	 */
 	@Test
-	public void testCategoryExists1()
+	public void testCategoryExists_1()
 	{
-		String name = "Java";
+		String name = "java";
 
 		Assert.assertTrue(categoryService.isCategoryExists(name));
 	}
@@ -63,7 +63,7 @@ public class CategoryServiceTest extends BaseTestCase
 	 * .
 	 */
 	@Test
-	public void testCategoryExists2()
+	public void testCategoryExists_2()
 	{
 		String name = "AS400";
 
@@ -72,7 +72,7 @@ public class CategoryServiceTest extends BaseTestCase
 
 	/**
 	 * Test method for
-	 * {@link org.sourcetree.interview.service.UserServiceImpl#getUser(java.lang.String)}
+	 * {@link org.sourcetree.interview.service.CategoryServiceImpl#findCategoryById(Long)}
 	 * .
 	 */
 	@Test
@@ -85,5 +85,43 @@ public class CategoryServiceTest extends BaseTestCase
 
 		Assert.assertNotNull(cat);
 		Assert.assertEquals(name, cat.getCategoryName());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.service.CategoryServiceImpl#getCategoryDTOByName(String)}
+	 * .
+	 */
+	@Test
+	public void getCategoryDTOByName_1()
+	{
+		Assert.assertNull(categoryService.getCategoryDTOByName(null));
+		Assert.assertNull(categoryService.getCategoryDTOByName(""));
+		Assert.assertNull(categoryService.getCategoryDTOByName(" "));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.service.CategoryServiceImpl#getCategoryDTOByName(String)}
+	 * .
+	 */
+	@Test
+	public void getCategoryDTOByName_2()
+	{
+		String name = "Java";
+		CategoryDTO categoryDTO = categoryService.getCategoryDTOByName(name);
+
+		Assert.assertNotNull(categoryDTO);
+		Assert.assertEquals(name, categoryDTO.getCategoryName());
+		Assert.assertNotNull(categoryDTO.getId());
+		Assert.assertNotNull(categoryDTO.getCategoryDescription());
+
+		name = "java";
+		categoryDTO = categoryService.getCategoryDTOByName(name);
+
+		Assert.assertNotNull(categoryDTO);
+		Assert.assertEquals("Java", categoryDTO.getCategoryName());
+		Assert.assertNotNull(categoryDTO.getId());
+		Assert.assertNotNull(categoryDTO.getCategoryDescription());
 	}
 }

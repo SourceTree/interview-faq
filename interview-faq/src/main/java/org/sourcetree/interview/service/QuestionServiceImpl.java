@@ -149,7 +149,7 @@ public class QuestionServiceImpl implements QuestionService
 	{
 		if (question != null && questionDTO != null)
 		{
-			question.setQuestion(questionDTO.getQuestion());
+			question.setQuestion(questionDTO.getQuestion().trim());
 
 			question.setCategories(processCategoryDto(questionDTO
 					.getCategoryDTOs()));

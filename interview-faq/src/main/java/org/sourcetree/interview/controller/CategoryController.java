@@ -67,7 +67,7 @@ public class CategoryController extends BaseController
 			@PathVariable String name, Model model)
 	{
 		model.addAttribute("category",
-				categoryService.findCategoryByParam(name));
+				categoryService.getCategoryDTOByName(name));
 		if (sessionAttributes.getRole() == UserRoleEnum.ADMIN)
 		{
 			return "category/categoryEdit";

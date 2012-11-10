@@ -77,11 +77,12 @@ public interface CategoryService
 	List<CategoryDTO> findAllCategories();
 
 	/**
-	 * get category based given param
+	 * get category as a DTO object based on name
 	 * 
-	 * @param param
-	 * @return
+	 * @param name
+	 *            name of the category
+	 * @return category as DTO object
 	 */
-	CategoryDTO findCategoryByParam(String param);
+	CategoryDTO getCategoryDTOByName(String name);
 
 }

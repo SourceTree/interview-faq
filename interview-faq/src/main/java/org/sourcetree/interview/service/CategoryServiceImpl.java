@@ -13,9 +13,11 @@ package org.sourcetree.interview.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.entity.Category;
+import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService
 	public void create(CategoryDTO catergoryDTO)
 	{
 		Category category = new Category();
-		category.setCategoryName(catergoryDTO.getCategoryName());
+		category.setCategoryName(catergoryDTO.getCategoryName().trim());
 		category.setCategoryDescription(catergoryDTO.getCategoryDescription());
 		category.setCreatedDate(new Date());
 		categoryDAO.save(category);
@@ -57,7 +59,8 @@ public class CategoryServiceImpl implements CategoryService
 		Category category = findCategoryById(categoryId);
 		if (category != null)
 		{
-			category.setCategoryName(catergoryDTO.getCategoryName());
+			// TODO: do we need to update name as well ? -- Venky
+			category.setCategoryName(catergoryDTO.getCategoryName().trim());
 			category.setCategoryDescription(catergoryDTO
 					.getCategoryDescription());
 			categoryDAO.update(category);
@@ -100,7 +103,12 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	public boolean isCategoryExists(String categoryName)
 	{
-		return categoryDAO.existsByParameter("categoryName", categoryName);
+		if (!StringUtils.isBlank(categoryName))
+		{
+			return categoryDAO.existsByParameter("categoryName",
+					categoryName.trim(), QueryCriteriaTypeEnum.IGNORE_CASE);
+		}
+		return true;
 	}
 
 	/**
@@ -117,8 +125,12 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public CategoryDTO findCategoryByParam(String param)
+	public CategoryDTO getCategoryDTOByName(String name)
 	{
+		if (!StringUtils.isBlank(name))
+		{
+			return categoryDAO.getCategoryDTOByName(name.trim());
+		}
 		return null;
 	}
 

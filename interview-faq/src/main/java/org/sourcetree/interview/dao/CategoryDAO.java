@@ -38,4 +38,13 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	 * @return Category DTO List
 	 */
 	List<CategoryDTO> getAllCategoryDTOs();
+
+	/**
+	 * Retrieves the category as DTO object with ignore case.
+	 * 
+	 * @param param
+	 *            category name to fetch
+	 * @return Category DTO
+	 */
+	CategoryDTO getCategoryDTOByName(String param);
 }

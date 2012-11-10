@@ -47,7 +47,8 @@ public class UserServiceImpl implements UserService
 		User user = new User();
 
 		user.setEmail(userDTO.getEmail().trim().toLowerCase());
-		user.setPassword(hashPassword(userDTO.getEmail(), userDTO.getPassword()));
+		user.setPassword(hashPassword(userDTO.getEmail().trim(),
+				userDTO.getPassword()));
 		user.setRole(UserRoleEnum.ADMIN);
 		user.setCreatedDate(new Date());
 		user.setName(userDTO.getName());
@@ -61,7 +62,7 @@ public class UserServiceImpl implements UserService
 	@Override
 	public boolean usernameExists(String username)
 	{
-		return userDAO.existsByParameter("email", username);
+		return userDAO.existsByParameter("email", username.trim());
 	}
 
 	/**
@@ -70,7 +71,11 @@ public class UserServiceImpl implements UserService
 	@Override
 	public User getUser(String userName)
 	{
-		return userDAO.findByParameter("email", userName);
+		if (!StringUtils.isBlank(userName))
+		{
+			return userDAO.findByParameter("email", userName.trim());
+		}
+		return null;
 	}
 
 	/**
@@ -86,7 +91,7 @@ public class UserServiceImpl implements UserService
 			return false;
 		}
 
-		if (password.equals(hashPassword(email, requestPassword)))
+		if (password.equals(hashPassword(email.trim(), requestPassword)))
 		{
 			return true;
 		}

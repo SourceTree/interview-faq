@@ -75,7 +75,7 @@ public class CategoryControllerTest extends BaseMvcTestCase
 	@Test
 	public void testFaqForm_3() throws Exception
 	{
-		ResultActions ra = mockMvc.perform(post("/category/new")).andExpect(
+		mockMvc.perform(post("/category/new")).andExpect(
 				status().isUnauthorized());
 	}
 
