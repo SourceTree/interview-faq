@@ -80,6 +80,7 @@
 				<value>org.sourcetree.interview.dto.ResponseDTO</value>
 				<value>org.sourcetree.interview.dto.QuestionDTO</value>
 				<value>org.sourcetree.interview.dto.CategoryDTO</value>
+				<value>org.sourcetree.interview.dto.CategoryListDTO</value>
 			</list>
 		</property>
 	</bean>

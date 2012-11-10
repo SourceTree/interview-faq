@@ -4,4 +4,20 @@ INSERT INTO user (id, created_date, deleted, modified_date, version, name, email
 INSERT INTO category (id, created_date, deleted, modified_date, version, categoryDescription, name) VALUES
 	(1, '2012-11-09 17:52:15', '\0', NULL, 0, 'Java Category', 'Java'),
 	(2, '2012-11-09 17:52:36', '\0', NULL, 0, 'php category', 'PHP'),
-	(3, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for .NET', '.NET');
+	(3, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for .NET', '.NET'),
+	(4, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for C#.NET', 'C#.NET'),
+	(5, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for ASP.NET', 'ASP.NET'),
+	(6, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for AS400', 'AS400'),
+	(7, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for C', 'C'),
+	(8, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for C++', 'C++'),
+	(9, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for ASP', 'SAP'),
+	(10, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for DBMS', 'DBMS'),
+	(11, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for MySQL', 'MySQL'),
+	(12, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for Oracle', 'Oracle'),
+	(13, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for PostgreSQL', 'PostgreSQL'),
+	(14, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for DB2', 'DB2'),
+	(15, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for HTML', 'HTML'),
+	(16, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for JavaScript', 'JavaScript'),
+	(17, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for HTML5', 'HTML5'),
+	(18, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for Flash', 'Flash'),
+	(19, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for ActionScript', 'ActionScript');

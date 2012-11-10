@@ -11,9 +11,12 @@ package org.sourcetree.interview.controller;
  * *************************************************************
  */
 
+import java.util.List;
 import java.util.Map;
 
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.CategoryListDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
@@ -53,6 +56,41 @@ public class CategoryController extends BaseController
 	public String categoryForm()
 	{
 		return "category/categoryForm";
+	}
+
+	/**
+	 * Category Listing page. for first initial page, fetch the first page (10
+	 * records) to display. this will reduce the server round trip.
+	 * 
+	 * @param model
+	 * @return category list page
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String categoryList(Model model)
+	{
+		// Initialize ListProp with first page
+		ListProp listProp = null;
+
+		CategoryListDTO categoryListDTO = getCategoryList(listProp);
+
+		model.addAttribute("categories", categoryListDTO);
+		return "category/categoryList";
+	}
+
+	/**
+	 * Category Listing for ajax call.
+	 * 
+	 * @param page
+	 * @return category list page
+	 */
+	@RequestMapping(value = "/list/{page}", method = RequestMethod.GET)
+	@ResponseBody
+	public CategoryListDTO categoryListAjax(@PathVariable String page)
+	{
+		// Initialize ListProp with first page
+		ListProp listProp = null;
+
+		return getCategoryList(listProp);
 	}
 
 	/**
@@ -119,4 +157,17 @@ public class CategoryController extends BaseController
 		return response;
 	}
 
+	/**
+	 * 
+	 * @param listProp
+	 * @return
+	 */
+	private CategoryListDTO getCategoryList(ListProp listProp)
+	{
+		// Retrieve categories
+		List<CategoryDTO> categoryDTOs = categoryService
+				.findAllCategories(listProp);
+
+		return new CategoryListDTO(categoryDTOs, listProp);
+	}
 }
