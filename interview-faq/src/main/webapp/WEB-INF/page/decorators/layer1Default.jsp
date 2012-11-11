@@ -32,10 +32,10 @@
 	href="<c:url value="/"/><s:theme code='styleSheet'/>" />
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='menuStyleSheet'/>" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<%-- <script src="<c:url value="/static/scripts/jquery/1.7.1/jquery.min.js"/>"
-	type="text/javascript"></script>--%>
+<%--<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>--%>
+ <script src="<c:url value="/static/scripts/jquery/1.7.1/jquery.min.js"/>"
+	type="text/javascript"></script>
 <script src="<c:url value="/static/scripts/jquery/superfish.js"/>"
 	type="text/javascript"></script>
 <decorator:head />
