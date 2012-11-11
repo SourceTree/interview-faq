@@ -3,7 +3,7 @@
 --%><%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" media="screen"
@@ -102,8 +102,9 @@ $(document).ready(function() {
 		});
 	});
 	cachedScript("<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>").done(function(){
-			$(".chzn-select").chosen();
-			<%--$(".chzn-select-deselect").chosen({allow_single_deselect:true});--%>
+		alert("hi");
+		<%--$(".chzn-select").chosen();--%>
+			$(".chzn-select-deselect").chosen({allow_single_deselect:true});
 		});
 	});
 </script>
