@@ -1,3 +1,11 @@
+/*
+**	Venkaiah Chowdary Koneru
+**	jQuery Simple and light weight Infinite Scroll Pagination
+**	11th/Nov/2012
+**	http://koneru.posterous.com/
+**	You may use this script for free, but keep my credits.
+**	Thank you.
+*/
 (function( $ ){
  $.fn.infinitePaging = function(options) {
   	
@@ -33,23 +41,29 @@
 		 if(opts.sortProperty != null){
 			 localUrl = localUrl + '?sort=' + opts.sortProperty + '&order=' + opts.sortOrder;
 		}
+		 
+		 opts.isLoading = true;
+		 
 		 $.ajax({
 			  type: opts.ajaxType,
-			  url: opts.url,
+			  url: localUrl,
 			  data: opts.contentData,
+			  dataType: opts.dataType,
 			  success: function(data){
 				$(obj).append(opts.renderData(data)); 
 				var objectsRendered = $(obj).children('[rel!=loaded]');
 				
 				opts.page = opts.page + 1;
+				opts.isLoading = false;
 				if (opts.afterLoad != null){
 					opts.afterLoad(objectsRendered);
 				} 
 				
 				//Logic to stop paging
-				//$(obj).stopInfinitePaging();
-			  },
-			  dataType: opts.dataType
+				if((data.listProp.endIndex +1) == data.listProp.totalRecords){
+					$(obj).stopInfinitePaging();
+				}
+			  }
 		 });
 	 }
 	 
@@ -61,7 +75,9 @@
 	
 	 $(target).scroll(function(event){
 		if ($(obj).attr('infinitePaging') == 'enabled'){
-	 		$.fn.infinitePaging.loadContent(obj, opts);		
+			if(!opts.isLoading){
+				$.fn.infinitePaging.loadContent(obj, opts);
+			}
 		}
 		else {
 			event.stopPropagation();	
@@ -85,6 +101,7 @@
 		 'dataType': 'json',
 		 'ajaxType':'GET',
 		 'totalPages':null,
-		 'renderData':null
+		 'renderData':null,
+		 'isLoading':false
  };	
 })( jQuery );
