@@ -71,12 +71,11 @@ public class CategoryController extends BaseController
 	public String categoryList(Model model)
 	{
 		// Initialize ListProp with first page
-		ListProp listProp = WebUtil.toJQueryListProp("1", getDefaultPageSize(),
+		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
 				null, null);
 
-		CategoryListDTO categoryListDTO = getCategoryList(listProp);
+		model.addAttribute("categories", getCategoryList(listProp));
 
-		model.addAttribute("categories", categoryListDTO);
 		return "category/categoryList";
 	}
 
@@ -99,8 +98,8 @@ public class CategoryController extends BaseController
 			@RequestParam(value = "sortOrder", required = false) String sortOrder)
 	{
 		// Initialize ListProp with first page
-		ListProp listProp = WebUtil.toJQueryListProp(page,
-				getDefaultPageSize(), null, null);
+		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
+				null, null);
 
 		return getCategoryList(listProp);
 	}
