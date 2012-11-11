@@ -37,6 +37,8 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 	static
 	{
 		CATEGORY_DTO_ALL.put("categoryName", "category.categoryName");
+		CATEGORY_DTO_ALL.put("categoryDescription",
+				"category.categoryDescription");
 		CATEGORY_DTO_ALL.put("id", "category.id");
 	}
 
