@@ -38,7 +38,7 @@ public abstract class BaseController
 	protected static final String LOGIN_FORM_PAGE = "login";
 
 	@Value("#{appProps['pagination.size']}")
-	private Integer defaultPageSize;
+	private int defaultPageSize;
 
 	@Autowired
 	protected MessageSource messageSource;
@@ -117,7 +117,7 @@ public abstract class BaseController
 	/**
 	 * @return the defaultPageSize
 	 */
-	public Integer getDefaultPageSize()
+	public int getDefaultPageSize()
 	{
 		return defaultPageSize;
 	}
