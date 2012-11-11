@@ -10,9 +10,11 @@
 <title>Category</title>
 </head>
 <body>
-	<ul id="" class="infinite_grid">
+	<ul id="infinite_grid" class="infinite_grid">
 		<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-			<li class="infinite_grid_item"></li>
+			<li class="infinite_grid_item">${categoryDTO.categoryName}<br />
+				<span>${categoryDTO.categoryDescription}</span>
+			</li>
 		</c:forEach>
 	</ul>
 	<div class="grid_loading"></div>
@@ -30,11 +32,13 @@
 
 		$(document).ready(function() {
 			$(function() {
-				$('#content').infinitePaging({
+				$('#infinite_grid').infinitePaging({
 					'url' : '<c:url value="/category/list"/>', 
-					'heightOffset' : 120,
+					'heightOffset' : 100,
 					'beforeLoad' : showLoader,
-					'renderData': renderData(data),
+					'renderData': function (data){
+						return renderData(data);
+					},
 					'afterLoad' : function(elementsLoaded) { // after loading content, you can use this function to animate your new elements
 						hideLoader();
 						$(elementsLoaded).fadeInWithDelay();
@@ -52,12 +56,18 @@
 					});
 				};
 				
-				$.fn.renderData = function(data) {
-					var htmlStr = ['<li style="opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);>'];
+				renderData = function(data) {
+					var htmlStr = [];
+					$.each(data.categoryDTOs, function(i, categoryDTO){
+						htmlStr.push('<li style="opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);>');
+						htmlStr.push(categoryDTO.categoryName);
+						htmlStr.push('<br /><span>');
+						htmlStr.push(categoryDTO.categoryDescription);
+						htmlStr.push('</span>');
+						htmlStr.push('</li>');	
+					});
 					
-					htmlStr.push('</li>');
-					
-					return htmlStr.join();
+					return htmlStr.join('');
 				};
 			});
 		});

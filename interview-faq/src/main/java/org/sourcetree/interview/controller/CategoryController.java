@@ -22,6 +22,7 @@ import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.support.SessionAttributes;
+import org.sourcetree.interview.support.WebUtil;
 import org.sourcetree.interview.support.annotation.InjectSessionAttributes;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -69,7 +71,8 @@ public class CategoryController extends BaseController
 	public String categoryList(Model model)
 	{
 		// Initialize ListProp with first page
-		ListProp listProp = null;
+		ListProp listProp = WebUtil.toJQueryListProp("1", getDefaultPageSize(),
+				null, null);
 
 		CategoryListDTO categoryListDTO = getCategoryList(listProp);
 
@@ -81,14 +84,23 @@ public class CategoryController extends BaseController
 	 * Category Listing for ajax call.
 	 * 
 	 * @param page
+	 *            - page number
+	 * @param sortProperty
+	 *            - sort property if any (can be null or empty)
+	 * @param sortOrder
+	 *            - sort order (ASC or DESC)
 	 * @return category list page
 	 */
 	@RequestMapping(value = "/list/{page}", method = RequestMethod.GET)
 	@ResponseBody
-	public CategoryListDTO categoryListAjax(@PathVariable String page)
+	public CategoryListDTO categoryListAjax(
+			@PathVariable(value = "page") String page,
+			@RequestParam(value = "sortProperty", required = false) String sortProperty,
+			@RequestParam(value = "sortOrder", required = false) String sortOrder)
 	{
 		// Initialize ListProp with first page
-		ListProp listProp = null;
+		ListProp listProp = WebUtil.toJQueryListProp(page,
+				getDefaultPageSize(), null, null);
 
 		return getCategoryList(listProp);
 	}
