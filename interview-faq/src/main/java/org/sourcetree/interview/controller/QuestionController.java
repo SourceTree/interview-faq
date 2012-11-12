@@ -19,8 +19,10 @@ import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
+import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.service.QuestionService;
+import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -49,6 +51,8 @@ public class QuestionController extends BaseController
 	private CategoryService categoryService;
 
 	@RequestMapping(value = "/addNew", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
 	String questionForm(Model model)
 	{
 		List<CategoryDTO> categoryDtos = categoryService.findAllCategories();
@@ -68,6 +72,8 @@ public class QuestionController extends BaseController
 	 *         to either XML/JSON/text base on the request headers
 	 */
 	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
 	@ResponseBody
 	public ResponseDTO processRegistration(
 			@ModelAttribute QuestionDTO questionDTO)

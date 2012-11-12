@@ -47,6 +47,8 @@ h5,h6{font-weight:bold}
 .col_66.wrap{width:66%;margin:0}
 .col_75.wrap{width:75%;margin:0}
 .col_100.wrap{width:100%;margin:0}
+.col_border{border: 1px solid #DDDDE0; border-radius: 8px;margin:0 1% 2% 0;}
+.col_border div{padding: 2%;};
 /* End Columns */
 /* Helper classes */
 .center{text-align:center}

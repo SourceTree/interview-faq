@@ -10,5 +10,33 @@
 <title>Admin Console</title>
 </head>
 <body>
+	<form id="loginForm" name="loginForm" method="post" class="cleanform"
+		action="<c:url value="/admin/console"/>">
+
+		<div class="col_50 col_border">
+			<div>
+				<a href="#"><strong><s:message code="console.faqManagement.link"/></strong></a>
+				<br> 
+				<em><s:message code="console.faqManagement.description"/></em>
+			</div>
+		</div>
+
+		<div class="col_50 col_border">
+			<div>
+				<a href="#"><strong><s:message code="console.categoryManagement.link"/></strong> </a>
+				<br> 
+				<em><s:message code="console.categoryManagement.description"/></em>
+			</div>
+		</div>
+		<div class="col_50 col_border">
+			<div>
+				<a href="#"><strong><s:message code="console.userManagement.link"/></strong></a>
+				<br> 
+				<em><s:message code="console.userManagement.description"/></em>
+			</div>
+		</div>
+
+
+	</form>
 </body>
 </html>
