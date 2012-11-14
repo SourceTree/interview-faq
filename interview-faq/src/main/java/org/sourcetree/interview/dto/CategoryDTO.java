@@ -12,6 +12,7 @@ package org.sourcetree.interview.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -27,8 +28,10 @@ public class CategoryDTO extends BaseDTO
 	private Long id;
 
 	@NotEmpty(message = "categoryName.null")
+	@Size(min = 3, max = 80, message = "name.length")
 	private String categoryName;
 
+	@Size(max = 500)
 	private String categoryDescription;
 
 	private List<QuestionDTO> questionDtos;

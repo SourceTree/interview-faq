@@ -44,7 +44,7 @@ public class Category extends AbstractEntity
 	@Column(name = "name", length = 80)
 	private String categoryName;
 
-	@Column(name = "categoryDescription", length = 150, nullable = true)
+	@Column(name = "categoryDescription", length = 500, nullable = true)
 	private String categoryDescription;
 
 	@ManyToMany(fetch = FetchType.LAZY)

@@ -117,6 +117,7 @@ public class CategoryController extends BaseController
 	{
 		model.addAttribute("category",
 				categoryService.getCategoryDTOByName(name));
+
 		if (sessionAttributes.getRole() == UserRoleEnum.ADMIN)
 		{
 			return "category/categoryEdit";
@@ -164,6 +165,34 @@ public class CategoryController extends BaseController
 		{
 			categoryService.create(categoryDTO);
 		}
+
+		return response;
+	}
+
+	/**
+	 * to handle new partner request. this method will be invoked in the event
+	 * of form submissions from the client which will contains the
+	 * <b>application/x-www-form-urlencoded</b> as the content-type header
+	 * 
+	 * @param categoryDTO
+	 *            category DTO object
+	 * @return <code>{@linkplain categoryDTO}</code> - response will be
+	 *         Serialised to either XML/JSON/text base on the request headers
+	 */
+	@RequestMapping(value = "/{name}", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public ResponseDTO updateCategory(@ModelAttribute CategoryDTO categoryDTO)
+	{
+		System.out.println("update Category controller");
+		System.out.println("categoryDTO ID=" + categoryDTO.getId());
+		System.out.println("categoryDTO NAME=" + categoryDTO.getCategoryName());
+		System.out.println("categoryDTO Desc="
+				+ categoryDTO.getCategoryDescription());
+		ResponseDTO response = new ResponseDTO();
+
+		categoryService.update(categoryDTO, categoryDTO.getId());
 
 		return response;
 	}
