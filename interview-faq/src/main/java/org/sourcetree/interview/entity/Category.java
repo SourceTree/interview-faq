@@ -32,7 +32,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Entity
 @Table(name = "category", uniqueConstraints = @UniqueConstraint(
-		columnNames = "categoryName"))
+		columnNames = "name"))
 @GenericGenerator(strategy = "native", name = "CategorySeq")
 public class Category extends AbstractEntity
 {
