@@ -37,8 +37,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @author Venkaiah Chowdary Koneru
+ * Category Controller. contains entry point for add, update, view categories.
  * 
+ * @author Venkaiah Chowdary Koneru
  */
 @Controller
 @RequestMapping(value = "/category")
@@ -97,7 +98,7 @@ public class CategoryController extends BaseController
 			@RequestParam(value = "sortProperty", required = false) String sortProperty,
 			@RequestParam(value = "sortOrder", required = false) String sortOrder)
 	{
-		// Initialize ListProp with first page
+		// Initialize ListProp with requested page
 		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
 				null, null);
 
@@ -118,12 +119,12 @@ public class CategoryController extends BaseController
 		model.addAttribute("category",
 				categoryService.getCategoryDTOByName(name));
 
-		if (sessionAttributes.getRole() == UserRoleEnum.ADMIN)
+		if (sessionAttributes.getRole() == null)
 		{
-			return "category/categoryEdit";
+			return "category/categoryDetails";
 		}
 
-		return "category/categoryDetails";
+		return "category/categoryEdit";
 	}
 
 	/**
@@ -179,17 +180,12 @@ public class CategoryController extends BaseController
 	 * @return <code>{@linkplain categoryDTO}</code> - response will be
 	 *         Serialised to either XML/JSON/text base on the request headers
 	 */
-	@RequestMapping(value = "/{name}", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
 	@ResponseBody
 	public ResponseDTO updateCategory(@ModelAttribute CategoryDTO categoryDTO)
 	{
-		System.out.println("update Category controller");
-		System.out.println("categoryDTO ID=" + categoryDTO.getId());
-		System.out.println("categoryDTO NAME=" + categoryDTO.getCategoryName());
-		System.out.println("categoryDTO Desc="
-				+ categoryDTO.getCategoryDescription());
 		ResponseDTO response = new ResponseDTO();
 
 		categoryService.update(categoryDTO, categoryDTO.getId());

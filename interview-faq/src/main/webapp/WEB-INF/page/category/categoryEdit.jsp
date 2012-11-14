@@ -10,7 +10,7 @@
 <title><s:message code="categoryForm.title"/></title>
 </head>
 <body>
-<form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/categoryEdit"/>">
+<form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/edit"/>">
 <h2><s:message code="categoryForm.title"/></h2>
 	<input name="id" id="id" type="hidden" value="${category.id}"/>
 	<input name="categoryName" type="hidden" value="${category.categoryName}"/>
