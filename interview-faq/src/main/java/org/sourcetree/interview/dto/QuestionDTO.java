@@ -12,9 +12,12 @@ package org.sourcetree.interview.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.sourcetree.interview.support.validation.SecondGroup;
 
 /**
  * @author Chalam Pavuluri
@@ -27,16 +30,16 @@ public class QuestionDTO extends BaseDTO
 	private Long id;
 
 	@NotEmpty(message = "question.null")
+	@Size(min = 3, max = 200, message = "question.length",
+			groups = SecondGroup.class)
 	private String question;
 
-	private List<CategoryDTO> categoryDTOs;
-
-	@NotEmpty(message = "answer.null")
+	@Size(min = 3, max = 5000, message = "answer.length",
+			groups = SecondGroup.class)
+	@SafeHtml(message = "asnwer.html")
 	private String answer;
 
-	private String categories[];
-
-	private Long ids[];
+	private List<CategoryDTO> categoryDTOs;
 
 	/**
 	 * @return the question
@@ -105,39 +108,4 @@ public class QuestionDTO extends BaseDTO
 	{
 		this.answer = answer;
 	}
-
-	/**
-	 * @return the categories
-	 */
-	public String[] getCategories()
-	{
-		return categories;
-	}
-
-	/**
-	 * @param categories
-	 *            the categories to set
-	 */
-	public void setCategories(String[] categories)
-	{
-		this.categories = categories;
-	}
-
-	/**
-	 * @return the ids
-	 */
-	public Long[] getIds()
-	{
-		return ids;
-	}
-
-	/**
-	 * @param ids
-	 *            the ids to set
-	 */
-	public void setIds(Long[] ids)
-	{
-		this.ids = ids;
-	}
-
 }

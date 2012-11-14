@@ -40,10 +40,10 @@ public class Question extends AbstractEntity
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "question", length = 200)
+	@Column(name = "question", length = 200, nullable = false)
 	private String question;
 
-	@Column(name = "answer", length = 300)
+	@Column(name = "answer", length = 5000, nullable = false)
 	private String answer;
 
 	@ManyToMany

@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.sourcetree.interview.support.validation.SecondGroup;
 
 /**
  * @author Chalam Pavuluri
@@ -28,10 +30,13 @@ public class CategoryDTO extends BaseDTO
 	private Long id;
 
 	@NotEmpty(message = "categoryName.null")
-	@Size(min = 3, max = 80, message = "name.length")
+	@Size(min = 3, max = 80, message = "name.length",
+			groups = SecondGroup.class)
 	private String categoryName;
 
-	@Size(max = 500)
+	@Size(min = 3, max = 500, message = "categoryDescription.length",
+			groups = SecondGroup.class)
+	@SafeHtml(message = "categoryDescription.html")
 	private String categoryDescription;
 
 	private List<QuestionDTO> questionDtos;

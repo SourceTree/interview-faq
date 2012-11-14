@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,7 +31,8 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Chalam Pavuluri
  */
 @Entity
-@Table(name = "category")
+@Table(name = "category", uniqueConstraints = @UniqueConstraint(
+		columnNames = "categoryName"))
 @GenericGenerator(strategy = "native", name = "CategorySeq")
 public class Category extends AbstractEntity
 {
@@ -41,10 +43,10 @@ public class Category extends AbstractEntity
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "name", length = 80)
+	@Column(name = "name", length = 80, nullable = false)
 	private String categoryName;
 
-	@Column(name = "categoryDescription", length = 500, nullable = true)
+	@Column(name = "categoryDescription", length = 500, nullable = false)
 	private String categoryDescription;
 
 	@ManyToMany(fetch = FetchType.LAZY)
