@@ -110,7 +110,6 @@ public class QuestionController extends BaseController
 	public String categoryDetailsForm(SessionAttributes sessionAttributes,
 			@PathVariable String Id, Model model)
 	{
-		System.out.println("Id=" + Id);
 		Long ID = Long.parseLong(Id);
 		model.addAttribute("question", questionService.getQuestionDTOById(ID));
 
