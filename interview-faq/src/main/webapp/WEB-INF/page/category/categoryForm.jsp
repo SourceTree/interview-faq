@@ -1,16 +1,15 @@
 <%--
-
 	Copyright © 2012, Source Tree, All Rights Reserved
-
 --%><%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
 <!DOCTYPE HTML>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:message code="categoryForm.title"/></title>
 
@@ -105,6 +104,16 @@
 				placeholder="<s:message code="categoryForm.description"/>"></textarea>
 		<span id="error_categoryDescription"></span></p>
 		
+		<p>
+			<select name="parentCategoryDTO.id" id="parentCategoryDTO.id"
+				class="chzn-select" data-placeholder="Choose a Parent Category (if any)">
+				<option value=""></option>
+				<c:forEach items="${parentCategories}" var="categories">
+					<option value="${categories.id}">${categories.categoryName}</option>
+				</c:forEach>
+			</select>
+		</p>
+		
 		<p><label for="submit"></label>
 		<button type="submit" id="btnSubmit" name="btnSubmit"><s:message code="categoryForm.btn.add"/></button>
 		<button type="reset" id="btnReset" name="btnReset" onclick="$('.warning').remove();"><s:message code="btn.reset"/></button>
@@ -144,7 +153,6 @@ function categoryFormResponse(data) {
 
 $(document).ready(function() {
 	var options = {
-		//beforeSubmit:validateRegForm,
 		success : categoryFormResponse,
 		beforeSend : showLoader,
 		complete : hideLoader,
@@ -153,6 +161,12 @@ $(document).ready(function() {
 	};
 
 	$("#categoryForm").ajaxForm(options);
+	
+	cachedScript(
+			"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
+			.done(function() {
+				$(".chzn-select").chosen();
+			});
 });
 </script>
 <script src="<c:url value="/static/scripts/jquery/advanced.js"/>"></script>

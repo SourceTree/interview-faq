@@ -13,7 +13,7 @@
 	<nav class="menu_main">
 		<div id="responsive_menu">Menu</div>
 		<ul class="sf-menu responsive-menu sf-js-enabled">
-			<li class="first-button"><a href="<c:url value="/"/>">Home</a></li>
+			<li class="first-button"><a href="<c:url value="/home"/>">Home</a></li>
 			<li><a href="#about">About Us</a></li>
 			<li class="last-button"><a href="#contact">Contact Us</a></li>
 			

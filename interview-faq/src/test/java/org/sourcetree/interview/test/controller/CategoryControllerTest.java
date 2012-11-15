@@ -170,7 +170,6 @@ public class CategoryControllerTest extends BaseMvcTestCase
 		ra.andExpect(status().isOk()).andExpect(
 				content().mimeType("application/json;charset=UTF-8"));
 
-		System.out.println(ra.andReturn().getResponse().getContentAsString());
 		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
 				.getResponse().getContentAsByteArray(), ResponseDTO.class);
 

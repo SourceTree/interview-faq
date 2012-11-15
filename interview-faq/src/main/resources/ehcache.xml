@@ -3,7 +3,28 @@
 
 	<diskStore path="java.io.tmpdir" />
 
-	<cache name="questions" eternal="false" maxElementsInMemory="100"
+	<cache name="categoryDTOByName" eternal="false" maxElementsInMemory="100"
+		timeToLiveSeconds="0" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
+	</cache>
+	
+	<cache name="allParentCategories" eternal="false" maxElementsInMemory="100"
+		timeToLiveSeconds="0" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
+	</cache>
+	
+	<cache name="allCategories" eternal="false" maxElementsInMemory="100"
+		timeToLiveSeconds="0" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
+	</cache>
+	
+	<cache name="categoryById" eternal="false" maxElementsInMemory="100"
 		timeToLiveSeconds="0" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
 		<cacheEventListenerFactory

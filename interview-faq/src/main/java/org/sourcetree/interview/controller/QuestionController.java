@@ -58,9 +58,7 @@ public class QuestionController extends BaseController
 			setSessionAttributes = false)
 	String questionForm(Model model)
 	{
-		List<CategoryDTO> categoryDtos = categoryService.findAllCategories();
-		model.addAttribute("categories", categoryDtos);
-
+		model.addAttribute("categories", categoryService.findAllCategories());
 		return "question/questionForm";
 	}
 
@@ -78,7 +76,7 @@ public class QuestionController extends BaseController
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
 	@ResponseBody
-	public ResponseDTO processRegistration(
+	public ResponseDTO processQuestionAddNew(
 			@ModelAttribute QuestionDTO questionDTO)
 	{
 		ResponseDTO response = new ResponseDTO();
@@ -101,17 +99,17 @@ public class QuestionController extends BaseController
 
 	/**
 	 * @param sessionAttributes
-	 * @param Id
+	 * @param questionId
 	 * @param model
 	 * @return question page
 	 */
-	@RequestMapping(value = "/{Id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{questionId}", method = RequestMethod.GET)
 	@InjectSessionAttributes
-	public String categoryDetailsForm(SessionAttributes sessionAttributes,
-			@PathVariable String Id, Model model)
+	public String questionDetailsForm(SessionAttributes sessionAttributes,
+			@PathVariable Long questionId, Model model)
 	{
-		Long ID = Long.parseLong(Id);
-		model.addAttribute("question", questionService.getQuestionDTOById(ID));
+		model.addAttribute("question",
+				questionService.getQuestionDTOById(questionId));
 
 		if (sessionAttributes.getRole() == null
 				|| sessionAttributes.getRole() != UserRoleEnum.ADMIN)
@@ -119,6 +117,7 @@ public class QuestionController extends BaseController
 			return "question/questionDetails";
 		}
 
+		model.addAttribute("categories", categoryService.findAllCategories());
 		return "question/questionEdit";
 	}
 

@@ -107,4 +107,21 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 
 		return (CategoryDTO) query.uniqueResult();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
+	@Override
+	public List<CategoryDTO> getAllParentCategorDTOs(ListProp listProp)
+	{
+		StringBuilder queryStr = new StringBuilder(" from ");
+		queryStr.append(getEntityClass().getName()).append(" as category");
+		queryStr.append(" where category.deleted=").append(Boolean.FALSE);
+		queryStr.append(" and category.parentCategory is null");
+
+		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
+				null, CATEGORY_DTO_ALL, queryStr.toString(), null, listProp,
+				CategoryDTO.class);
+	}
 }

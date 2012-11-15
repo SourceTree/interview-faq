@@ -11,7 +11,9 @@
 package org.sourcetree.interview.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dao.QuestionDAO;
@@ -46,12 +48,15 @@ public class QuestionServiceImpl implements QuestionService
 	@Transactional(readOnly = false)
 	public void create(QuestionDTO questionDTO)
 	{
-		Question question = new Question();
+		Question question = copyDTOtoEntity(questionDTO, null);
 
-		copyDTOtoEntity(questionDTO, question);
+		if (question != null)
+		{
+			questionDAO.save(question);
+			return;
+		}
 
-		questionDAO.save(question);
-
+		throw new IllegalArgumentException("Invalid Data: Null");
 	}
 
 	/**
@@ -66,7 +71,8 @@ public class QuestionServiceImpl implements QuestionService
 			Question question = findQuestionById(questionDTO.getId());
 			if (question != null)
 			{
-				copyDTOtoEntity(questionDTO, question);
+				question = copyDTOtoEntity(questionDTO, question);
+
 				questionDAO.update(question);
 			}
 			return;
@@ -126,10 +132,30 @@ public class QuestionServiceImpl implements QuestionService
 		if (CoreUtil.isEmpty(categoryDTOs))
 		{
 			List<Category> categories = new ArrayList<Category>();
+			Map<String, String> catMap = new HashMap<String, String>();
 			for (CategoryDTO categoryDto : categoryDTOs)
 			{
-				Category category = categoryDAO.find(categoryDto.getId());
-				categories.add(category);
+				if (!catMap.containsKey(categoryDto.getId().toString()))
+				{
+					Category category = categoryDAO.find(categoryDto.getId());
+					categories.add(category);
+
+					catMap.put(category.getId().toString(),
+							category.getCategoryName());
+
+					// Checks for Sub Category
+					if (category.getParentCategory() != null)
+					{
+						if (!catMap.containsKey(category.getParentCategory()
+								.getId().toString()))
+						{
+							categories.add(category.getParentCategory());
+							catMap.put(category.getParentCategory().getId()
+									.toString(), category.getParentCategory()
+									.getCategoryName());
+						}
+					}
+				}
 			}
 			return categories;
 		}
@@ -144,17 +170,28 @@ public class QuestionServiceImpl implements QuestionService
 	 * @param question
 	 *            Question entity. cannot be empty
 	 */
-	private void copyDTOtoEntity(final QuestionDTO questionDTO,
+	private Question copyDTOtoEntity(final QuestionDTO questionDTO,
 			final Question question)
 	{
-		if (question != null && questionDTO != null)
+		if (questionDTO == null)
 		{
-			question.setQuestion(questionDTO.getQuestion().trim());
-
-			question.setCategories(processCategoryDto(questionDTO
-					.getCategoryDTOs()));
-			question.setAnswer(questionDTO.getAnswer());
+			return null;
 		}
+
+		Question localQuestion = question;
+		if (localQuestion == null)
+		{
+			localQuestion = new Question();
+		}
+
+		localQuestion.setQuestion(questionDTO.getQuestion().trim());
+
+		localQuestion.setCategories(processCategoryDto(questionDTO
+				.getCategoryDTOs()));
+
+		localQuestion.setAnswer(questionDTO.getAnswer());
+
+		return localQuestion;
 	}
 
 	/**

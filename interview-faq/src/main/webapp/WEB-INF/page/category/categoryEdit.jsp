@@ -6,9 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:message code="categoryEdit.title"/> - ${category.categoryName}</title>
 </head>
@@ -104,6 +105,17 @@
 				title="<s:message code="categoryForm.description"/>"
 				placeholder="<s:message code="categoryForm.description"/>">${category.categoryDescription}</textarea>
 		<span id="error_categoryDescription"></span></p>
+	
+	<p>
+		<select name="parentCategoryDTO.id" id="parentCategoryDTO.id"
+				class="chzn-select" data-placeholder="Choose a Parent Category (if any)">
+				<option value=""></option>
+				<c:forEach items="${parentCategories}" var="categories">
+					<option value="${categories.id}" <c:if test="${categories.id == category.parentCategoryDTO.id}">selected="selected"</c:if>>${categories.categoryName}</option>
+				</c:forEach>
+		</select>
+	</p>
+	
 	<p><label for="submit"></label>
 		<button type="submit" id="btnSubmit" name="btnSubmit"><s:message code="categoryForm.btn.save"/></button>
 		<button type="button" id="btnBack" name="btnBack" onclick=""><s:message code="btn.back"/></button>
@@ -143,7 +155,6 @@ function categoryEditResponse(data) {
 
 $(document).ready(function() {
 	var options = {
-		//beforeSubmit:validateRegForm,
 		success : categoryEditResponse,
 		beforeSend : showLoader,
 		complete : hideLoader,
@@ -152,6 +163,12 @@ $(document).ready(function() {
 	};
 
 	$("#categoryEdit").ajaxForm(options);
+	
+	cachedScript(
+			"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
+			.done(function() {
+				$(".chzn-select").chosen();
+			});
 });
 </script>
 <script src="<c:url value="/static/scripts/jquery/advanced.js"/>"></script>

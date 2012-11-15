@@ -24,12 +24,11 @@
 			<strong><s:message code="questionEdit.title" /></strong>
 		</h2>
 		<p>
-			<input type="hidden" id="id" name="id" value="${question.id}"/>
-			<input type="text" id="question" maxlength="200" name="question" 
-				title="<s:message code="questionForm.question"/>" 
-				placeholder="<s:message code="questionForm.question"/>" 
-				value="${question.question}"/> 
-				<span id="error_question"></span>
+			<input type="hidden" id="id" name="id" value="${question.id}" /> <input
+				type="text" id="question" maxlength="200" name="question"
+				title="<s:message code="questionForm.question"/>"
+				placeholder="<s:message code="questionForm.question"/>"
+				value="${question.question}" /> <span id="error_question"></span>
 		</p>
 
 
@@ -117,7 +116,7 @@
 			<span id="error_answer"></span>
 		</p>
 
-		<!-- <p>
+		<p>
 			<select name="categoryDTOs" id="categoryDTOs"
 				class="chzn-select-deselect" multiple="multiple"
 				data-placeholder="Add some tags">
@@ -125,16 +124,7 @@
 					<option value="${categories.id}">${categories.categoryName}</option>
 				</c:forEach>
 			</select> <span id="error_category"></span>
-		</p>-->
-
-		<%-- <p><label id="label_category" for="category"></label>
-		<select name="cat" id="cat" class="chzn-select" data-placeholder="Choose an option">
-			<option value=""></option>
-			<option value="abcd">ABCD</option>
-			<option value="abcd1">ABCD</option>
-			<option value="abcd2">ABCD</option>
-		</select>
-		<span id="error_category"></span></p> --%>
+		</p>
 
 		<p>
 			<label for="submit"></label>
@@ -149,8 +139,6 @@
 	</form>
 	<script src="<c:url value="/static/scripts/jquery/jquery.form.js"/>"
 		type="text/javascript"></script>
-
-
 	<script type="text/javascript">
 		function showLoader() {
 			$('.warning').remove();
@@ -183,29 +171,25 @@
 			}
 		}
 
-		$(document)
-				.ready(
-						function() {
-							var options = {
-								//beforeSubmit:validateRegForm,
-								success : questionEditResponse,
-								beforeSend : showLoader,
-								complete : hideLoader,
-								dataType : 'json',
-								error : gotError
-							};
+		$(document).ready(function() {
+				var options = {
+					success : questionEditResponse,
+					beforeSend : showLoader,
+					complete : hideLoader,
+					dataType : 'json',
+					error : gotError
+				};
 
-							$("#questionEdit").ajaxForm(options);
+				$("#questionEdit").ajaxForm(options);
 
-							cachedScript(
-									"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
-									.done(function() {
-	<%--$(".chzn-select").chosen();--%>
-		$(".chzn-select-deselect").chosen({
-											allow_single_deselect : true
-										});
-									});
+				cachedScript(
+						"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
+						.done(function() {
+							$(".chzn-select-deselect").chosen({
+								allow_single_deselect : true
+							});
 						});
+			});
 	</script>
 	<script src="<c:url value="/static/scripts/jquery/advanced.js"/>"></script>
 	<script

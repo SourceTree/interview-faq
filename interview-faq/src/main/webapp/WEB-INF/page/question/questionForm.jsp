@@ -6,13 +6,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-<link rel="stylesheet"
-	href="<c:url value="/static/styles/wysiwyg.css"/>">
-
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
+<link rel="stylesheet"
+	href="<c:url value="/static/styles/wysiwyg.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:message code="questionForm.title" /></title>
 </head>

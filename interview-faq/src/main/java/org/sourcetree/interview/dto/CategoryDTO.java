@@ -42,6 +42,8 @@ public class CategoryDTO extends BaseDTO
 
 	private List<QuestionDTO> questionDtos;
 
+	private CategoryDTO parentCategoryDTO;
+
 	/**
 	 * @return the categoryName
 	 */
@@ -110,4 +112,20 @@ public class CategoryDTO extends BaseDTO
 		this.id = id;
 	}
 
+	/**
+	 * @return the parentCategoryDTO
+	 */
+	public CategoryDTO getParentCategoryDTO()
+	{
+		return parentCategoryDTO;
+	}
+
+	/**
+	 * @param parentCategoryDTO
+	 *            the parentCategoryDTO to set
+	 */
+	public void setParentCategoryDTO(CategoryDTO parentCategoryDTO)
+	{
+		this.parentCategoryDTO = parentCategoryDTO;
+	}
 }

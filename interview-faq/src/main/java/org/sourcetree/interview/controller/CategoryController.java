@@ -51,13 +51,17 @@ public class CategoryController extends BaseController
 	/**
 	 * Category Form
 	 * 
-	 * @return
+	 * @param model
+	 * 
+	 * @return Category Form
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
-	public String categoryForm()
+	public String categoryForm(Model model)
 	{
+		model.addAttribute("parentCategories",
+				categoryService.findAllParentCategories());
 		return "category/categoryForm";
 	}
 
@@ -125,6 +129,8 @@ public class CategoryController extends BaseController
 			return "category/categoryDetails";
 		}
 
+		model.addAttribute("parentCategories",
+				categoryService.findAllParentCategories());
 		return "category/categoryEdit";
 	}
 
@@ -203,8 +209,7 @@ public class CategoryController extends BaseController
 	{
 		// Retrieve categories
 		List<CategoryDTO> categoryDTOs = categoryService
-				.findAllCategories(listProp);
-
+				.findAllParentCategories(listProp);
 		return new CategoryListDTO(categoryDTOs, listProp);
 	}
 }

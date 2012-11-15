@@ -20,9 +20,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -54,6 +57,13 @@ public class Category extends AbstractEntity
 			name = "category_id"), inverseJoinColumns = @JoinColumn(
 			name = "question_id"))
 	private List<Question> questions;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade(value = CascadeType.SAVE_UPDATE)
+	@JoinTable(name = "PARENT_CATEGORY", joinColumns = @JoinColumn(
+			name = "category_id"), inverseJoinColumns = @JoinColumn(
+			name = "parent_category_id"))
+	private Category parentCategory;
 
 	/**
 	 * @return the questions
@@ -123,4 +133,20 @@ public class Category extends AbstractEntity
 		this.categoryDescription = categoryDescription;
 	}
 
+	/**
+	 * @return the parentCategory
+	 */
+	public Category getParentCategory()
+	{
+		return parentCategory;
+	}
+
+	/**
+	 * @param parentCategory
+	 *            the parentCategory to set
+	 */
+	public void setParentCategory(Category parentCategory)
+	{
+		this.parentCategory = parentCategory;
+	}
 }

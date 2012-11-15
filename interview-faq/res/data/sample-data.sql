@@ -20,4 +20,12 @@ INSERT INTO category (id, created_date, deleted, modified_date, version, categor
 	(16, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for JavaScript', 'JavaScript'),
 	(17, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for HTML5', 'HTML5'),
 	(18, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for Flash', 'Flash'),
-	(19, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for ActionScript', 'ActionScript');
+	(19, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for ActionScript', 'ActionScript'),
+	(20, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for J2SE. Core java, collections, threading etc..', 'J2SE'),
+	(21, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for J2EE. EJB', 'J2EE'),
+	(22, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for J2EE. Servlets.', 'Servlet'),
+	(23, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for J2EE. JSP', 'JSP'),
+	(24, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for core spring framework', 'Spring'),
+	(25, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for Spring MVC Framework', 'Spring MVC');
+
+INSERT INTO parent_category(parent_category_id, category_id) VALUES (1, 20), (18, 19), (1, 21), (1, 22), (1, 23), (1, 24), (1, 25); 

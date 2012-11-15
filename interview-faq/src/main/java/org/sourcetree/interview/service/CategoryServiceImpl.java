@@ -20,6 +20,8 @@ import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,17 +37,30 @@ public class CategoryServiceImpl implements CategoryService
 	@Autowired
 	private CategoryDAO categoryDAO;
 
+	private static final String CACHE_ALL_KEY = "-2";
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	@Transactional(readOnly = false)
+	@CacheEvict(value = { "allParentCategories", "allCategories",
+			"categoryDTOByName", "categoryById" }, allEntries = true,
+			beforeInvocation = false)
 	public void create(CategoryDTO catergoryDTO)
 	{
 		Category category = new Category();
 		category.setCategoryName(catergoryDTO.getCategoryName().trim());
 		category.setCategoryDescription(catergoryDTO.getCategoryDescription());
 		category.setCreatedDate(new Date());
+
+		if (catergoryDTO.getParentCategoryDTO() != null
+				&& catergoryDTO.getParentCategoryDTO().getId() != null)
+		{
+			category.setParentCategory(findCategoryById(catergoryDTO
+					.getParentCategoryDTO().getId()));
+		}
+
 		categoryDAO.save(category);
 
 	}
@@ -55,25 +70,43 @@ public class CategoryServiceImpl implements CategoryService
 	 */
 	@Override
 	@Transactional(readOnly = false)
+	@CacheEvict(value = { "allParentCategories", "allCategories",
+			"categoryDTOByName", "categoryById" }, allEntries = true,
+			beforeInvocation = false)
 	public void update(CategoryDTO catergoryDTO, Long categoryId)
 	{
 		Category category = findCategoryById(categoryId);
 		if (category != null)
 		{
-			// TODO: do we need to update name as well ? -- Venky
-			category.setCategoryName(catergoryDTO.getCategoryName().trim());
 			category.setCategoryDescription(catergoryDTO
 					.getCategoryDescription());
+
+			// Logic for updating parent category
+			if (catergoryDTO.getParentCategoryDTO() != null)
+			{
+				if ((category.getParentCategory() != null && catergoryDTO
+						.getParentCategoryDTO().getId()
+						.compareTo(category.getParentCategory().getId()) != 0)
+						|| category.getParentCategory() == null)
+				{
+					category.setParentCategory(findCategoryById(catergoryDTO
+							.getParentCategoryDTO().getId()));
+				}
+			}
+			else
+			{
+				category.setParentCategory(null);
+			}
+
 			categoryDAO.update(category);
-
 		}
-
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "categoryById", key = "#categoryId")
 	public Category findCategoryById(Long categoryId)
 	{
 		return categoryDAO.find(categoryId);
@@ -93,6 +126,8 @@ public class CategoryServiceImpl implements CategoryService
 	 */
 	@Override
 	@Transactional(readOnly = false)
+	@CacheEvict(value = { "allParentCategories", "allCategories",
+			"categoryDTOByName", "categoryById" }, allEntries = true)
 	public boolean deleteCategoryById(Long categoryId)
 	{
 		return categoryDAO.deleteById(categoryId);
@@ -116,6 +151,7 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "allCategories", key = CACHE_ALL_KEY)
 	public List<CategoryDTO> findAllCategories()
 	{
 
@@ -126,6 +162,7 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "allCategories", key = "#listProp.page")
 	public List<CategoryDTO> findAllCategories(ListProp listProp)
 	{
 		return categoryDAO.getAllCategoryDTOs(listProp);
@@ -135,13 +172,59 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
+	@Cacheable(value = "categoryDTOByName", key = "#name")
 	public CategoryDTO getCategoryDTOByName(String name)
 	{
 		if (!StringUtils.isBlank(name))
 		{
-			return categoryDAO.getCategoryDTOByName(name.trim());
+			Category category = categoryDAO.findByParameter("categoryName",
+					name.trim());
+
+			if (category != null)
+			{
+				return copyEntityToDTO(category);
+			}
 		}
 		return null;
 	}
 
+	@Override
+	@Cacheable(value = "allParentCategories", key = CACHE_ALL_KEY)
+	public List<CategoryDTO> findAllParentCategories()
+	{
+		return findAllParentCategories(null);
+	}
+
+	@Override
+	@Cacheable(value = "allParentCategories", key = "#listProp.page")
+	public List<CategoryDTO> findAllParentCategories(ListProp listProp)
+	{
+		return categoryDAO.getAllParentCategorDTOs(listProp);
+	}
+
+	/**
+	 * 
+	 * @param category
+	 * @return
+	 */
+	private CategoryDTO copyEntityToDTO(final Category category)
+	{
+		if (category == null)
+		{
+			return null;
+		}
+
+		CategoryDTO categoryDTO = new CategoryDTO();
+		categoryDTO.setId(category.getId());
+		categoryDTO.setCategoryName(category.getCategoryName());
+		categoryDTO.setCategoryDescription(category.getCategoryDescription());
+
+		if (category.getParentCategory() != null)
+		{
+			categoryDTO.setParentCategoryDTO(copyEntityToDTO(category
+					.getParentCategory()));
+		}
+
+		return categoryDTO;
+	}
 }

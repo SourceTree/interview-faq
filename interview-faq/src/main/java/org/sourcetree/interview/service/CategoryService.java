@@ -72,12 +72,16 @@ public interface CategoryService
 	boolean isCategoryExists(String categoryName);
 
 	/**
+	 * Retrieves all categories irrespective of parent or sub category. Doesn't
+	 * contain parent category reference information.
 	 * 
 	 * @return List of category DTO
 	 */
 	List<CategoryDTO> findAllCategories();
 
 	/**
+	 * Retrieves all categories irrespective of parent or sub category. Doesn't
+	 * contain parent category reference information.
 	 * 
 	 * @param listProp
 	 * @return List of category DTO
@@ -85,12 +89,27 @@ public interface CategoryService
 	List<CategoryDTO> findAllCategories(ListProp listProp);
 
 	/**
-	 * get category as a DTO object based on name
+	 * retrieves all categories which doesn't contain any parents.
+	 * 
+	 * @return List of category DTO
+	 */
+	List<CategoryDTO> findAllParentCategories();
+
+	/**
+	 * retrieves all categories which doesn't contain any parents.
+	 * 
+	 * @param listProp
+	 * @return List of category DTO
+	 */
+	List<CategoryDTO> findAllParentCategories(ListProp listProp);
+
+	/**
+	 * Get category as a DTO object based on name. Retrieves the parent category
+	 * reference information.
 	 * 
 	 * @param name
 	 *            name of the category
 	 * @return category as DTO object
 	 */
 	CategoryDTO getCategoryDTOByName(String name);
-
 }

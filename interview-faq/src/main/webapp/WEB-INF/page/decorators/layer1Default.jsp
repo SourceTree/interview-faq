@@ -72,7 +72,7 @@
 		});
 
 		function goHome() {
-			window.location.href = "<c:url value="/"/>";
+			window.location.href = "<c:url value="/home"/>";
 		}
 
 		function gotError(jqXHR, textStatus, errorThrown) {

@@ -34,7 +34,7 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	List<Category> getCategoriesByQuestionId(Long questionId);
 
 	/**
-	 * Retrieve all Non- Deleted categories
+	 * Retrieve all non deleted categories
 	 * 
 	 * @param listProp
 	 *            Listing property object. can be null.
@@ -51,4 +51,13 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	 * @return Category DTO
 	 */
 	CategoryDTO getCategoryDTOByName(String param);
+
+	/**
+	 * Retrieves all categories (non deleted) which doesn't contain any parents.
+	 * 
+	 * @param listProp
+	 *            Listing property object. can be null.
+	 * @return Category DTO List
+	 */
+	List<CategoryDTO> getAllParentCategorDTOs(ListProp listProp);
 }
