@@ -12,6 +12,7 @@ package org.sourcetree.interview.dao;
 
 import java.util.List;
 
+import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Question;
 
 /**
@@ -29,4 +30,13 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	 * @return
 	 */
 	List<Question> getQuestionsByCategoryId(Long categoryId);
+
+	/**
+	 * Retrieves the question as DTO object with ignore case.
+	 * 
+	 * @param param
+	 *            question id to fetch
+	 * @return Question DTO
+	 */
+	QuestionDTO getQuestionDTOById(Long id);
 }

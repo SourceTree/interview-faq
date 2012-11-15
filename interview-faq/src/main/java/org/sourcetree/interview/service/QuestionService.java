@@ -70,4 +70,13 @@ public interface QuestionService
 	 */
 	boolean deleteQuestionById(Long questionId);
 
+	/**
+	 * get question as a DTO object based on Id
+	 * 
+	 * @param Id
+	 *            Id of the question
+	 * @return question as DTO object
+	 */
+	QuestionDTO getQuestionDTOById(Long Id);
+
 }

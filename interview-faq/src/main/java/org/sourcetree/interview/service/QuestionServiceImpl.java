@@ -156,4 +156,17 @@ public class QuestionServiceImpl implements QuestionService
 			question.setAnswer(questionDTO.getAnswer());
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public QuestionDTO getQuestionDTOById(Long Id)
+	{
+		if (Id != null)
+		{
+			return questionDAO.getQuestionDTOById(Id);
+		}
+		return null;
+	}
 }

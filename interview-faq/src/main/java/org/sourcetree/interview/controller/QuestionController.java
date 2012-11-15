@@ -22,6 +22,8 @@ import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.service.QuestionService;
+import org.sourcetree.interview.support.SessionAttributes;
+import org.sourcetree.interview.support.annotation.InjectSessionAttributes;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -94,6 +97,30 @@ public class QuestionController extends BaseController
 		}
 
 		return response;
+	}
+
+	/**
+	 * @param sessionAttributes
+	 * @param Id
+	 * @param model
+	 * @return question page
+	 */
+	@RequestMapping(value = "/{Id}", method = RequestMethod.GET)
+	@InjectSessionAttributes
+	public String categoryDetailsForm(SessionAttributes sessionAttributes,
+			@PathVariable String Id, Model model)
+	{
+		System.out.println("Id=" + Id);
+		Long ID = Long.parseLong(Id);
+		model.addAttribute("question", questionService.getQuestionDTOById(ID));
+
+		if (sessionAttributes.getRole() == null
+				|| sessionAttributes.getRole() != UserRoleEnum.ADMIN)
+		{
+			return "question/questionDetails";
+		}
+
+		return "question/questionEdit";
 	}
 
 	/**

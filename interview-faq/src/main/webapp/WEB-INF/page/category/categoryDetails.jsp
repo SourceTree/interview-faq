@@ -10,7 +10,6 @@
 <title><s:message code="categoryDetail.title"/> - ${category.categoryName}</title>
 </head>
 <body>
-<form id="categoryDetails" name="categoryDetails" method="post" class="cleanform" action="<c:url value="/category/categoryEdit"/>">
 <h2><s:message code="categoryDetail.title"/> - ${category.categoryName}</h2>
 	<input name="id" id="id" type="hidden" value="${category.id}"/>
 	<p>
@@ -23,6 +22,5 @@
 	<p><label for="submit"></label>
 		<button type="button" id="btnBack" name="btnBack" onclick=""><s:message code="btn.back"/></button>
 	</p>
-</form>
 </body>
 </html>
