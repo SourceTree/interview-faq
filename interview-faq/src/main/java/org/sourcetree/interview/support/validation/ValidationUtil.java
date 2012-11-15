@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.validation.groups.Default;
 
 import org.springframework.context.MessageSource;
 
@@ -48,8 +49,8 @@ public final class ValidationUtil
 			final Validator validator, final MessageSource messageSource)
 	{
 		Map<String, String> errors = new HashMap<String, String>();
-		Set<ConstraintViolation<Object>> violations = validator
-				.validate(object);
+		Set<ConstraintViolation<Object>> violations = validator.validate(
+				object, Default.class);
 
 		for (ConstraintViolation<Object> violation : violations)
 		{
