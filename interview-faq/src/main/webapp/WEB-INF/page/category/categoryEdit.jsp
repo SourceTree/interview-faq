@@ -9,13 +9,11 @@
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
 
-<link rel="stylesheet" type="text/css" media="screen"
-	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><s:message code="categoryEdit.title"/> - ${category.categoryName}</title>
 </head>
 <body>
-<form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/categoryEdit"/>">
+<form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/edit"/>">
 <h2><s:message code="categoryEdit.title"/> - ${category.categoryName}</h2>
 	<input name="id" id="id" type="hidden" value="${category.id}"/>
 	<p>
