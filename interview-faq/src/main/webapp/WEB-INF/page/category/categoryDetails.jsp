@@ -7,11 +7,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><s:message code="categoryForm.title"/></title>
+<title><s:message code="categoryDetail.title"/> - ${category.categoryName}</title>
 </head>
 <body>
-<form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/categoryEdit"/>">
-<h2><s:message code="categoryForm.title"/></h2>
+<form id="categoryDetails" name="categoryDetails" method="post" class="cleanform" action="<c:url value="/category/categoryEdit"/>">
+<h2><s:message code="categoryDetail.title"/> - ${category.categoryName}</h2>
 	<input name="id" id="id" type="hidden" value="${category.id}"/>
 	<p>
 		${category.categoryName}	

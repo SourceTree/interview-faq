@@ -119,7 +119,8 @@ public class CategoryController extends BaseController
 		model.addAttribute("category",
 				categoryService.getCategoryDTOByName(name));
 
-		if (sessionAttributes.getRole() == null)
+		if (sessionAttributes.getRole() == null
+				|| sessionAttributes.getRole() != UserRoleEnum.ADMIN)
 		{
 			return "category/categoryDetails";
 		}
