@@ -91,6 +91,38 @@ public class RegistrationControllerTest extends BaseMvcTestCase
 		ResponseDTO res = (ResponseDTO) jaxb2Marshaller
 				.unmarshal(new javax.xml.transform.stream.StreamSource(reader));
 
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(1, res.getErrors().size());
+		Assert.assertEquals(OutcomeStatus.FAILURE, res.getStatus());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.RegistrationController#processRegistration(UserDTO userDTO)}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             in case of errors
+	 */
+	@Test
+	public void testXMLProcessNewPartnerFormRequest_3() throws Exception
+	{
+		// check for mandatory
+		ResultActions ra = mockMvc.perform(post("/register/new")
+				.param("name", "Venky").param("email", "venky1@gmail.com")
+				.param("password", "password")
+				.param("confirmPassword", "password")
+				.accept(MediaType.APPLICATION_XML));
+
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType(MediaType.APPLICATION_XML));
+
+		StringReader reader = new StringReader(ra.andReturn().getResponse()
+				.getContentAsString());
+
+		ResponseDTO res = (ResponseDTO) jaxb2Marshaller
+				.unmarshal(new javax.xml.transform.stream.StreamSource(reader));
+
 		Assert.assertNull(res.getErrors());
 		Assert.assertEquals(OutcomeStatus.SUCCESS, res.getStatus());
 	}
@@ -136,6 +168,35 @@ public class RegistrationControllerTest extends BaseMvcTestCase
 		// check for mandatory
 		ResultActions ra = mockMvc.perform(post("/register/new")
 				.param("name", "Venky").param("email", "venky@gmail.com")
+				.param("password", "password")
+				.param("confirmPassword", "password")
+				.accept(MediaType.APPLICATION_JSON));
+
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType("application/json;charset=UTF-8"));
+
+		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
+				.getResponse().getContentAsByteArray(), ResponseDTO.class);
+
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(1, res.getErrors().size());
+		Assert.assertEquals(OutcomeStatus.FAILURE, res.getStatus());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.RegistrationController#processRegistration(UserDTO userDTO)}
+	 * .
+	 * 
+	 * @throws Exception
+	 *             in case of errors
+	 */
+	@Test
+	public void testJSONProcessNewPartnerFormRequest_3() throws Exception
+	{
+		// check for mandatory
+		ResultActions ra = mockMvc.perform(post("/register/new")
+				.param("name", "Venky").param("email", "venky1@gmail.com")
 				.param("password", "password")
 				.param("confirmPassword", "password")
 				.accept(MediaType.APPLICATION_JSON));

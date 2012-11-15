@@ -42,13 +42,13 @@ public class UserServiceTest extends BaseTestCase
 	public void testCreate_1()
 	{
 		UserDTO dto = new UserDTO();
-		dto.setEmail("venky@gmail.com");
+		dto.setEmail("venky1@gmail.com");
 		dto.setPassword("password");
 		dto.setName("Venky");
 
 		userService.create(dto);
 
-		Assert.assertTrue(userService.usernameExists("venky@gmail.com"));
+		Assert.assertTrue(userService.usernameExists("venky1@gmail.com"));
 	}
 
 	/**

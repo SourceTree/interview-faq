@@ -62,7 +62,8 @@ public class CategoryControllerTest extends BaseMvcTestCase
 				get("/category/new").sessionAttr(AppConstants.SESS_VARS,
 						new SessionAttributes("", 0L, UserRoleEnum.ADMIN)))
 				.andExpect(status().isOk())
-				.andExpect(forwardedUrl("/WEB-INF/page/faqForm.jsp"));
+				.andExpect(
+						forwardedUrl("/WEB-INF/page/category/categoryForm.jsp"));
 	}
 
 	/**
@@ -115,11 +116,12 @@ public class CategoryControllerTest extends BaseMvcTestCase
 				.param("categoryName", "").accept(MediaType.APPLICATION_JSON));
 		ra.andExpect(status().isOk()).andExpect(
 				content().mimeType("application/json;charset=UTF-8"));
+
 		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
 				.getResponse().getContentAsByteArray(), ResponseDTO.class);
 
 		Assert.assertNotNull(res.getErrors());
-		Assert.assertEquals(1, res.getErrors().size());
+		Assert.assertEquals(2, res.getErrors().size());
 
 	}
 
@@ -136,16 +138,76 @@ public class CategoryControllerTest extends BaseMvcTestCase
 		ResultActions ra = mockMvc.perform(post("/category/new")
 				.sessionAttr(AppConstants.SESS_VARS,
 						new SessionAttributes("", 0L, UserRoleEnum.ADMIN))
-				.param("categoryName", "JAVA")
+				.param("categoryName", "SAP")
 				.accept(MediaType.APPLICATION_JSON));
 		ra.andExpect(status().isOk()).andExpect(
 				content().mimeType("application/json;charset=UTF-8"));
 		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
 				.getResponse().getContentAsByteArray(), ResponseDTO.class);
 
-		Assert.assertNull(res.getErrors());
-		Assert.assertEquals(OutcomeStatus.SUCCESS, res.getStatus());
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(1, res.getErrors().size());
+		Assert.assertEquals(OutcomeStatus.FAILURE, res.getStatus());
 
 	}
 
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.CategoryController#processCategory()}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testFaqForm_7() throws Exception
+	{
+		ResultActions ra = mockMvc.perform(post("/category/new")
+				.sessionAttr(AppConstants.SESS_VARS,
+						new SessionAttributes("", 0L, UserRoleEnum.ADMIN))
+				.param("categoryName", "JAVA")
+				.param("categoryDescription", "<script>")
+				.accept(MediaType.APPLICATION_JSON));
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType("application/json;charset=UTF-8"));
+
+		System.out.println(ra.andReturn().getResponse().getContentAsString());
+		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
+				.getResponse().getContentAsByteArray(), ResponseDTO.class);
+
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(2, res.getErrors().size());
+		Assert.assertEquals(OutcomeStatus.FAILURE, res.getStatus());
+
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.sourcetree.interview.controller.CategoryController#processCategory()}
+	 * .
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testFaqForm_8() throws Exception
+	{
+		ResultActions ra = mockMvc.perform(post("/category/new")
+				.sessionAttr(AppConstants.SESS_VARS,
+						new SessionAttributes("", 0L, UserRoleEnum.ADMIN))
+				.param("categoryName", "SAP")
+				.param("categoryDescription", "<script>")
+				.accept(MediaType.APPLICATION_JSON));
+		ra.andExpect(status().isOk()).andExpect(
+				content().mimeType("application/json;charset=UTF-8"));
+
+		ResponseDTO res = jaxbJacksonObjectMapper.readValue(ra.andReturn()
+				.getResponse().getContentAsByteArray(), ResponseDTO.class);
+
+		Assert.assertNotNull(res.getErrors());
+		Assert.assertEquals(1, res.getErrors().size());
+		Assert.assertEquals(
+				"Category Description contains restricted input pattern.", res
+						.getErrors().get("categoryDescription"));
+		Assert.assertEquals(OutcomeStatus.FAILURE, res.getStatus());
+
+	}
 }

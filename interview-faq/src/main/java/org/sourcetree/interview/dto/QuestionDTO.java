@@ -34,9 +34,9 @@ public class QuestionDTO extends BaseDTO
 			groups = SecondGroup.class)
 	private String question;
 
-	@Size(min = 3, max = 5000, message = "answer.length",
-			groups = SecondGroup.class)
-	@SafeHtml(message = "asnwer.html")
+	@NotEmpty(message = "answer.null")
+	@SafeHtml(message = "asnwer.html", groups = SecondGroup.class)
+	@Size(max = 5000, message = "answer.length", groups = SecondGroup.class)
 	private String answer;
 
 	private List<CategoryDTO> categoryDTOs;

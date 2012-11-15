@@ -30,13 +30,14 @@ public class CategoryDTO extends BaseDTO
 	private Long id;
 
 	@NotEmpty(message = "categoryName.null")
-	@Size(min = 3, max = 80, message = "name.length",
+	@Size(min = 3, max = 80, message = "categoryName.length",
 			groups = SecondGroup.class)
 	private String categoryName;
 
-	@Size(min = 3, max = 500, message = "categoryDescription.length",
+	@NotEmpty(message = "categoryDescription.null")
+	@SafeHtml(message = "categoryDescription.html", groups = SecondGroup.class)
+	@Size(max = 500, message = "categoryDescription.length",
 			groups = SecondGroup.class)
-	@SafeHtml(message = "categoryDescription.html")
 	private String categoryDescription;
 
 	private List<QuestionDTO> questionDtos;
