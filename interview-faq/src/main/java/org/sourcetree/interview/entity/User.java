@@ -44,7 +44,7 @@ public class User extends AbstractEntity
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "password", length = 80)
+	@Column(name = "password", length = 150)
 	private String password;
 
 	@Column(name = "role", length = 30)

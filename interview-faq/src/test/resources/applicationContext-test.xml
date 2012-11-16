@@ -90,6 +90,6 @@
 
 	<bean id="shaPasswordEncoder"
 		class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
-		<constructor-arg index="0" value="256" />
+		<constructor-arg index="0" value="512" />
 	</bean>
 </beans>

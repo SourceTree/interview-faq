@@ -1,5 +1,5 @@
-INSERT INTO user (id, created_date, deleted, modified_date, version, name, email, password, role) VALUES (1, '2012-06-01 16:02:49', '\0', NULL, 0, 'Administrator', 'admin@faqmasters.com', '6f87c6a32d765bbfb7113732e046a71d9537cbea3cd2c145c5cf08c95997b88b', 'ADMIN'),
-	(2, '2012-11-09 17:51:34', '\0', NULL, 0, 'venky@gmail.com', 'Venky', '573027f536ca557e79b8e8247db75dad96a0aa50dc150c4ff3d34a06b98562cd', 'ADMIN');
+INSERT INTO user (id, created_date, deleted, modified_date, version, name, email, password, role) VALUES (1, '2012-06-01 16:02:49', '\0', NULL, 0, 'Administrator', 'admin@faqmasters.com', '52b890d1943a985cce2adae3e656e93799e18c1c92de09925204d3aeb28920136f81e5b6f454dfd3c437073e85865b49840c487a29f69ae39a514cd07e666179', 'ADMIN'),
+	(2, '2012-11-09 17:51:34', '\0', NULL, 0, 'venky@gmail.com', 'Venky', '5fc6eaa208496dde8160ec4de6b9bec15b1be4cf2c8001b858fee355ba91b18f9b1a3b59de99148c06a17584b3fc1139ffafa2b1a300d46d4400c751b6fa1a9f', 'ADMIN');
 	
 INSERT INTO category (id, created_date, deleted, modified_date, version, categoryDescription, name) VALUES
 	(1, '2012-11-09 17:52:15', '\0', NULL, 0, 'Java Category', 'Java'),
