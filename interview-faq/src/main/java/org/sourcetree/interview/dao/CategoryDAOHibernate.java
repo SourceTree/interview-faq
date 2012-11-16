@@ -81,8 +81,8 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 		queryStr.append(" where category.deleted=").append(Boolean.FALSE);
 
 		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
-				null, CATEGORY_DTO_ALL, queryStr.toString(), null, listProp,
-				CategoryDTO.class);
+				listProp != null ? "select count(*)" : null, CATEGORY_DTO_ALL,
+				queryStr.toString(), null, listProp, CategoryDTO.class);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 		queryStr.append(" and category.parentCategory is null");
 
 		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
-				null, CATEGORY_DTO_ALL, queryStr.toString(), null, listProp,
-				CategoryDTO.class);
+				listProp != null ? "select count(*)" : null, CATEGORY_DTO_ALL,
+				queryStr.toString(), null, listProp, CategoryDTO.class);
 	}
 }

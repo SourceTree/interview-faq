@@ -94,6 +94,8 @@ background: -o-linear-gradient(top,  #f79621 0%,#f9c667 100%); /* Opera 11.10+ *
 background: -ms-linear-gradient(top,  #f79621 0%,#f9c667 100%); /* IE10+ */
 background: linear-gradient(to bottom,  #f79621 0%,#f9c667 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f79621', endColorstr='#f9c667',GradientType=0 ); /* IE6-9 */}
+li.infinite_grid_item.initial_load_item{opacity:1;-moz-opacity: 1;filter: alpha(opacity=1);}
+li.infinite_grid_item{list-style: none;opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);}
 @media only screen and (max-width:480px){/* Smartphone */.header{margin-bottom:0}
 body{min-width:360px;}
 .logo{display:block;float:none;text-align:center}

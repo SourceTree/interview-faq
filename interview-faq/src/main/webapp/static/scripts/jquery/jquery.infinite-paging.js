@@ -60,7 +60,7 @@
 				} 
 				
 				//Logic to stop paging
-				if((data.listProp.endIndex +1) == data.listProp.totalRecords){
+				if((data.listProp.endIndex +1) >= data.listProp.totalRecords){
 					$(obj).stopInfinitePaging();
 				}
 			  }

@@ -10,9 +10,9 @@
 <title>Category</title>
 </head>
 <body>
-	<ul id="infinite_grid" class="infinite_grid">
+	<ul id="category_list" class="infinite_grid">
 		<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-			<li class="infinite_grid_item">${categoryDTO.categoryName}<br />
+			<li class="infinite_grid_item initial_load_item">${categoryDTO.categoryName}<br />
 				<span>${categoryDTO.categoryDescription}</span>
 			</li>
 		</c:forEach>
@@ -32,7 +32,7 @@
 
 		$(document).ready(function() {
 			$(function() {
-				$('#infinite_grid').infinitePaging({
+				$('#category_list').infinitePaging({
 					'url' : '<c:url value="/category/list"/>', 
 					'heightOffset' : 100,
 					'beforeLoad' : showLoader,
@@ -45,6 +45,10 @@
 					}
 				});
 
+				if('${categories.listProp.endIndex}' + 1 >= '${categories.listProp.totalRecords}'){
+					$('#category_list').stopInfinitePaging();
+				}
+				
 				// code for fade in element by element
 				$.fn.fadeInWithDelay = function() {
 					var delay = 0;
@@ -59,7 +63,7 @@
 				renderData = function(data) {
 					var htmlStr = [];
 					$.each(data.categoryDTOs, function(i, categoryDTO){
-						htmlStr.push('<li style="opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);>');
+						htmlStr.push('<li class="infinite_grid_item">');
 						htmlStr.push(categoryDTO.categoryName);
 						htmlStr.push('<br /><span>');
 						htmlStr.push(categoryDTO.categoryDescription);
