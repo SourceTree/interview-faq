@@ -1,4 +1,4 @@
-create table CATEGORY_QUESTION (question_id bigint not null, category_id bigint not null, unique (category_id)) ENGINE=InnoDB;
+create table CATEGORY_QUESTION (question_id bigint not null, category_id bigint not null) ENGINE=InnoDB;
 create table PARENT_CATEGORY (parent_category_id bigint, category_id bigint not null, primary key (category_id)) ENGINE=InnoDB;
 create table category (id bigint not null auto_increment, created_date datetime, deleted bit, modified_date datetime, version integer, categoryDescription varchar(500) not null, name varchar(80) not null, primary key (id), unique (name)) ENGINE=InnoDB;
 create table question (id bigint not null auto_increment, created_date datetime, deleted bit, modified_date datetime, version integer, answer varchar(5000) not null, question varchar(200) not null, primary key (id)) ENGINE=InnoDB;
