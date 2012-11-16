@@ -31,7 +31,7 @@ public class HomeController extends BaseController
 	String viewHome(Model model)
 	{
 
-		model.addAttribute("categories", getCategoryList());
+		model.addAttribute("parentCategories", getCategoryList());
 
 		return "home";
 
@@ -44,6 +44,7 @@ public class HomeController extends BaseController
 	 */
 	private CategoryListDTO getCategoryList()
 	{
-		return new CategoryListDTO(categoryService.findAllCategories(), null);
+		return new CategoryListDTO(categoryService.findAllParentCategories(),
+				null);
 	}
 }

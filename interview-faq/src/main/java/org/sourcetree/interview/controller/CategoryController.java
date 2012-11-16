@@ -75,6 +75,7 @@ public class CategoryController extends BaseController
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String categoryList(Model model)
 	{
+		// TODO: remove - venky
 		// Initialize ListProp with first page
 		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
 				null, null);
@@ -212,24 +213,4 @@ public class CategoryController extends BaseController
 				.findAllParentCategories(listProp);
 		return new CategoryListDTO(categoryDTOs, listProp);
 	}
-
-	/**
-	 * 
-	 * @param sessionAttributes
-	 * @param name
-	 * @param model
-	 * @return
-	 */
-
-	@RequestMapping(value = "/questions/{name}", method = RequestMethod.GET)
-	public String questionsList(SessionAttributes sessionAttributes,
-
-	@PathVariable String name, Model model)
-
-	{
-		System.out.println("********** Param Value ************" + name);
-		return null;
-
-	}
-
 }

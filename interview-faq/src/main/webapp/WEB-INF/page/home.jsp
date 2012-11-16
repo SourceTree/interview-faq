@@ -16,7 +16,7 @@
 		</div>
 		<br />		
 	</form>
-	<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
+	<c:forEach items="${parentCategories.categoryDTOs}" var="categoryDTO">
 			<div class="col_50 col_border">
 				<div>
 					<a href="<c:url value="/category/questions/"/>${categoryDTO.categoryName}"><strong>${categoryDTO.categoryName}</strong></a> <br>

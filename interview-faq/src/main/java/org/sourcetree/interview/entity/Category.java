@@ -53,9 +53,6 @@ public class Category extends AbstractEntity
 	private String categoryDescription;
 
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-	// @JoinTable(name = "CATEGORY_QUESTION", joinColumns = @JoinColumn(
-	// name = "category_id"), inverseJoinColumns = @JoinColumn(
-	// name = "question_id"))
 	private List<Question> questions;
 
 	@ManyToOne(fetch = FetchType.EAGER)
