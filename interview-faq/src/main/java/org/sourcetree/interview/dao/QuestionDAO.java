@@ -34,7 +34,7 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	/**
 	 * Retrieves the question as DTO object with ignore case.
 	 * 
-	 * @param param
+	 * @param id
 	 *            question id to fetch
 	 * @return Question DTO
 	 */
