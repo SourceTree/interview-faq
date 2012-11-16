@@ -156,7 +156,7 @@ public class QuestionServiceImpl implements QuestionService
 	private List<Category> processCategoryDto(
 			final List<CategoryDTO> categoryDTOs)
 	{
-		if (CoreUtil.isEmpty(categoryDTOs))
+		if (!CoreUtil.isEmpty(categoryDTOs))
 		{
 			List<Category> categories = new ArrayList<Category>();
 			Map<String, String> catMap = new HashMap<String, String>();
