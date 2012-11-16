@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
 import org.sourcetree.interview.enums.UserRoleEnum;
 
 /**
@@ -42,6 +43,7 @@ public class User extends AbstractEntity
 	private String name;
 
 	@Column(name = "email", unique = true, nullable = false)
+	@Index(name = "user_email")
 	private String email;
 
 	@Column(name = "password", length = 150, nullable = false)

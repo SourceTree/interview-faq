@@ -7,3 +7,5 @@ alter table CATEGORY_QUESTION add index FKD2C46E0788E429AD (category_id), add co
 alter table CATEGORY_QUESTION add index FKD2C46E071E34E0AD (question_id), add constraint FKD2C46E071E34E0AD foreign key (question_id) references question (id);
 alter table PARENT_CATEGORY add index FKA39080F388E429AD (category_id), add constraint FKA39080F388E429AD foreign key (category_id) references category (id);
 alter table PARENT_CATEGORY add index FKA39080F3FB31E198 (parent_category_id), add constraint FKA39080F3FB31E198 foreign key (parent_category_id) references category (id);
+create index category_name on category (name);
+create index user_email on user (email);

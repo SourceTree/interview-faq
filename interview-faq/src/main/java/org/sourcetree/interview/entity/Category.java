@@ -26,6 +26,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Index;
 
 /**
  * Category Entity
@@ -45,6 +46,7 @@ public class Category extends AbstractEntity
 	private Long id;
 
 	@Column(name = "name", length = 80, nullable = false, unique = true)
+	@Index(name = "category_name")
 	private String categoryName;
 
 	@Column(name = "categoryDescription", length = 500, nullable = false)
