@@ -10,7 +10,11 @@
  */
 package org.sourcetree.interview.controller;
 
+import org.sourcetree.interview.dto.CategoryListDTO;
+import org.sourcetree.interview.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -19,9 +23,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController extends BaseController
 {
+
+	@Autowired
+	private CategoryService categoryService;
+
 	@RequestMapping(value = "/home")
-	String viewHome()
+	String viewHome(Model model)
 	{
+
+		model.addAttribute("categories", getCategoryList());
+
 		return "home";
+
+	}
+
+	/**
+	 * 
+	 * @param listProp
+	 * @return
+	 */
+	private CategoryListDTO getCategoryList()
+	{
+		return new CategoryListDTO(categoryService.findAllCategories(), null);
 	}
 }

@@ -121,6 +121,33 @@ public class QuestionServiceImpl implements QuestionService
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<QuestionDTO> getQuestionsByCategoryName(String categoryName)
+	{
+		Category category = categoryDAO.findByParameter("categoryName",
+				categoryName);
+		if (category != null)
+		{
+			List<Question> questionList = category.getQuestions();
+			if (!CoreUtil.isEmpty(questionList))
+			{
+				List<QuestionDTO> questionDtos = new ArrayList<QuestionDTO>();
+				for (Question question : questionList)
+				{
+					QuestionDTO questionDTO = copyEntitytoDTO(question);
+					questionDtos.add(questionDTO);
+
+				}
+				return questionDtos;
+			}
+		}
+
+		return null;
+	}
+
+	/**
 	 * To Convert from DTO list to Entity list
 	 * 
 	 * @param categoryDTOs
@@ -192,6 +219,57 @@ public class QuestionServiceImpl implements QuestionService
 		localQuestion.setAnswer(questionDTO.getAnswer());
 
 		return localQuestion;
+	}
+
+	/**
+	 * copies Question entity data into Question dto
+	 * 
+	 * @param questionDTO
+	 *            Question DTO. cannot be empty
+	 * @param question
+	 *            Question entity. cannot be empty
+	 */
+	private QuestionDTO copyEntitytoDTO(final Question question)
+	{
+		if (question == null)
+		{
+
+			return null;
+		}
+		QuestionDTO questionDTO = new QuestionDTO();
+
+		questionDTO.setQuestion(question.getQuestion().trim());
+
+		questionDTO.setCategoryDTOs(processCategoryEntity(question
+				.getCategories()));
+		questionDTO.setAnswer(question.getAnswer());
+
+		return questionDTO;
+
+	}
+
+	/**
+	 * To Convert from Entity list to DTO list
+	 * 
+	 * @param category
+	 * @return categoryDTOs
+	 */
+	private List<CategoryDTO> processCategoryEntity(
+			final List<Category> categories)
+	{
+		if (CoreUtil.isEmpty(categories))
+		{
+			List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
+			for (Category category : categories)
+			{
+				CategoryDTO categoryDto = new CategoryDTO();
+				categoryDto.setId(category.getId());
+				categoryDto.setCategoryName(category.getCategoryName());
+				categoryDTOs.add(categoryDto);
+			}
+			return categoryDTOs;
+		}
+		return null;
 	}
 
 	/**

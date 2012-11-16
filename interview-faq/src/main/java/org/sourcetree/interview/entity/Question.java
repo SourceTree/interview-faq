@@ -12,9 +12,9 @@ package org.sourcetree.interview.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -22,9 +22,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
+//import org.hibernate.annotations.Cascade;
+//import org.hibernate.annotations.CascadeType;
 
 /**
  * Question Entity
@@ -49,8 +49,10 @@ public class Question extends AbstractEntity
 	@Column(name = "answer", length = 5000, nullable = false)
 	private String answer;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@Cascade(value = CascadeType.SAVE_UPDATE)
+	// @ManyToMany(fetch = FetchType.EAGER)
+	// @Cascade(value = CascadeType.SAVE_UPDATE)
+
+	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(name = "CATEGORY_QUESTION", joinColumns = @JoinColumn(
 			name = "question_id"), inverseJoinColumns = @JoinColumn(
 			name = "category_id"))

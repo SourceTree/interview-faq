@@ -79,4 +79,12 @@ public interface QuestionService
 	 */
 	QuestionDTO getQuestionDTOById(Long Id);
 
+	/**
+	 * Get Questions by category name
+	 * 
+	 * @param categoryName
+	 * @return
+	 */
+	List<QuestionDTO> getQuestionsByCategoryName(String categoryName);
+
 }
