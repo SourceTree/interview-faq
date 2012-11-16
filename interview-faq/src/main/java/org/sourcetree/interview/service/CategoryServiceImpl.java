@@ -98,6 +98,7 @@ public class CategoryServiceImpl implements CategoryService
 				category.setParentCategory(null);
 			}
 
+			category.setModifiedDate(new Date());
 			categoryDAO.update(category);
 		}
 	}

@@ -73,11 +73,11 @@ public interface QuestionService
 	/**
 	 * get question as a DTO object based on Id
 	 * 
-	 * @param Id
+	 * @param questionId
 	 *            Id of the question
 	 * @return question as DTO object
 	 */
-	QuestionDTO getQuestionDTOById(Long Id);
+	QuestionDTO getQuestionDTOById(Long questionId);
 
 	/**
 	 * Get Questions by category name

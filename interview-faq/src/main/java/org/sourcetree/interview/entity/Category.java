@@ -22,7 +22,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -34,8 +33,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Chalam Pavuluri
  */
 @Entity
-@Table(name = "category", uniqueConstraints = @UniqueConstraint(
-		columnNames = "name"))
+@Table(name = "category")
 @GenericGenerator(strategy = "native", name = "CategorySeq")
 public class Category extends AbstractEntity
 {
@@ -46,7 +44,7 @@ public class Category extends AbstractEntity
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "name", length = 80, nullable = false)
+	@Column(name = "name", length = 80, nullable = false, unique = true)
 	private String categoryName;
 
 	@Column(name = "categoryDescription", length = 500, nullable = false)

@@ -41,13 +41,13 @@ public class User extends AbstractEntity
 	@Column(name = "name", length = 80)
 	private String name;
 
-	@Column(name = "email")
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", length = 150)
+	@Column(name = "password", length = 150, nullable = false)
 	private String password;
 
-	@Column(name = "role", length = 30)
+	@Column(name = "role", length = 30, nullable = false)
 	@Enumerated(EnumType.STRING)
 	private UserRoleEnum role;
 

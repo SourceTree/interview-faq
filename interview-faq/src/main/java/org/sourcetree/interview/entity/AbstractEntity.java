@@ -31,7 +31,7 @@ public abstract class AbstractEntity implements Serializable
 	@Column(name = "deleted")
 	private Boolean deleted = Boolean.FALSE;
 
-	@Column(name = "created_date")
+	@Column(name = "created_date", nullable = false)
 	private Date createdDate;
 
 	@Column(name = "modified_date")
@@ -39,7 +39,7 @@ public abstract class AbstractEntity implements Serializable
 
 	@Version
 	@Column(name = "version")
-	private Integer version;
+	private Integer version = Integer.valueOf("0");
 
 	/**
 	 * @return the createdDate

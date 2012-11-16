@@ -11,6 +11,7 @@
 package org.sourcetree.interview.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,7 @@ public class QuestionServiceImpl implements QuestionService
 
 		if (question != null)
 		{
+			question.setCreatedDate(new Date());
 			questionDAO.save(question);
 			return;
 		}
@@ -73,6 +75,7 @@ public class QuestionServiceImpl implements QuestionService
 			{
 				question = copyDTOtoEntity(questionDTO, question);
 
+				question.setModifiedDate(new Date());
 				questionDAO.update(question);
 			}
 			return;
@@ -276,11 +279,11 @@ public class QuestionServiceImpl implements QuestionService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public QuestionDTO getQuestionDTOById(Long Id)
+	public QuestionDTO getQuestionDTOById(Long questionId)
 	{
-		if (Id != null)
+		if (questionId != null)
 		{
-			return questionDAO.getQuestionDTOById(Id);
+			return questionDAO.getQuestionDTOById(questionId);
 		}
 		return null;
 	}
