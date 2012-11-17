@@ -246,6 +246,7 @@ public class QuestionServiceImpl implements QuestionService
 		questionDTO.setCategoryDTOs(processCategoryEntity(question
 				.getCategories()));
 		questionDTO.setAnswer(question.getAnswer());
+		questionDTO.setId(question.getId());
 
 		return questionDTO;
 
@@ -260,7 +261,7 @@ public class QuestionServiceImpl implements QuestionService
 	private List<CategoryDTO> processCategoryEntity(
 			final List<Category> categories)
 	{
-		if (CoreUtil.isEmpty(categories))
+		if (!CoreUtil.isEmpty(categories))
 		{
 			List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
 			for (Category category : categories)
@@ -279,11 +280,19 @@ public class QuestionServiceImpl implements QuestionService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public QuestionDTO getQuestionDTOById(Long questionId)
+	public QuestionDTO getQuestionDTOById(Long Id)
 	{
-		if (questionId != null)
+		Question question = new Question();
+
+		if (Id != null)
 		{
-			return questionDAO.getQuestionDTOById(questionId);
+			question = findQuestionById(Id);
+			QuestionDTO questionDTO = new QuestionDTO();
+			if (question != null)
+			{
+				questionDTO = copyEntitytoDTO(question);
+				return questionDTO;
+			}
 		}
 		return null;
 	}

@@ -196,7 +196,17 @@ public class CategoryController extends BaseController
 	{
 		ResponseDTO response = new ResponseDTO();
 
-		categoryService.update(categoryDTO, categoryDTO.getId());
+		Map<String, String> errors = ValidationUtil.validate(categoryDTO,
+				validator, messageSource);
+		if (!errors.isEmpty())
+		{
+			response.setErrors(errors);
+			response.setStatus(OutcomeStatus.FAILURE);
+		}
+		else
+		{
+			categoryService.update(categoryDTO, categoryDTO.getId());
+		}
 
 		return response;
 	}

@@ -149,4 +149,37 @@ public class QuestionController extends BaseController
 					}
 				});
 	}
+
+	/**
+	 * to handle new partner request. this method will be invoked in the event
+	 * of form submissions from the client which will contains the
+	 * <b>application/x-www-form-urlencoded</b> as the content-type header
+	 * 
+	 * @param QuestionDTO
+	 *            Question DTO object
+	 * @return <code>{@linkplain QuestionDTO}</code> - response will be
+	 *         Serialised to either XML/JSON/text base on the request headers
+	 */
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public ResponseDTO updateQuestion(@ModelAttribute QuestionDTO questionDTO)
+	{
+		ResponseDTO response = new ResponseDTO();
+		Map<String, String> errors = ValidationUtil.validate(questionDTO,
+				validator, messageSource);
+
+		if (!errors.isEmpty())
+		{
+			response.setErrors(errors);
+			response.setStatus(OutcomeStatus.FAILURE);
+		}
+		else
+		{
+			questionService.update(questionDTO);
+		}
+
+		return response;
+	}
 }
