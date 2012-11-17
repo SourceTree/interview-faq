@@ -49,7 +49,7 @@ public class Category extends AbstractEntity
 	@Index(name = "category_name")
 	private String categoryName;
 
-	@Column(name = "displayname", length = 80, nullable = false, unique = true)
+	@Column(name = "displayname", length = 80, nullable = false)
 	private String categoryDisplayName;
 
 	@Column(name = "categoryDescription", length = 500, nullable = false)

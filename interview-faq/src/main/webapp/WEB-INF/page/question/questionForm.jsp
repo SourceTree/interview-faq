@@ -117,7 +117,7 @@
 				class="chzn-select-deselect" multiple="multiple"
 				data-placeholder="Add some tags">
 				<c:forEach items="${categories}" var="categories">
-					<option value="${categories.id}">${categories.categoryName}</option>
+					<option value="${categories.id}">${categories.categoryDisplayName}</option>
 				</c:forEach>
 			</select> <span id="error_category"></span>
 		</p>

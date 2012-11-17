@@ -5,7 +5,7 @@
 	file="/WEB-INF/page/common/taglibs.jsp"%>
 <!DOCTYPE html>
 <html>
-<title><s:message code="title.home" /></title>
+<title>${categoryDTO.categoryName}</title>
 <body>
 	<form class="cleanform" id="search" name="search"
 		action="<c:url value="ab"/>" method="post">

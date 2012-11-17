@@ -24,6 +24,7 @@
 		<p>
 		<input type="text" id=categoryDisplayName maxlength="80" name="categoryDisplayName" title="<s:message code="categoryForm.displayName"/>" placeholder="<s:message code="categoryForm.displayName"/>" />
 		<span id="error_categoryDisplayName"></span></p>
+		
 		<div id="wysihtml5-editor-toolbar">
 			<header class="img_header">
 				<ul class="commands">
@@ -112,7 +113,7 @@
 				class="chzn-select" data-placeholder="Choose a Parent Category (if any)">
 				<option value=""></option>
 				<c:forEach items="${parentCategories}" var="categories">
-					<option value="${categories.id}">${categories.categoryName}</option>
+					<option value="${categories.id}">${categories.categoryDisplayName}</option>
 				</c:forEach>
 			</select>
 		</p>

@@ -11,11 +11,11 @@
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><s:message code="categoryEdit.title"/> - ${category.categoryName}</title>
+<title><s:message code="categoryEdit.title"/> - ${category.categoryDisplayName}</title>
 </head>
 <body>
 <form id="categoryEdit" name="categoryEdit" method="post" class="cleanform" action="<c:url value="/category/edit"/>">
-<h2><s:message code="categoryEdit.title"/> - ${category.categoryName}</h2>
+<h2><s:message code="categoryEdit.title"/> - ${category.categoryDisplayName}</h2>
 	<input name="id" id="id" type="hidden" value="${category.id}"/>
 	<p>
 		<input type="text" id="categoryName" maxlength="80" name="categoryName" title="<s:message code="categoryForm.name"/>" placeholder="<s:message code="categoryForm.name"/>" value="${category.categoryName}" readonly="readonly"/>
@@ -114,7 +114,7 @@
 				class="chzn-select" data-placeholder="Choose a Parent Category (if any)">
 				<option value=""></option>
 				<c:forEach items="${parentCategories}" var="categories">
-					<option value="${categories.id}" <c:if test="${categories.id == category.parentCategoryDTO.id}">selected="selected"</c:if>>${categories.categoryName}</option>
+					<option value="${categories.id}" <c:if test="${categories.id == category.parentCategoryDTO.id}">selected="selected"</c:if>>${categories.categoryDisplayName}</option>
 				</c:forEach>
 		</select>
 	</p>
