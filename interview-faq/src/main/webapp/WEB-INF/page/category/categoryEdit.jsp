@@ -20,6 +20,9 @@
 	<p>
 		<input type="text" id="categoryName" maxlength="80" name="categoryName" title="<s:message code="categoryForm.name"/>" placeholder="<s:message code="categoryForm.name"/>" value="${category.categoryName}" readonly="readonly"/>
 		<span id="error_categoryName"></span></p>
+	<p>
+		<input type="text" id=categoryDisplayName maxlength="80" name="categoryDisplayName" title="<s:message code="categoryForm.displayName"/>" placeholder="<s:message code="categoryForm.displayName"/>" value="${category.categoryDisplayName}" />
+		<span id="error_categoryDisplayName"></span></p>
 		
 	<p>
 	<div id="wysihtml5-editor-toolbar">

@@ -49,6 +49,9 @@ public class Category extends AbstractEntity
 	@Index(name = "category_name")
 	private String categoryName;
 
+	@Column(name = "displayname", length = 80, nullable = false, unique = true)
+	private String categoryDisplayName;
+
 	@Column(name = "categoryDescription", length = 500, nullable = false)
 	private String categoryDescription;
 
@@ -146,4 +149,22 @@ public class Category extends AbstractEntity
 	{
 		this.parentCategory = parentCategory;
 	}
+
+	/**
+	 * @return the categoryDisplayName
+	 */
+	public String getCategoryDisplayName()
+	{
+		return categoryDisplayName;
+	}
+
+	/**
+	 * @param categoryDisplayName
+	 *            the categoryDisplayName to set
+	 */
+	public void setCategoryDisplayName(String categoryDisplayName)
+	{
+		this.categoryDisplayName = categoryDisplayName;
+	}
+
 }

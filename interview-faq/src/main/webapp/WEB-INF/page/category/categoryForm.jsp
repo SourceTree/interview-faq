@@ -21,6 +21,9 @@
 		<p>
 		<input type="text" id="categoryName" maxlength="80" name="categoryName" title="<s:message code="categoryForm.name"/>" placeholder="<s:message code="categoryForm.name"/>"/>
 		<span id="error_categoryName"></span></p>
+		<p>
+		<input type="text" id=categoryDisplayName maxlength="80" name="categoryDisplayName" title="<s:message code="categoryForm.displayName"/>" placeholder="<s:message code="categoryForm.displayName"/>" />
+		<span id="error_categoryDisplayName"></span></p>
 		<div id="wysihtml5-editor-toolbar">
 			<header class="img_header">
 				<ul class="commands">

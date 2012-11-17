@@ -56,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService
 		Category category = new Category();
 		category.setCategoryName(catergoryDTO.getCategoryName().trim());
 		category.setCategoryDescription(catergoryDTO.getCategoryDescription());
+		category.setCategoryDisplayName(catergoryDTO.getCategoryDisplayName());
 		category.setCreatedDate(new Date());
 
 		if (catergoryDTO.getParentCategoryDTO() != null
@@ -84,6 +85,8 @@ public class CategoryServiceImpl implements CategoryService
 		{
 			category.setCategoryDescription(catergoryDTO
 					.getCategoryDescription());
+			category.setCategoryDisplayName(catergoryDTO
+					.getCategoryDisplayName());
 
 			// Logic for updating parent category
 			if (catergoryDTO.getParentCategoryDTO() != null)
@@ -251,6 +254,7 @@ public class CategoryServiceImpl implements CategoryService
 		categoryDTO.setId(category.getId());
 		categoryDTO.setCategoryName(category.getCategoryName());
 		categoryDTO.setCategoryDescription(category.getCategoryDescription());
+		categoryDTO.setCategoryDisplayName(category.getCategoryDisplayName());
 
 		if (category.getParentCategory() != null)
 		{

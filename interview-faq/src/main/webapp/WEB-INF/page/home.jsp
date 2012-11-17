@@ -19,7 +19,7 @@
 	<c:forEach items="${parentCategories.categoryDTOs}" var="categoryDTO">
 			<div class="col_50 col_border">
 				<div>
-					<a href="<c:url value="/category/"/>${categoryDTO.categoryName}"><strong>${categoryDTO.categoryName}</strong></a> <br>
+					<a href="<c:url value="/category/"/>${categoryDTO.categoryName}"><strong>${categoryDTO.categoryDisplayName}</strong></a> <br>
 					<em>${categoryDTO.categoryDescription}</em>
 				</div>
 			</div>

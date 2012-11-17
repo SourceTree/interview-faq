@@ -34,6 +34,11 @@ public class CategoryDTO extends BaseDTO
 			groups = SecondGroup.class)
 	private String categoryName;
 
+	@NotEmpty(message = "categoryDisplayName.null")
+	@Size(min = 3, max = 80, message = "categoryDisplayName.length",
+			groups = SecondGroup.class)
+	private String categoryDisplayName;
+
 	@NotEmpty(message = "categoryDescription.null")
 	@SafeHtml(message = "categoryDescription.html", groups = SecondGroup.class)
 	@Size(max = 500, message = "categoryDescription.length",
@@ -128,4 +133,22 @@ public class CategoryDTO extends BaseDTO
 	{
 		this.parentCategoryDTO = parentCategoryDTO;
 	}
+
+	/**
+	 * @return the categoryDisplayName
+	 */
+	public String getCategoryDisplayName()
+	{
+		return categoryDisplayName;
+	}
+
+	/**
+	 * @param categoryDisplayName
+	 *            the categoryDisplayName to set
+	 */
+	public void setCategoryDisplayName(String categoryDisplayName)
+	{
+		this.categoryDisplayName = categoryDisplayName;
+	}
+
 }

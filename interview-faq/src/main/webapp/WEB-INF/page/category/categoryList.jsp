@@ -12,7 +12,7 @@
 <body>
 	<ul id="category_list" class="infinite_grid">
 		<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-			<li class="infinite_grid_item initial_load_item">${categoryDTO.categoryName}<br />
+			<li class="infinite_grid_item initial_load_item">${categoryDTO.categoryDisplayName}<br />
 				<span>${categoryDTO.categoryDescription}</span>
 			</li>
 		</c:forEach>

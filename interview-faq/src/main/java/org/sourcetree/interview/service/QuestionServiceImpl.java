@@ -269,6 +269,8 @@ public class QuestionServiceImpl implements QuestionService
 				CategoryDTO categoryDto = new CategoryDTO();
 				categoryDto.setId(category.getId());
 				categoryDto.setCategoryName(category.getCategoryName());
+				categoryDto.setCategoryDisplayName(category
+						.getCategoryDisplayName());
 				categoryDTOs.add(categoryDto);
 			}
 			return categoryDTOs;

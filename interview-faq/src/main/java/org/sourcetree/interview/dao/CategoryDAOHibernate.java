@@ -40,6 +40,8 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 		CATEGORY_DTO_ALL.put("categoryDescription",
 				"category.categoryDescription");
 		CATEGORY_DTO_ALL.put("id", "category.id");
+		CATEGORY_DTO_ALL.put("categoryDisplayName",
+				"category.categoryDisplayName");
 	}
 
 	private static final Map<String, String> CATEGORY_DTO = new HashMap<String, String>();
@@ -48,6 +50,7 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 		CATEGORY_DTO.put("categoryName", "category.categoryName");
 		CATEGORY_DTO.put("id", "category.id");
 		CATEGORY_DTO.put("categoryDescription", "category.categoryDescription");
+		CATEGORY_DTO.put("categoryDisplayName", "category.categoryDisplayName");
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 	@Override
 	public List<CategoryDTO> getAllCategoryDTOs(ListProp listProp)
 	{
-		StringBuilder queryStr = new StringBuilder(" from ");
+		StringBuilder queryStr = new StringBuilder(AppConstants.FROM);
 		queryStr.append(getEntityClass().getName()).append(" as category");
 		queryStr.append(" where category.deleted=").append(Boolean.FALSE);
 

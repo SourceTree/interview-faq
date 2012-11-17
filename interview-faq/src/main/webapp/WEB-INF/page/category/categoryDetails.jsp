@@ -16,62 +16,57 @@
 		</div>
 		<br />
 	</form>
+	<c:choose>
+		<c:when test="${!empty childCategories}">
+			<div class="col_25 col_border">
 
-	<div class="col_25 col_border">
-
-		<c:set var="subCategory" value="${categoryDTO.categoryName}" />
-		<c:choose>
-			<c:when test="${!empty childCategories}">
 				<c:forEach items="${childCategories}" var="childCategoryDTO">
 					<c:choose>
 						<c:when
 							test="${childCategoryDTO.categoryName eq categoryDTO.categoryName}">
 							<div>
-								<strong class="question_hightlight">${childCategoryDTO.categoryName}</strong>
+								<strong class="question_hightlight">${childCategoryDTO.categoryDisplayName}</strong>
 							</div>
 						</c:when>
 						<c:otherwise>
 							<div>
 								<a
-									href="<c:url value="/category/"/>${parentCategoryName}/${childCategoryDTO.categoryName}"><strong>${childCategoryDTO.categoryName}</strong></a>
+									href="<c:url value="/category/"/>${parentCategoryName}/${childCategoryDTO.categoryName}"><strong>${childCategoryDTO.categoryDisplayName}</strong></a>
 							</div>
 						</c:otherwise>
 
 					</c:choose>
 
 				</c:forEach>
-			</c:when>
-
-			<c:otherwise>
-				<div>
-					<strong><s:message
-							code="catergorySubCategory.notAvailable" /> -
-						${parentCategoryName}</strong>
-				</div>
-			</c:otherwise>
-		</c:choose>
-
+			</div>
+			<div class="col_75 col_border">
+		</c:when>
+		<c:otherwise>
+			<div class="col_border">
+		</c:otherwise>
+	</c:choose>
+	<div>
+		<h2>${categoryDTO.categoryDisplayName}</h2>
 	</div>
-	<div class="col_75 col_border">
-		<h2>${categoryDTO.categoryName}</h2>
-		<c:choose>
-			<c:when test="${!empty categoryDTO.questionDtos}">
-				<c:forEach items="${categoryDTO.questionDtos}" var="questionDTO"
-					varStatus="questionNum">
-					<div>
-						<strong class="question_hightlight">${questionDTO.question}</strong>
-						<br> <strong><em>${questionDTO.answer}</em></strong>
-					</div>
-				</c:forEach>
-			</c:when>
-
-			<c:otherwise>
+	<c:choose>
+		<c:when test="${!empty categoryDTO.questionDtos}">
+			<c:forEach items="${categoryDTO.questionDtos}" var="questionDTO"
+				varStatus="questionNum">
 				<div>
-					<strong><s:message code="catergoryQuestion.notAvailable" />
-						- ${categoryDTO.categoryName}</strong>
+					<strong class="question_hightlight">${questionDTO.question}</strong>
+					<br> <strong><em>${questionDTO.answer}</em></strong>
 				</div>
-			</c:otherwise>
-		</c:choose>
+			</c:forEach>
+		</c:when>
+
+		<c:otherwise>
+			<div>
+				<strong class="question_hightlight"><s:message
+						code="catergoryQuestion.notAvailable" /> -
+					${categoryDTO.categoryDisplayName}</strong>
+			</div>
+		</c:otherwise>
+	</c:choose>
 
 	</div>
 
