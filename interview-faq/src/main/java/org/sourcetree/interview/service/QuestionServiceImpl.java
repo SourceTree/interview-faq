@@ -280,13 +280,13 @@ public class QuestionServiceImpl implements QuestionService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public QuestionDTO getQuestionDTOById(Long Id)
+	public QuestionDTO getQuestionDTOById(Long questionId)
 	{
 		Question question = new Question();
 
-		if (Id != null)
+		if (questionId != null)
 		{
-			question = findQuestionById(Id);
+			question = findQuestionById(questionId);
 			QuestionDTO questionDTO = new QuestionDTO();
 			if (question != null)
 			{
