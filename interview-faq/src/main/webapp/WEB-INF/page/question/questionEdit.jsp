@@ -121,8 +121,7 @@
 				class="chzn-select-deselect" multiple="multiple"
 				data-placeholder="Add some tags">
 				<c:forEach items="${categories}" var="categories">
-					<option value="${categories.id}" 
-					<c:forEach items="${question.categoryDTOs}" var="category"><c:if test="${categories.id == category.id}">selected="selected"</c:if></c:forEach>>${categories.categoryName}</option>
+					<option value="${categories.id}">${categories.categoryName}</option>
 				</c:forEach>
 			</select> <span id="error_category"></span>
 		</p>
@@ -183,6 +182,10 @@
 
 				$("#questionEdit").ajaxForm(options);
 
+				<c:forEach items="${question.categoryDTOs}" var="selectedCategory">
+					$('#categoryDTOs').val('${selectedCategory.id}');
+				</c:forEach>
+				
 				cachedScript(
 						"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
 						.done(function() {
