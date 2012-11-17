@@ -39,9 +39,6 @@
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- one of the properties available; the maximum file size in bytes (500 
-			KB) -->
-		<!-- <property name="maxUploadSize" value="512000" /> -->
 	</bean>
 
 	<mvc:resources mapping="/static/images/**" location="/static/images/" />
@@ -49,7 +46,9 @@
 	<mvc:resources mapping="/static/scripts/**" location="/static/scripts/" />
 
 	<mvc:view-controller path="/" view-name="redirect:/home" />
-
+	<mvc:view-controller path="/about" view-name="about" />
+	<mvc:view-controller path="/contact" view-name="contactus" />
+	
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">

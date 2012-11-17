@@ -18,7 +18,8 @@
 	<aop:aspectj-autoproxy />
 
 	<mvc:interceptors>
-		<bean id="noCache" class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" />
+		<bean id="noCache"
+			class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" />
 
 		<bean id="themeChangeInterceptor"
 			class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"
@@ -39,9 +40,6 @@
 
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- one of the properties available; the maximum file size in bytes (500 
-			KB) -->
-		<!-- <property name="maxUploadSize" value="512000" /> -->
 	</bean>
 
 	<mvc:resources mapping="/static/images/**" location="/static/images/" />
@@ -49,6 +47,8 @@
 	<mvc:resources mapping="/static/scripts/**" location="/static/scripts/" />
 
 	<mvc:view-controller path="/" view-name="redirect:/home" />
+	<mvc:view-controller path="/about" view-name="about" />
+	<mvc:view-controller path="/contact" view-name="contactus" />
 
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -95,7 +95,8 @@
 		p:basenames="classpath:messages,classpath:app" p:fileEncodings="UTF-8"
 		p:defaultEncoding="UTF-8" />
 
-	<bean id="jaxbJacksonObjectMapper" class="org.sourcetree.interview.support.JaxbJacksonObjectMapper" />
+	<bean id="jaxbJacksonObjectMapper"
+		class="org.sourcetree.interview.support.JaxbJacksonObjectMapper" />
 
 	<bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

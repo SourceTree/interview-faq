@@ -24,26 +24,3 @@ ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li:first-child, ul.sf-menu>li.sfHover>ul>
 ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li>a { font-family:Arial, Helvetica, sans-serif; font-weight:normal; font-size:14px; line-height:17px; color:#fff; margin:6px 0 7px 0px; display:inline-block;}
 ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li:hover { }
 ul.sf-menu>li.sfHover>ul>li.sfHover>ul>li>a:hover {color:#1689b6; text-decoration:none;}
-#responsive_menu{display:none;color:#fff;background-color: #58c9f5;cursor: pointer;}
-@media only screen and (max-width: 768px){
-	nav{padding-right:0px;}
-	.sf-menu > li > a {padding:114px 5px 0;}
-	.sf-menu > li > a .menu-arrow{display:inline-block; width:7px; height:4px; overflow:hidden; text-indent:-999em; font-size:0; line-height:0; background:url(../../images/menu_arrow.gif) center top no-repeat; margin-left:5px; vertical-align:middle;}
-	.sf-menu ul {min-width:150px;}
-	.sf-menu ul .menu-arrow{display:inline;}
-	.sf-menu li li:hover ul, .sf-menu li li.sfHover ul {left:150px;}
-}
-
-@media only screen and (max-width:480px) {
-	#responsive_menu{display:block;}
-	/*menu*/
-	.sf-menu{display:none; position:absolute; top:154px; right:0; min-width:130px; z-index:999;}
-	.sf-menu > li {float:none; padding:0; margin-right:0; padding:1px; background:#e6e6e6;}
-	.sf-menu > li > a {border-top:1px solid #f4f4f4; border-left:1px solid #f4f4f4; color:#2d2d2d; padding:7px 15px 8px; background:transparent;}
-	.sf-menu > li.sfHover > a,.sf-menu > li > a:hover , .sf-menu > li.current > a {color:#41b3de;}
-	.menu > li > a .menu-arrow{display:inline; width:auto; height:auto; text-indent:0; font-size:inherit; line-height:inherit; background:none; margin-left:0; vertical-align:inherit;}
-	/***submenu***/
-	.sf-menu ul {right:131px; left:auto !important; top:1px !important; min-width:152px; padding-top:0; background:none;}
-	/***submenu***/
-	.sf-menu ul ul {position:static; width:auto;}
-}

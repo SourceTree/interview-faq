@@ -1,4 +1,3 @@
-
 /*
  * Superfish v1.4.8 - jQuery menu widget
  * Copyright (c) 2008 Joel Birch
@@ -13,9 +12,8 @@
 ;(function($){
 	$.fn.superfish = function(op){
 
-		var sf = $.fn.superfish,
-			c = sf.c,
-			$arrow = $(['<span class="',c.arrowClass,'"></span>'].join('')),
+		var sf = $.fn.superfish, c = sf.c,
+			$arrow = $(['<span class="',c.arrowClass,'"> &rsaquo;</span>'].join('')),
 			over = function(){
 				var $$ = $(this), menu = getMenu($$);
 				clearTimeout(menu.sfTimer);
@@ -55,7 +53,6 @@
 			var $a = $('a',this);
 			$a.each(function(i){
 				var $li = $a.eq(i).parents('li');
-				$a.eq(i).focus(function(){over.call($li);}).blur(function(){out.call($li);});
 			});
 			o.onInit.call(this);
 			
@@ -78,17 +75,17 @@
 		bcClass     : 'sf-breadcrumb',
 		menuClass   : 'sf-js-enabled',
 		anchorClass : 'sf-with-ul',
-		arrowClass  : 'sf-sub-indicator',
+		arrowClass  : 'menu-arrow',
 		shadowClass : 'sf-shadow'
 	};
 	sf.defaults = {
 		hoverClass	: 'sfHover',
 		pathClass	: 'overideThisToUse',
-		pathLevels	: 1,
-		delay		: 1200,
+		pathLevels	: 2,
+		delay		: 1000,
 		animation	: {height:'show'},
 		speed		: 'normal',
-		autoArrows	: true,
+		autoArrows	: false,
 		dropShadows : false,
 		disableHI	: false,		// true disables hoverIntent detection
 		onInit		: function(){}, // callback functions
@@ -102,16 +99,15 @@
 				not = (o.retainPath===true) ? o.$path : '';
 			o.retainPath = false;
 			var $ul = $(['li.',o.hoverClass].join(''),this).add(this).not(not).removeClass(o.hoverClass)
-					.find('>ul').hide().css('visibility','hidden');
+					.find('>ul').hide();
 			o.onHide.call($ul);
-			//Cufon.refresh();
 			return this;
 		},
 		showSuperfishUl : function(){
 			var o = sf.op,
 				sh = sf.c.shadowClass+'-off',
-				$ul = this.addClass(o.hoverClass)
-					.find('>ul:hidden').css('visibility','visible');
+				$ul = this.not('.accorChild').addClass(o.hoverClass)
+					.find('>ul:hidden');
 			sf.IE7fix.call($ul);
 			o.onBeforeShow.call($ul);
 			$ul.animate(o.animation,o.speed,function(){ sf.IE7fix.call($ul); o.onShow.call($ul); });
@@ -120,5 +116,7 @@
 	});
 
 })(jQuery);
-
-$(function(){$('.sf-menu').superfish()})
+var menuCl='sf-menu';
+$(function(){
+	$('.sf-menu').superfish();
+});
