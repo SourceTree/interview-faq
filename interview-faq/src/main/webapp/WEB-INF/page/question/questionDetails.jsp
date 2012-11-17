@@ -11,8 +11,6 @@
 <title><s:message code="questionDetails.title" /></title>
 </head>
 <body>
-	<form id="questionDetails" name="questionDetails" method="post"
-		class="cleanform" action="<c:url value="/question/details"/>">
 		<h2>
 			<strong><s:message code="questionDetails.title" /></strong>
 		</h2>
@@ -36,6 +34,5 @@
 				<s:message code="btn.back" />
 			</button>
 		</p>
-		</form>
 </body>
 </html>
