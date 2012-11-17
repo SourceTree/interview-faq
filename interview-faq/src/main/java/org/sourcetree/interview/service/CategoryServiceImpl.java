@@ -45,8 +45,8 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryById" }, allEntries = true,
-			beforeInvocation = false)
+			"categoryDTOByName", "categoryDTOById", "categoryById" },
+			allEntries = true, beforeInvocation = false)
 	public void create(CategoryDTO catergoryDTO)
 	{
 		Category category = new Category();
@@ -71,8 +71,8 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryById" }, allEntries = true,
-			beforeInvocation = false)
+			"categoryDTOByName", "categoryDTOById", "categoryById" },
+			allEntries = true, beforeInvocation = false)
 	public void update(CategoryDTO catergoryDTO, Long categoryId)
 	{
 		Category category = findCategoryById(categoryId);
@@ -128,7 +128,8 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryById" }, allEntries = true)
+			"categoryDTOByName", "categoryDTOById", "categoryById" },
+			allEntries = true)
 	public boolean deleteCategoryById(Long categoryId)
 	{
 		return categoryDAO.deleteById(categoryId);
