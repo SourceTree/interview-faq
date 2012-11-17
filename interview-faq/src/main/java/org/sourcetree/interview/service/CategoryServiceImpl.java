@@ -10,6 +10,7 @@
  */
 package org.sourcetree.interview.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.ListProp;
+import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Category;
+import org.sourcetree.interview.entity.Question;
 import org.sourcetree.interview.enums.QueryCriteriaTypeEnum;
+import org.sourcetree.interview.support.CoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -180,8 +184,7 @@ public class CategoryServiceImpl implements CategoryService
 		if (!StringUtils.isBlank(name))
 		{
 			Category category = categoryDAO.findByParameter("categoryName",
-					name.trim());
-
+					name.trim(), false, true);
 			if (category != null)
 			{
 				return copyEntityToDTO(category);
@@ -222,6 +225,16 @@ public class CategoryServiceImpl implements CategoryService
 		return categoryDAO.getAllParentCategorDTOs(listProp);
 	}
 
+	@Override
+	// @Cacheable(value = "allChildCategoriesByParentName", key =
+	// "#listProp.page")
+	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
+			ListProp listProp, String parentCategoryName)
+	{
+		return categoryDAO.getChildCategorDTOsByParentName(listProp,
+				parentCategoryName);
+	}
+
 	/**
 	 * 
 	 * @param category
@@ -244,7 +257,34 @@ public class CategoryServiceImpl implements CategoryService
 			categoryDTO.setParentCategoryDTO(copyEntityToDTO(category
 					.getParentCategory()));
 		}
+		categoryDTO.setQuestionDtos(processQuestionEntity(category
+				.getQuestions()));
 
 		return categoryDTO;
+	}
+
+	/**
+	 * To Convert from Entity list to DTO list
+	 * 
+	 * @param questions
+	 * @return List Question DTOs
+	 */
+	private List<QuestionDTO> processQuestionEntity(
+			final List<Question> questions)
+	{
+		if (!CoreUtil.isEmpty(questions))
+		{
+			List<QuestionDTO> questionDTOs = new ArrayList<QuestionDTO>();
+			for (Question question : questions)
+			{
+				QuestionDTO questionDTO = new QuestionDTO();
+				questionDTO.setId(question.getId());
+				questionDTO.setQuestion(question.getQuestion());
+				questionDTO.setAnswer(question.getAnswer());
+				questionDTOs.add(questionDTO);
+			}
+			return questionDTOs;
+		}
+		return null;
 	}
 }

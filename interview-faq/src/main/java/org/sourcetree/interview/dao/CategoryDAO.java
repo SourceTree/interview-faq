@@ -60,4 +60,15 @@ public interface CategoryDAO extends GenericDAO<Category, Long>
 	 * @return Category DTO List
 	 */
 	List<CategoryDTO> getAllParentCategorDTOs(ListProp listProp);
+
+	/**
+	 * Retrieves all child categories (non deleted) of the given parent.
+	 * 
+	 * @param listProp
+	 *            Listing property object. can be null.
+	 * @param parentCategoryName
+	 * @return Category DTO List
+	 */
+	public List<CategoryDTO> getChildCategorDTOsByParentName(ListProp listProp,
+			String parentCategoryName);
 }

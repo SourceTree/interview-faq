@@ -21,6 +21,7 @@ import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
+import org.sourcetree.interview.support.SessionAttributes;
 import org.sourcetree.interview.support.WebUtil;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
@@ -162,16 +163,36 @@ public class CategoryController extends BaseController
 	 * of questions.
 	 * 
 	 * @param sessionAttributes
-	 * @param name
+	 * @param parenCategoryName
 	 * @param model
 	 * @return category page
 	 */
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
-	public String categoryDetailsForm(@PathVariable String name, Model model)
+	@RequestMapping(value = "/{parenCategoryName}", method = RequestMethod.GET)
+	public String categoryDetailsForm(@PathVariable String parenCategoryName,
+			Model model)
 	{
-		model.addAttribute("category",
-				categoryService.getCategoryDTOByName(name));
+		setCategoryListAttributes(model, parenCategoryName);
+		return "category/categoryDetails";
 
+	}
+
+	/**
+	 * 
+	 * @param sessionAttributes
+	 * @param parentCategoryName
+	 * @param subCategoryName
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/{parentCategoryName}/{subCategoryName}",
+			method = RequestMethod.GET)
+	public String subCategoryQuestionsList(
+			SessionAttributes sessionAttributes,
+			@PathVariable(value = "parentCategoryName") String parentCategoryName,
+			@PathVariable(value = "subCategoryName") String subCategoryName,
+			Model model)
+	{
+		setCategoryListAttributes(model, parentCategoryName, subCategoryName);
 		return "category/categoryDetails";
 	}
 
@@ -221,6 +242,35 @@ public class CategoryController extends BaseController
 				null, null);
 
 		return getCategoryList(listProp);
+	}
+
+	private void setCategoryListAttributes(Model model, String... categories)
+	{
+		String parentCategoryName = categories[0];
+		String subCategoryName = null;
+		if (categories.length > 1)
+		{
+			subCategoryName = categories[1];
+		}
+
+		List<CategoryDTO> childCategories = categoryService
+				.findAllChildCategorDTOsByParentName(null, parentCategoryName);
+
+		CategoryDTO categoryDTO = null;
+		if (subCategoryName != null)
+		{
+			categoryDTO = categoryService.getCategoryDTOByName(subCategoryName);
+		}
+		else
+		{
+			categoryDTO = categoryService
+					.getCategoryDTOByName(parentCategoryName);
+		}
+
+		model.addAttribute("childCategories", childCategories);
+		model.addAttribute("parentCategoryName", parentCategoryName);
+		model.addAttribute("categoryDTO", categoryDTO);
+
 	}
 
 	/**

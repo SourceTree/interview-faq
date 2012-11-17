@@ -115,7 +115,7 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 	@Override
 	public List<CategoryDTO> getAllParentCategorDTOs(ListProp listProp)
 	{
-		StringBuilder queryStr = new StringBuilder(" from ");
+		StringBuilder queryStr = new StringBuilder(AppConstants.FROM);
 		queryStr.append(getEntityClass().getName()).append(" as category");
 		queryStr.append(" where category.deleted=").append(Boolean.FALSE);
 		queryStr.append(" and category.parentCategory is null");
@@ -123,5 +123,30 @@ public class CategoryDAOHibernate extends GenericDAOImpl<Category, Long>
 		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
 				listProp != null ? "select count(*)" : null, CATEGORY_DTO_ALL,
 				queryStr.toString(), null, listProp, CategoryDTO.class);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
+	public List<CategoryDTO> getChildCategorDTOsByParentName(ListProp listProp,
+			String parentCategoryName)
+	{
+		StringBuilder queryStr = new StringBuilder(AppConstants.FROM);
+		queryStr.append(getEntityClass().getName()).append(" as category");
+		queryStr.append(" where category.deleted=").append(":DELETED");
+		queryStr.append(" and ");
+		queryStr.append(getDialect().getLowercaseFunction()).append("(")
+				.append("category.parentCategory.categoryName").append(")=")
+				.append(":NAME");
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("DELETED", Boolean.FALSE);
+		params.put("NAME", parentCategoryName.toLowerCase());
+
+		return (List<CategoryDTO>) HibernateUtil.list(getSessionFactory(),
+				listProp != null ? "select count(*)" : null, CATEGORY_DTO_ALL,
+				queryStr.toString(), params, listProp, CategoryDTO.class);
 	}
 }

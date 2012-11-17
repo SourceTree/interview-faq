@@ -122,4 +122,15 @@ public interface CategoryService
 	 * @return category as DTO object
 	 */
 	CategoryDTO getCategoryDTOById(Long categoryId);
+
+	/**
+	 * retrieves all child categories by parent category name.
+	 * 
+	 * @param listProp
+	 * @param parentCategoryName
+	 * @return List of category DTO
+	 */
+	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
+			ListProp listProp, String parentCategoryName);
+
 }

@@ -74,6 +74,7 @@ box-shadow:0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);}
 .cleanform .area .error {float:none;}
 .cleanform textarea {width:548px;height:207px;resize:none;overflow:auto;}
 .buttons-wrapper{text-align:right; position:relative;}
+.question_hightlight{color:#f79621;}
 .cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;padding:10px;cursor:pointer;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;}
 .cleanform button:hover{background:#178AB6;}
 .search{text-align: center;}
