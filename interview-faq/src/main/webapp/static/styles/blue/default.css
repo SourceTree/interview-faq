@@ -1,12 +1,12 @@
 @import url("../default.css");
 /* Skin "Simple" by Renat Rafikov */
-body{background:#FFF;width:1024px;font-size:13px;font-family:Helvetica, arial, freesans, clean, sans-serif;color:#6D6D6D;line-height: 19px;margin:0 auto;}
+body{width:1024px;font-size:13px;font-family:Helvetica, arial, freesans, clean, sans-serif;color:#6D6D6D;line-height: 19px;margin:0 auto;}
 a{color:#53C9F6;}
 a:hover{text-decoration:none;}
 a:visited{color:#53C9F6;}
 ul li,ol li{padding:0 0 .4em 0}
-.container{background-color:#fff; margin:0 auto;margin-top: 5px;}
-.header{padding:30px 0 10px 0;}
+.container{background-color:#53C9F6; margin:0 auto;padding-top: 5px;}
+.header{padding:30px 2px 10px 2px;}
 .logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;}
 #main{border:1px solid #DDDDE0; border-radius:8px;margin-bottom:10px;}
 .menu_main{float:right;text-align:right;margin:.3em 0 0 0;font-size:12px}
@@ -32,8 +32,11 @@ h5,h6{font-weight:bold}
 .warning{color:#ec252e;padding:0 0 0 14px;}
 .success{color:#0bbe2e;padding:0 0 0 14px;}
 .message{color:#bcd9ff;padding:0 0 0 14px;}
-.container_col{width:160px;margin:0 auto;float:left;}
+.container_col{width:158px;margin:0 auto;float:left;}
+.container_col.left{padding-left:2px;}
+.container_col.right{padding-right:2px;}
 .container_col.content{width:702px;}
+.header .container_col.content{width:1020px;}
 /* Columns */
 .col_12{width:10%;margin:0 2% 0 0;float:left}
 .col_25{width:23%;margin:0 2% 0 0;float:left}
@@ -74,7 +77,7 @@ box-shadow:0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);}
 .cleanform input:focus,.cleanform textarea:focus,.cleanform select:focus{-webkit-box-shadow:0 0 5px rgba(0, 0, 0, .3);-moz-box-shadow:0 0 5px rgba(0, 0, 0, .3);box-shadow:0 0 5px rgba(0, 0, 0, .3);border:1px solid #5897FB;}
 .cleanform select{width:346px;}
 .cleanform .area .error {float:none;}
-.cleanform textarea {width:548px;height:207px;resize:none;overflow:auto;}
+.cleanform textarea {width:400px;resize:none;overflow:auto;}
 .buttons-wrapper{text-align:right; position:relative;}
 .question_hightlight{color:#f79621;}
 .cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;padding:10px;cursor:pointer;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;}
@@ -99,3 +102,5 @@ background: linear-gradient(to bottom,  #f79621 0%,#f9c667 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f79621', endColorstr='#f9c667',GradientType=0 ); /* IE6-9 */}
 li.infinite_grid_item.initial_load_item{opacity:1;-moz-opacity: 1;filter: alpha(opacity=1);}
 li.infinite_grid_item{list-style: none;opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);}
+.ads_top{height:96px;width:100%;}
+.link_font11{font-size: 12px;}

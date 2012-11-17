@@ -10,11 +10,6 @@
  $.fn.infinitePaging = function(options) {
   	
 		var opts = $.extend($.fn.infinitePaging.defaults, options);  
-		var target = opts.scrollTarget;
-		if (target == null){
-			target = obj; 
-	 	}
-		opts.scrollTarget = target;
 	 
 		return this.each(function() {
 		  $.fn.infinitePaging.init($(this), opts);
@@ -29,20 +24,23 @@
 	  
   };
   
+  $.fn.loadMore = function(opts){
+	  if ($(this).attr('infinitePaging') == 'enabled'){
+			$.fn.infinitePaging.loadContent(this, opts);
+	  }
+  };
+  
   $.fn.infinitePaging.loadContent = function(obj, opts){
-	 var target = opts.scrollTarget;
-	 var mayLoadContent = $(target).scrollTop()+opts.heightOffset >= $(document).height() - $(target).height();
-	 if (mayLoadContent){
 		 if (opts.beforeLoad != null){
 			opts.beforeLoad(); 
+		 
 		 }
+		 $('.pager').remove();
 		 $(obj).children().attr('rel', 'loaded');
 		 var localUrl = opts.url + '/' + (opts.page + 1);
 		 if(opts.sortProperty != null){
 			 localUrl = localUrl + '?sort=' + opts.sortProperty + '&order=' + opts.sortOrder;
 		}
-		 
-		 opts.isLoading = true;
 		 
 		 $.ajax({
 			  type: opts.ajaxType,
@@ -62,42 +60,29 @@
 				//Logic to stop paging
 				if((data.listProp.endIndex +1) >= data.listProp.totalRecords){
 					$(obj).stopInfinitePaging();
+				} else {
+					$(obj).append('<div class="pager">LoadMore</div>');
 				}
 			  }
 		 });
-	 }
-	 
   };
   
   $.fn.infinitePaging.init = function(obj, opts){
-	 var target = opts.scrollTarget;
-	 $(obj).attr('infinitePaging', 'enabled');
-	
-	 $(target).scroll(function(event){
-		if ($(obj).attr('infinitePaging') == 'enabled'){
-			if(!opts.isLoading){
-				$.fn.infinitePaging.loadContent(obj, opts);
-			}
-		}
-		else {
-			event.stopPropagation();	
-		}
-	 });
+	 $(obj).attr('infinitePaging', 'enabled');	 
 	 
-	 $.fn.infinitePaging.loadContent(obj, opts);
-	 
+	 $('.pager').bind('click', function(){
+			$(obj).loadMore(opts);
+		});
  };
 	
  $.fn.infinitePaging.defaults = {
       	 'url' : null,
-      	 'page': 1,
+      	 'page': 0,
       	 'sortProperty' : null,
       	 'sortOrder' : 'ASC',
      	 'contentData' : {},
 		 'beforeLoad': null,
 		 'afterLoad': null	,
-		 'scrollTarget': $(window),
-		 'heightOffset': 0,
 		 'dataType': 'json',
 		 'ajaxType':'GET',
 		 'totalPages':null,

@@ -14,29 +14,27 @@
 		action="<c:url value="/admin/console"/>">
 
 		<div class="col_50 col_border">
-			<div>
-				<a href="#"><strong><s:message code="console.faqManagement.link"/></strong></a>
-				<br> 
-				<em><s:message code="console.faqManagement.description"/></em>
-			</div>
-		</div>
-
-		<div class="col_50 col_border">
-			<div>
+			<div class="mgmt_section">
 				<a href="#"><strong><s:message code="console.categoryManagement.link"/></strong> </a>
 				<br> 
 				<em><s:message code="console.categoryManagement.description"/></em>
+				
+				<br /><br/>
+				<a class="link_font11" href="<c:url value="/category/new"/>">Add New Category</a><br/>
+				<a class="link_font11" href="<c:url value="/category/list"/>">View All Categories</a>
 			</div>
 		</div>
+		
 		<div class="col_50 col_border">
-			<div>
-				<a href="#"><strong><s:message code="console.userManagement.link"/></strong></a>
+			<div class="mgmt_section">
+				<a href="#"><strong><s:message code="console.faqManagement.link"/></strong></a>
 				<br> 
-				<em><s:message code="console.userManagement.description"/></em>
+				<em><s:message code="console.faqManagement.description"/></em>
+				<br /><br/>
+				<a class="link_font11" href="<c:url value="/question/addNew"/>">Add New Question</a><br/>
+				<a class="link_font11" href="#">View all Questions</a><br/>
 			</div>
 		</div>
-
-
 	</form>
 </body>
 </html>

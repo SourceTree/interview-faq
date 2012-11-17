@@ -18,6 +18,8 @@
 		<header class="header clearfix">
 			<%@include file="/WEB-INF/page/common/banner.jsp"%>
 		</header>
+		<div id="ads" class="ads ads_top clearfix">&nbsp;</div>
+		
 		<decorator:body />
 	<%@include file="/WEB-INF/page/common/footer.jsp"%>
 	</div>

@@ -48,6 +48,7 @@
 	<mvc:view-controller path="/" view-name="redirect:/home" />
 	<mvc:view-controller path="/about" view-name="about" />
 	<mvc:view-controller path="/contact" view-name="contactus" />
+	<mvc:view-controller path="/admin/dashboard" view-name="admin/console" />
 	
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

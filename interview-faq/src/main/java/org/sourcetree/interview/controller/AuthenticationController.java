@@ -97,4 +97,18 @@ public class AuthenticationController extends BaseController
 
 		return "admin/console";
 	}
+
+	/**
+	 * performs logout and redirect to home page.
+	 * 
+	 * @param httpSession
+	 * @return home page
+	 */
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession httpSession)
+	{
+		AuthorizationUtil.removeAuthorizedSession(httpSession);
+
+		return "redirect:/";
+	}
 }

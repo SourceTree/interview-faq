@@ -13,7 +13,7 @@
 <body
 	<decorator:getProperty property="body.onload" writeEntireProperty="true"/>
 	<decorator:getProperty property="body.onunload" writeEntireProperty="true"/>>
-	<div id="ads" class="container_col">&nbsp;</div>
+	<div id="ads" class="container_col left">&nbsp;</div>
 	<div id="main" class="container_col content">
 		<div id="info" class="info">
 			<article class="hero clearfix">
@@ -21,7 +21,7 @@
 			</article>
 		</div>
 	</div>
-	<div id="ads" class="container_col">&nbsp;</div>
+	<div id="ads" class="container_col right">&nbsp;</div>
 	<div class="clearfix"></div>
 </body>
 	</html>

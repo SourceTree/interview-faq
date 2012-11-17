@@ -17,7 +17,8 @@
 			</li>
 		</c:forEach>
 	</ul>
-	<div class="grid_loading"></div>
+	<div class="pager">LoadMore</div>
+
 	<script type="text/javascript"
 		src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
 	<script type="text/javascript">
@@ -34,7 +35,7 @@
 			$(function() {
 				$('#category_list').infinitePaging({
 					'url' : '<c:url value="/category/list"/>', 
-					'heightOffset' : 100,
+					page: curPage,
 					'beforeLoad' : showLoader,
 					'renderData': function (data){
 						return renderData(data);
@@ -45,7 +46,7 @@
 					}
 				});
 
-				if('${categories.listProp.endIndex}' + 1 >= '${categories.listProp.totalRecords}'){
+				if((${categories.listProp.endIndex} + 1) >= ${categories.listProp.totalRecords}){
 					$('#category_list').stopInfinitePaging();
 				}
 				
@@ -64,7 +65,7 @@
 					var htmlStr = [];
 					$.each(data.categoryDTOs, function(i, categoryDTO){
 						htmlStr.push('<li class="infinite_grid_item">');
-						htmlStr.push(categoryDTO.categoryName);
+						htmlStr.push(categoryDTO.categoryDisplayName);
 						htmlStr.push('<br /><span>');
 						htmlStr.push(categoryDTO.categoryDescription);
 						htmlStr.push('</span>');

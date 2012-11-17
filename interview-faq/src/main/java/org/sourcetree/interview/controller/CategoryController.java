@@ -244,6 +244,11 @@ public class CategoryController extends BaseController
 		return getCategoryList(listProp);
 	}
 
+	/**
+	 * 
+	 * @param model
+	 * @param categories
+	 */
 	private void setCategoryListAttributes(Model model, String... categories)
 	{
 		String parentCategoryName = categories[0];
@@ -254,7 +259,7 @@ public class CategoryController extends BaseController
 		}
 
 		List<CategoryDTO> childCategories = categoryService
-				.findAllChildCategorDTOsByParentName(null, parentCategoryName);
+				.findAllChildCategorDTOsByParentName(parentCategoryName, null);
 
 		CategoryDTO categoryDTO = null;
 		if (subCategoryName != null)

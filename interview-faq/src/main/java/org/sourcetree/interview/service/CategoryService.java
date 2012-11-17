@@ -126,11 +126,20 @@ public interface CategoryService
 	/**
 	 * retrieves all child categories by parent category name.
 	 * 
+	 * @param parentCategoryName
+	 * @return List of category DTO
+	 */
+	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
+			String parentCategoryName);
+
+	/**
+	 * retrieves all child categories by parent category name.
+	 * 
 	 * @param listProp
 	 * @param parentCategoryName
 	 * @return List of category DTO
 	 */
 	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
-			ListProp listProp, String parentCategoryName);
+			String parentCategoryName, ListProp listProp);
 
 }

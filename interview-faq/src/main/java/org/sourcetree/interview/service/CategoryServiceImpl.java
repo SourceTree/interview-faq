@@ -49,8 +49,9 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryDTOById", "categoryById" },
-			allEntries = true, beforeInvocation = false)
+			"categoryDTOByName", "categoryDTOById", "categoryById",
+			"allChildCategoriesByParentName" }, allEntries = true,
+			beforeInvocation = false)
 	public void create(CategoryDTO catergoryDTO)
 	{
 		Category category = new Category();
@@ -76,8 +77,9 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryDTOById", "categoryById" },
-			allEntries = true, beforeInvocation = false)
+			"categoryDTOByName", "categoryDTOById", "categoryById",
+			"allChildCategoriesByParentName" }, allEntries = true,
+			beforeInvocation = false)
 	public void update(CategoryDTO catergoryDTO, Long categoryId)
 	{
 		Category category = findCategoryById(categoryId);
@@ -135,8 +137,8 @@ public class CategoryServiceImpl implements CategoryService
 	@Override
 	@Transactional(readOnly = false)
 	@CacheEvict(value = { "allParentCategories", "allCategories",
-			"categoryDTOByName", "categoryDTOById", "categoryById" },
-			allEntries = true)
+			"categoryDTOByName", "categoryDTOById", "categoryById",
+			"allChildCategoriesByParentName" }, allEntries = true)
 	public boolean deleteCategoryById(Long categoryId)
 	{
 		return categoryDAO.deleteById(categoryId);
@@ -171,7 +173,6 @@ public class CategoryServiceImpl implements CategoryService
 	 * {@inheritDoc}
 	 */
 	@Override
-	@Cacheable(value = "allCategories", key = "#listProp.page")
 	public List<CategoryDTO> findAllCategories(ListProp listProp)
 	{
 		return categoryDAO.getAllCategoryDTOs(listProp);
@@ -221,18 +222,33 @@ public class CategoryServiceImpl implements CategoryService
 		return findAllParentCategories(null);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@Cacheable(value = "allParentCategories", key = "#listProp.page")
 	public List<CategoryDTO> findAllParentCategories(ListProp listProp)
 	{
 		return categoryDAO.getAllParentCategorDTOs(listProp);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	// @Cacheable(value = "allChildCategoriesByParentName", key =
-	// "#listProp.page")
+	@Cacheable(value = "allChildCategoriesByParentName",
+			key = "#parentCategoryName")
 	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
-			ListProp listProp, String parentCategoryName)
+			String parentCategoryName)
+	{
+		return findAllChildCategorDTOsByParentName(parentCategoryName, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<CategoryDTO> findAllChildCategorDTOsByParentName(
+			String parentCategoryName, ListProp listProp)
 	{
 		return categoryDAO.getChildCategorDTOsByParentName(listProp,
 				parentCategoryName);
