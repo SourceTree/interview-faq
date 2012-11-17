@@ -21,9 +21,7 @@ import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
-import org.sourcetree.interview.support.SessionAttributes;
 import org.sourcetree.interview.support.WebUtil;
-import org.sourcetree.interview.support.annotation.InjectSessionAttributes;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,77 +64,7 @@ public class CategoryController extends BaseController
 	}
 
 	/**
-	 * Category Listing page. for first initial page, fetch the first page (10
-	 * records) to display. this will reduce the server round trip.
-	 * 
-	 * @param model
-	 * @return category list page
-	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String categoryList(Model model)
-	{
-		// TODO: remove - venky
-		// Initialize ListProp with first page
-		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
-				null, null);
-
-		model.addAttribute("categories", getCategoryList(listProp));
-
-		return "category/categoryList";
-	}
-
-	/**
-	 * Category Listing for ajax call.
-	 * 
-	 * @param page
-	 *            - page number
-	 * @param sortProperty
-	 *            - sort property if any (can be null or empty)
-	 * @param sortOrder
-	 *            - sort order (ASC or DESC)
-	 * @return category list page
-	 */
-	@RequestMapping(value = "/list/{page}", method = RequestMethod.GET)
-	@ResponseBody
-	public CategoryListDTO categoryListAjax(
-			@PathVariable(value = "page") String page,
-			@RequestParam(value = "sortProperty", required = false) String sortProperty,
-			@RequestParam(value = "sortOrder", required = false) String sortOrder)
-	{
-		// Initialize ListProp with requested page
-		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
-				null, null);
-
-		return getCategoryList(listProp);
-	}
-
-	/**
-	 * @param sessionAttributes
-	 * @param name
-	 * @param model
-	 * @return category page
-	 */
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
-	@InjectSessionAttributes
-	public String categoryDetailsForm(SessionAttributes sessionAttributes,
-			@PathVariable String name, Model model)
-	{
-		model.addAttribute("category",
-				categoryService.getCategoryDTOByName(name));
-
-		if (sessionAttributes.getRole() == null
-				|| sessionAttributes.getRole() != UserRoleEnum.ADMIN)
-		{
-			return "category/categoryDetails";
-		}
-
-		model.addAttribute("parentCategories",
-				categoryService.findAllParentCategories());
-		return "category/categoryEdit";
-	}
-
-	/**
-	 * to handle new partner request. this method will be invoked in the event
+	 * to handle new category request. this method will be invoked in the event
 	 * of form submissions from the client which will contains the
 	 * <b>application/x-www-form-urlencoded</b> as the content-type header
 	 * 
@@ -179,9 +107,26 @@ public class CategoryController extends BaseController
 	}
 
 	/**
-	 * to handle new partner request. this method will be invoked in the event
-	 * of form submissions from the client which will contains the
-	 * <b>application/x-www-form-urlencoded</b> as the content-type header
+	 * @param model
+	 * @param categoryId
+	 * @return category edit page
+	 */
+	@RequestMapping(value = "/edit/{categoryId}", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String editPage(Model model,
+			@PathVariable(value = "categoryId") Long categoryId)
+	{
+		model.addAttribute("category",
+				categoryService.getCategoryDTOById(categoryId));
+		model.addAttribute("parentCategories",
+				categoryService.findAllParentCategories());
+
+		return "category/categoryEdit";
+	}
+
+	/**
+	 * to handle edit category form update request.
 	 * 
 	 * @param categoryDTO
 	 *            category DTO object
@@ -209,6 +154,73 @@ public class CategoryController extends BaseController
 		}
 
 		return response;
+	}
+
+	/**
+	 * To navigate to category details page. the resulting view contains the
+	 * information about sub-categories (if any) of requested category and list
+	 * of questions.
+	 * 
+	 * @param sessionAttributes
+	 * @param name
+	 * @param model
+	 * @return category page
+	 */
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	public String categoryDetailsForm(@PathVariable String name, Model model)
+	{
+		model.addAttribute("category",
+				categoryService.getCategoryDTOByName(name));
+
+		return "category/categoryDetails";
+	}
+
+	/**
+	 * Category Listing page. for first initial page, fetch the first page (10
+	 * records) to display. this will reduce the server round trip.
+	 * 
+	 * @param model
+	 * @return category list page
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String categoryList(Model model)
+	{
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
+				null, null);
+
+		model.addAttribute("categories", getCategoryList(listProp));
+
+		return "category/categoryList";
+	}
+
+	/**
+	 * Category Listing for ajax call.
+	 * 
+	 * @param page
+	 *            - page number
+	 * @param sortProperty
+	 *            - sort property if any (can be null or empty)
+	 * @param sortOrder
+	 *            - sort order (ASC or DESC)
+	 * @return category list page
+	 */
+	@RequestMapping(value = "/list/{page}", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public CategoryListDTO categoryListAjax(
+			@PathVariable(value = "page") String page,
+			@RequestParam(value = "sortProperty", required = false) String sortProperty,
+			@RequestParam(value = "sortOrder", required = false) String sortOrder)
+	{
+		// Initialize ListProp with requested page
+		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
+				null, null);
+
+		return getCategoryList(listProp);
 	}
 
 	/**

@@ -189,6 +189,24 @@ public class CategoryServiceImpl implements CategoryService
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@Cacheable(value = "categoryDTOById", key = "#categoryId")
+	public CategoryDTO getCategoryDTOById(Long categoryId)
+	{
+
+		Category category = categoryDAO.find(categoryId);
+
+		if (category != null)
+		{
+			return copyEntityToDTO(category);
+		}
+
+		return null;
+	}
+
 	@Override
 	@Cacheable(value = "allParentCategories", key = CACHE_ALL_KEY)
 	public List<CategoryDTO> findAllParentCategories()

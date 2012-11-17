@@ -22,8 +22,6 @@ import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.service.QuestionService;
-import org.sourcetree.interview.support.SessionAttributes;
-import org.sourcetree.interview.support.annotation.InjectSessionAttributes;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,27 +96,69 @@ public class QuestionController extends BaseController
 	}
 
 	/**
-	 * @param sessionAttributes
+	 * to navigate to question edit form.
+	 * 
 	 * @param questionId
 	 * @param model
-	 * @return question page
+	 * @return question edit page
 	 */
-	@RequestMapping(value = "/{questionId}", method = RequestMethod.GET)
-	@InjectSessionAttributes
-	public String questionDetailsForm(SessionAttributes sessionAttributes,
-			@PathVariable Long questionId, Model model)
+	@RequestMapping(value = "/edit/{questionId}", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String questionEditForm(@PathVariable Long questionId, Model model)
+	{
+		model.addAttribute("question",
+				questionService.getQuestionDTOById(questionId));
+		model.addAttribute("categories", categoryService.findAllCategories());
+
+		return "question/questionEdit";
+	}
+
+	/**
+	 * to handle question edit form request.
+	 * 
+	 * @param questionDTO
+	 *            Question DTO object
+	 * @return <code>{@linkplain QuestionDTO}</code> - response will be
+	 *         Serialised to either XML/JSON/text base on the request headers
+	 */
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public ResponseDTO updateQuestion(@ModelAttribute QuestionDTO questionDTO)
+	{
+		ResponseDTO response = new ResponseDTO();
+		Map<String, String> errors = ValidationUtil.validate(questionDTO,
+				validator, messageSource);
+
+		if (!errors.isEmpty())
+		{
+			response.setErrors(errors);
+			response.setStatus(OutcomeStatus.FAILURE);
+		}
+		else
+		{
+			questionService.update(questionDTO);
+		}
+
+		return response;
+	}
+
+	/**
+	 * To view the question details.
+	 * 
+	 * @param questionId
+	 * @param model
+	 * @return question details page
+	 */
+	@RequestMapping(value = "/view/{questionId}", method = RequestMethod.GET)
+	public String questionDetails(@PathVariable Long questionId, Model model)
 	{
 		model.addAttribute("question",
 				questionService.getQuestionDTOById(questionId));
 
-		if (sessionAttributes.getRole() == null
-				|| sessionAttributes.getRole() != UserRoleEnum.ADMIN)
-		{
-			return "question/questionDetails";
-		}
-
-		model.addAttribute("categories", categoryService.findAllCategories());
-		return "question/questionEdit";
+		return "question/questionDetails";
 	}
 
 	/**
@@ -148,38 +188,5 @@ public class QuestionController extends BaseController
 						return null;
 					}
 				});
-	}
-
-	/**
-	 * to handle new partner request. this method will be invoked in the event
-	 * of form submissions from the client which will contains the
-	 * <b>application/x-www-form-urlencoded</b> as the content-type header
-	 * 
-	 * @param QuestionDTO
-	 *            Question DTO object
-	 * @return <code>{@linkplain QuestionDTO}</code> - response will be
-	 *         Serialised to either XML/JSON/text base on the request headers
-	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
-			setSessionAttributes = false)
-	@ResponseBody
-	public ResponseDTO updateQuestion(@ModelAttribute QuestionDTO questionDTO)
-	{
-		ResponseDTO response = new ResponseDTO();
-		Map<String, String> errors = ValidationUtil.validate(questionDTO,
-				validator, messageSource);
-
-		if (!errors.isEmpty())
-		{
-			response.setErrors(errors);
-			response.setStatus(OutcomeStatus.FAILURE);
-		}
-		else
-		{
-			questionService.update(questionDTO);
-		}
-
-		return response;
 	}
 }

@@ -112,4 +112,14 @@ public interface CategoryService
 	 * @return category as DTO object
 	 */
 	CategoryDTO getCategoryDTOByName(String name);
+
+	/**
+	 * Get category as a DTO object based on category ID. Retrieves the parent
+	 * category reference information.
+	 * 
+	 * @param categoryId
+	 *            category ID
+	 * @return category as DTO object
+	 */
+	CategoryDTO getCategoryDTOById(Long categoryId);
 }
