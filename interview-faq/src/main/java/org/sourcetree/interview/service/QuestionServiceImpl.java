@@ -298,4 +298,11 @@ public class QuestionServiceImpl implements QuestionService
 		}
 		return null;
 	}
+
+	@Override
+	public List<Question> getQuestionSearchResult(String[] searchKey,
+			Long categoryId)
+	{
+		return questionDAO.searchQuestions(searchKey, categoryId);
+	}
 }

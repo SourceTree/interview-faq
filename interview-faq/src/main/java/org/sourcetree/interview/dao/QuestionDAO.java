@@ -49,4 +49,13 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	 */
 	List<Question> getQuestionsByCategoryName(String categoryName,
 			ListProp listProp);
+
+	/**
+	 * Get Questions by searchKey and categoryId
+	 * 
+	 * @param searchKey
+	 * @param categoryId
+	 * @return List Question
+	 */
+	List<Question> searchQuestions(String[] searchKey, Long categoryId);
 }

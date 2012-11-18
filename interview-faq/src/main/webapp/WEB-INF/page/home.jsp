@@ -8,10 +8,11 @@
 <title><s:message code="title.home" /></title>
 <body>
 	<form class="cleanform" id="search" name="search"
-		action="<c:url value="ab"/>" method="post">
+		action="<c:url value="/search/new"/>" method="get">
 		<div class="search">
-			<input type="text" class="search_big" title="Search"
-				placeholder="Search" />
+			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
+				placeholder="Search" /><span id="error_searchString"></span>	
+			<input type="hidden" id="categoryId" name="categoryId">	
 			<button type="submit" name="searchBtn" id="searchBtn">Search</button>
 		</div>
 		<br />		

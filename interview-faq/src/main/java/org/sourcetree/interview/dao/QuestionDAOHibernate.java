@@ -10,11 +10,13 @@
  */
 package org.sourcetree.interview.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.sourcetree.interview.AppConstants;
 import org.sourcetree.interview.dto.ListProp;
@@ -106,5 +108,34 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		return (List<Question>) HibernateUtil.list(getSessionFactory(),
 				"select count(question.id)", null, queryStr.toString(), params,
 				listProp, null);
+	}
+
+	@Override
+	public List<Question> searchQuestions(String[] searchKey, Long categoryId)
+	{
+		if (searchKey != null && searchKey.length > 0 && categoryId != null)
+		{
+			return getSessionFactory()
+					.getCurrentSession()
+					.createCriteria(Question.class)
+					.add(Restrictions.or(
+							Restrictions.in("question", searchKey),
+							Restrictions.in("answer", searchKey)))
+					.add(Restrictions.eq("category_id", categoryId)).list();
+		}
+		else if (searchKey != null && searchKey.length > 0)
+		{
+			return getSessionFactory()
+					.getCurrentSession()
+					.createCriteria(Question.class)
+					.add(Restrictions.or(
+							Restrictions.in("question", searchKey),
+							Restrictions.in("answer", searchKey))).list();
+		}
+		else
+		{
+			return (new ArrayList<Question>());
+		}
+
 	}
 }

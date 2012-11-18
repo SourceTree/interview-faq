@@ -87,4 +87,12 @@ public interface QuestionService
 	 */
 	List<QuestionDTO> getQuestionsByCategoryName(String categoryName);
 
+	/**
+	 * Get Questions by searchKey and categoryId
+	 * 
+	 * @param searchKey
+	 * @param categoryId
+	 * @return Lit of Question
+	 */
+	List<Question> getQuestionSearchResult(String[] searchKey, Long categoryId);
 }
