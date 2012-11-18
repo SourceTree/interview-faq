@@ -31,6 +31,13 @@
 			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
 	</cache>
 	
+	<cache name="allChildCategoriesByParentName" eternal="false" maxElementsInMemory="100"
+		timeToLiveSeconds="0" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">
+		<cacheEventListenerFactory
+			class="org.sourcetree.interview.support.NullCacheEventListenerFactory" />
+	</cache>
+	
 	<cache name="categoryById" eternal="false" maxElementsInMemory="100"
 		timeToLiveSeconds="0" diskPersistent="false"
 		diskExpiryThreadIntervalSeconds="1" memoryStoreEvictionPolicy="LRU">

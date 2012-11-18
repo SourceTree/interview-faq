@@ -17,6 +17,7 @@ import java.util.Map;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.sourcetree.interview.AppConstants;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Question;
 import org.sourcetree.interview.support.HibernateUtil;
@@ -39,7 +40,6 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		QUESTION_DTO.put("question", "question.question");
 		QUESTION_DTO.put("id", "question.id");
 		QUESTION_DTO.put("answer", "question.answer");
-		// QUESTION_DTO.put("categoryDTOs", "question.categoryDTOs");
 	}
 
 	/**
@@ -69,8 +69,7 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		queryStr.append(AppConstants.FROM);
 		queryStr.append(getEntityClass().getName()).append(" as question");
 		queryStr.append(" where ");
-		queryStr// .append(getDialect().getLowercaseFunction()).append("(")
-		.append("question.id").append("=").append(":ID");
+		queryStr.append("question.id").append("=").append(":ID");
 		queryStr.append(" and question.deleted=").append(":DELETED");
 
 		Query query = getSessionFactory().getCurrentSession().createQuery(
@@ -84,4 +83,28 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		return (QuestionDTO) query.uniqueResult();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
+	@Override
+	public List<Question> getQuestionsByCategoryName(String categoryName,
+			ListProp listProp)
+	{
+		StringBuilder queryStr = new StringBuilder(AppConstants.FROM);
+		queryStr.append(getEntityClass().getName()).append(" as question");
+		queryStr.append(" join question.categories as categories");
+		queryStr.append(" where ");
+		queryStr.append(getDialect().getLowercaseFunction()).append("(");
+		queryStr.append("categories.categoryName)=").append(":NAME");
+		queryStr.append(" and question.deleted=").append(":DELETED");
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("NAME", categoryName.toLowerCase());
+		params.put("DELETED", Boolean.FALSE);
+
+		return (List<Question>) HibernateUtil.list(getSessionFactory(),
+				"select count(question.id)", null, queryStr.toString(), params,
+				listProp, null);
+	}
 }

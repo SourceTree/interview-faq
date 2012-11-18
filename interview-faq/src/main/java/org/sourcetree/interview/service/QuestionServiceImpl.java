@@ -151,6 +151,27 @@ public class QuestionServiceImpl implements QuestionService
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public QuestionDTO getQuestionDTOById(Long questionId)
+	{
+		Question question = new Question();
+
+		if (questionId != null)
+		{
+			question = findQuestionById(questionId);
+			QuestionDTO questionDTO = new QuestionDTO();
+			if (question != null)
+			{
+				questionDTO = copyEntitytoDTO(question);
+				return questionDTO;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * To Convert from DTO list to Entity list
 	 * 
 	 * @param categoryDTOs
@@ -274,27 +295,6 @@ public class QuestionServiceImpl implements QuestionService
 				categoryDTOs.add(categoryDto);
 			}
 			return categoryDTOs;
-		}
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public QuestionDTO getQuestionDTOById(Long questionId)
-	{
-		Question question = new Question();
-
-		if (questionId != null)
-		{
-			question = findQuestionById(questionId);
-			QuestionDTO questionDTO = new QuestionDTO();
-			if (question != null)
-			{
-				questionDTO = copyEntitytoDTO(question);
-				return questionDTO;
-			}
 		}
 		return null;
 	}

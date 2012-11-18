@@ -12,6 +12,7 @@ package org.sourcetree.interview.dao;
 
 import java.util.List;
 
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Question;
 
@@ -39,4 +40,13 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	 * @return Question DTO
 	 */
 	QuestionDTO getQuestionDTOById(Long id);
+
+	/**
+	 * 
+	 * @param categoryName
+	 * @param listProp
+	 * @return
+	 */
+	List<Question> getQuestionsByCategoryName(String categoryName,
+			ListProp listProp);
 }

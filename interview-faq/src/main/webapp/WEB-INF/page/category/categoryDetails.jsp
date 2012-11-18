@@ -16,8 +16,7 @@
 		</div>
 		<br />
 	</form>
-	<c:choose>
-		<c:when test="${!empty childCategories}">
+		<c:if test="${!empty childCategories}">
 			<div class="col_25 col_border">
 
 				<c:forEach items="${childCategories}" var="childCategoryDTO">
@@ -39,12 +38,8 @@
 
 				</c:forEach>
 			</div>
-			<div class="col_75 col_border">
-		</c:when>
-		<c:otherwise>
-			<div class="col_border">
-		</c:otherwise>
-	</c:choose>
+		</c:if>
+		<div class="<c:if test="${!empty childCategories}">col_75</c:if> col_border">
 	<div>
 		<h2>${categoryDTO.categoryDisplayName}</h2>
 	</div>
@@ -67,9 +62,6 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
-
 	</div>
-
-
 </body>
 </html>

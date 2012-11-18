@@ -259,23 +259,25 @@ public class CategoryController extends BaseController
 		}
 
 		List<CategoryDTO> childCategories = categoryService
-				.findAllChildCategorDTOsByParentName(parentCategoryName, null);
+				.findAllChildCategorDTOsByParentName(parentCategoryName);
+		model.addAttribute("childCategories", childCategories);
 
 		CategoryDTO categoryDTO = null;
 		if (subCategoryName != null)
 		{
 			categoryDTO = categoryService.getCategoryDTOByName(subCategoryName);
+			model.addAttribute("parentCategoryName", categoryDTO
+					.getParentCategoryDTO().getCategoryName());
 		}
 		else
 		{
 			categoryDTO = categoryService
 					.getCategoryDTOByName(parentCategoryName);
+			model.addAttribute("parentCategoryName",
+					categoryDTO.getCategoryName());
 		}
 
-		model.addAttribute("childCategories", childCategories);
-		model.addAttribute("parentCategoryName", parentCategoryName);
 		model.addAttribute("categoryDTO", categoryDTO);
-
 	}
 
 	/**
