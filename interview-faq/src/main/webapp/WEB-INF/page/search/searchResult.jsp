@@ -1,12 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%--
+	Copyright © 2012, Source Tree, All Rights Reserved
+--%><%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%><%@ include
+	file="/WEB-INF/page/common/taglibs.jsp"%>
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>SearchResult Page</title>
-</head>
+<title>${categoryDTO.categoryName}</title>
 <body>
+<c:forEach items="${questions}" var="questionDTO">
+				<div>
+					${questionDTO.question}
+					<br> <strong><em>${questionDTO.answer}</em></strong>
+				</div>
+</c:forEach>
 
 </body>
 </html>

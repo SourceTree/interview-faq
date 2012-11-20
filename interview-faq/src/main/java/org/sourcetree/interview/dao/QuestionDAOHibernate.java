@@ -10,13 +10,11 @@
  */
 package org.sourcetree.interview.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.sourcetree.interview.AppConstants;
 import org.sourcetree.interview.dto.ListProp;
@@ -110,32 +108,102 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 				listProp, null);
 	}
 
+	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
 	public List<Question> searchQuestions(String[] searchKey, Long categoryId)
 	{
+		StringBuilder queryStr = new StringBuilder("from ");
+		queryStr.append(Question.class.getName()).append(" as _etc_");
+		queryStr.append(" where ");
+
 		if (searchKey != null && searchKey.length > 0 && categoryId != null)
 		{
-			return getSessionFactory()
-					.getCurrentSession()
-					.createCriteria(Question.class)
-					.add(Restrictions.or(
-							Restrictions.in("question", searchKey),
-							Restrictions.in("answer", searchKey)))
-					.add(Restrictions.eq("category_id", categoryId)).list();
+			int i = 0;
+
+			for (String search : searchKey)
+			{
+				if (i == 0)
+				{
+					queryStr.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("question)")
+							.append(" like :VAL1" + i).append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("answer)")
+							.append(" like :VAL2" + i);
+
+				}
+				else
+				{
+					queryStr.append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("question)")
+							.append(" like :VAL1" + i).append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("answer)")
+							.append(" like :VAL2" + i);
+				}
+				i++;
+			}
+			queryStr.append(" and _etc_.").append("category_id")
+					.append(" = :CATEGORY_ID");
+
 		}
 		else if (searchKey != null && searchKey.length > 0)
 		{
-			return getSessionFactory()
-					.getCurrentSession()
-					.createCriteria(Question.class)
-					.add(Restrictions.or(
-							Restrictions.in("question", searchKey),
-							Restrictions.in("answer", searchKey))).list();
-		}
-		else
-		{
-			return (new ArrayList<Question>());
+			int i = 0;
+			for (String search : searchKey)
+			{
+				if (i == 0)
+				{
+					queryStr.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("question)")
+							.append(" like :VAL1" + i).append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("answer)")
+							.append(" like :VAL2" + i);
+
+				}
+				else
+				{
+					queryStr.append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("question)")
+							.append(" like :VAL1" + i).append(" or ")
+							.append(getDialect().getLowercaseFunction())
+							.append("(_etc_.").append("answer)")
+							.append(" like :VAL2" + i);
+				}
+				i++;
+			}
 		}
 
+		queryStr.append(" and _etc_.deleted= :DELETED");
+
+		Query query = getSessionFactory().getCurrentSession().createQuery(
+				queryStr.toString());
+
+		if (searchKey != null && searchKey.length > 0 && categoryId != null)
+		{
+			int i = 0;
+			for (String search : searchKey)
+			{
+				query.setParameter("VAL1" + i, search.toLowerCase());
+				query.setParameter("VAL2" + i, search.toLowerCase());
+				i++;
+			}
+			query.setParameter("CATEGORY_ID", categoryId);
+		}
+		else if (searchKey != null && searchKey.length > 0)
+		{
+			int i = 0;
+			for (String search : searchKey)
+			{
+				query.setParameter("VAL1" + i, search.toLowerCase());
+				query.setParameter("VAL2" + i, search.toLowerCase());
+				i++;
+			}
+		}
+
+		return query.list();
 	}
 }
