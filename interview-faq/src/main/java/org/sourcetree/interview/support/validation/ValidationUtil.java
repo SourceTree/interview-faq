@@ -34,41 +34,55 @@ public final class ValidationUtil
 	}
 
 	/**
-	 * Validates an object against number of groups. This helper method is
-	 * intended for grabbing all the messages across all the groups.
+	 * validates an object against number of validation groups.
 	 * 
-	 * @param object
+	 * This helper method is intended for grabbing all the messages across all
+	 * the groups instead of one group single time.
+	 * 
+	 * @param dto
 	 *            the object that need to be validated
 	 * @param validator
 	 *            validator instance
 	 * @param messageSource
-	 *            message source instance to retrieve messages
-	 * @return errors map with codes as key and messages as value.
+	 *            messageSource instance to retrieve error messages
+	 * @return map of error codes as key and error message as value
 	 */
-	public static Map<String, String> validate(final Object object,
+	public static Map<String, String> validate(final Object dto,
 			final Validator validator, final MessageSource messageSource)
 	{
 		Map<String, String> errors = new HashMap<String, String>();
-		Set<ConstraintViolation<Object>> violations = validator.validate(
-				object, Default.class);
 
-		for (ConstraintViolation<Object> violation : violations)
-		{
-			errors.put(violation.getPropertyPath().toString(), messageSource
-					.getMessage(violation.getMessage(), null, null));
-		}
+		Set<ConstraintViolation<Object>> voilations = validator.validate(dto,
+				Default.class);
+		putErrors(voilations, messageSource, errors);
 
-		violations = validator.validate(object, SecondGroup.class);
-		for (ConstraintViolation<Object> violation : violations)
+		voilations = validator.validate(dto, SecondGroup.class);
+		putErrors(voilations, messageSource, errors);
+
+		voilations = validator.validate(dto, ThirdGroup.class);
+		putErrors(voilations, messageSource, errors);
+
+		return errors;
+	}
+
+	/**
+	 * helper method to push error messages into map
+	 * 
+	 * @param voilations
+	 * @param messageSource
+	 * @param errors
+	 */
+	private static void putErrors(Set<ConstraintViolation<Object>> voilations,
+			MessageSource messageSource, Map<String, String> errors)
+	{
+		for (ConstraintViolation<Object> voilation : voilations)
 		{
-			if (!errors.containsKey(violation.getPropertyPath().toString()))
+			if (!errors.containsKey(voilation.getPropertyPath().toString()))
 			{
-				errors.put(violation.getPropertyPath().toString(),
-						messageSource.getMessage(violation.getMessage(), null,
+				errors.put(voilation.getPropertyPath().toString(),
+						messageSource.getMessage(voilation.getMessage(), null,
 								null));
 			}
 		}
-
-		return errors;
 	}
 }
