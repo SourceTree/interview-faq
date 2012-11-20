@@ -54,25 +54,25 @@ public final class ValidationUtil
 
 		Set<ConstraintViolation<Object>> voilations = validator.validate(dto,
 				Default.class);
-		putErrors(voilations, messageSource, errors);
+		parseErrors(voilations, messageSource, errors);
 
 		voilations = validator.validate(dto, SecondGroup.class);
-		putErrors(voilations, messageSource, errors);
+		parseErrors(voilations, messageSource, errors);
 
 		voilations = validator.validate(dto, ThirdGroup.class);
-		putErrors(voilations, messageSource, errors);
+		parseErrors(voilations, messageSource, errors);
 
 		return errors;
 	}
 
 	/**
-	 * helper method to push error messages into map
+	 * helper method to parse error mesage codes and push plain text messages into map.
 	 * 
 	 * @param voilations
 	 * @param messageSource
 	 * @param errors
 	 */
-	private static void putErrors(Set<ConstraintViolation<Object>> voilations,
+	private static void parseErrors(Set<ConstraintViolation<Object>> voilations,
 			MessageSource messageSource, Map<String, String> errors)
 	{
 		for (ConstraintViolation<Object> voilation : voilations)
