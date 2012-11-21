@@ -56,14 +56,6 @@ public interface QuestionService
 	Question findQuestionById(Long questionId);
 
 	/**
-	 * Find Questions by category id
-	 * 
-	 * @param categoryId
-	 * @return List of Questions
-	 */
-	List<Question> getQuestionsByCategoryId(Long categoryId);
-
-	/**
 	 * Delete question by id
 	 * 
 	 * @param questionId
@@ -84,17 +76,20 @@ public interface QuestionService
 	 * Get Questions by category name
 	 * 
 	 * @param categoryName
+	 * @param listProp
 	 * @return
 	 */
-	List<QuestionDTO> getQuestionsByCategoryName(String categoryName);
+	List<QuestionDTO> getQuestionsByCategoryName(String categoryName,
+			ListProp listProp);
 
 	/**
 	 * Get Questions by searchKey and categoryId
 	 * 
 	 * @param searchKey
-	 * @param categoryId
+	 * @param categoryName
+	 * @param listProp
 	 * @return Lit of Question
 	 */
 	List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
-			Long categoryId, ListProp listProp);
+			String categoryName, ListProp listProp);
 }

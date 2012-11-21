@@ -109,15 +109,6 @@ public class QuestionServiceImpl implements QuestionService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Question> getQuestionsByCategoryId(Long categoryId)
-	{
-		return questionDAO.getQuestionsByCategoryId(categoryId);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	@Transactional(readOnly = false)
 	public boolean deleteQuestionById(Long questionId)
 	{
@@ -128,24 +119,22 @@ public class QuestionServiceImpl implements QuestionService
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<QuestionDTO> getQuestionsByCategoryName(String categoryName)
+	public List<QuestionDTO> getQuestionsByCategoryName(String categoryName,
+			ListProp listProp)
 	{
-		Category category = categoryDAO.findByParameter("categoryName",
-				categoryName);
-		if (category != null)
-		{
-			List<Question> questionList = category.getQuestions();
-			if (!CoreUtil.isEmpty(questionList))
-			{
-				List<QuestionDTO> questionDtos = new ArrayList<QuestionDTO>();
-				for (Question question : questionList)
-				{
-					QuestionDTO questionDTO = copyEntitytoDTO(question);
-					questionDtos.add(questionDTO);
 
-				}
-				return questionDtos;
+		List<Question> questionList = questionDAO.getQuestionsByCategoryName(
+				categoryName, listProp);
+		if (!CoreUtil.isEmpty(questionList))
+		{
+			List<QuestionDTO> questionDtos = new ArrayList<QuestionDTO>();
+			for (Question question : questionList)
+			{
+				QuestionDTO questionDTO = copyEntitytoDTO(question);
+				questionDtos.add(questionDTO);
+
 			}
+			return questionDtos;
 		}
 
 		return null;
@@ -170,6 +159,26 @@ public class QuestionServiceImpl implements QuestionService
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
+			String categoryName, ListProp listProp)
+	{
+
+		List<Question> questionList = questionDAO.searchQuestions(searchKey,
+				categoryName, listProp);
+
+		List<QuestionDTO> questionDTOs = new ArrayList<QuestionDTO>();
+		for (Question question : questionList)
+		{
+			questionDTOs.add(copyEntitytoDTO(question));
+		}
+
+		return questionDTOs;
 	}
 
 	/**
@@ -258,9 +267,9 @@ public class QuestionServiceImpl implements QuestionService
 	{
 		if (question == null)
 		{
-
 			return null;
 		}
+
 		QuestionDTO questionDTO = new QuestionDTO();
 
 		questionDTO.setQuestion(question.getQuestion().trim());
@@ -298,14 +307,5 @@ public class QuestionServiceImpl implements QuestionService
 			return categoryDTOs;
 		}
 		return null;
-	}
-
-	@Override
-	public List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
-			Long categoryId, ListProp listProp)
-	{
-
-		return questionDAO.searchQuestions(searchKey, categoryId, listProp);
-
 	}
 }

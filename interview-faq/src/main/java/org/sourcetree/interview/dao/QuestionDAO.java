@@ -25,14 +25,6 @@ import org.sourcetree.interview.entity.Question;
 public interface QuestionDAO extends GenericDAO<Question, Long>
 {
 	/**
-	 * Retrieves questions for the passed in category id
-	 * 
-	 * @param categoryId
-	 * @return
-	 */
-	List<Question> getQuestionsByCategoryId(Long categoryId);
-
-	/**
 	 * Retrieves the question as DTO object with ignore case.
 	 * 
 	 * @param id
@@ -54,9 +46,10 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	 * Get Questions by searchKey and categoryId
 	 * 
 	 * @param searchKey
-	 * @param categoryId
-	 * @return List QuestionDTO
+	 * @param categoryName
+	 * @param listProp
+	 * @return List Question
 	 */
-	List<QuestionDTO> searchQuestions(String[] searchKey, Long categoryId,
+	List<Question> searchQuestions(String[] searchKey, String categoryName,
 			ListProp listProp);
 }

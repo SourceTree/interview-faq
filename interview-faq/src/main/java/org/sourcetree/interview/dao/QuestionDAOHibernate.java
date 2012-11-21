@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
 import org.sourcetree.interview.AppConstants;
@@ -49,16 +50,6 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 	protected Class<Question> getEntityClass()
 	{
 		return Question.class;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Question> getQuestionsByCategoryId(Long categoryId)
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -104,99 +95,75 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		params.put("DELETED", Boolean.FALSE);
 
 		return (List<Question>) HibernateUtil.list(getSessionFactory(),
-				"select count(question.id)", null, queryStr.toString(), params,
-				listProp, null);
+				"select count(question.id) ", " question ",
+				queryStr.toString(), null, params, listProp, null, false);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
-	public List<QuestionDTO> searchQuestions(String[] searchKey,
-			Long categoryId, ListProp listProp)
+	public List<Question> searchQuestions(String[] searchKey,
+			String categoryName, ListProp listProp)
 	{
 		Map<String, Object> params = new HashMap<String, Object>();
-		StringBuilder queryStr = new StringBuilder("from ");
-		queryStr.append(getEntityClass().getName()).append(" as _etc_");
-		queryStr.append(" where ");
 
-		if (searchKey != null && searchKey.length > 0 && categoryId != null)
-		{
-			int i = 0;
-
-			for (String search : searchKey)
-			{
-				if (i == 0)
-				{
-					queryStr.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("question)")
-							.append(" like '%" + search.toLowerCase() + "%'")
-							.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("answer)")
-							.append(" like '%" + search.toLowerCase() + "%'");
-
-				}
-				else
-				{
-					queryStr.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("question)")
-							.append(" like '%" + search.toLowerCase() + "%'")
-							.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("answer)")
-							.append(" like '%" + search.toLowerCase() + "%'");
-				}
-				i++;
-			}
-			queryStr.append(" and _etc_.").append("category_id")
-					.append(" = :CATEGORY_ID");
-
-		}
-		else if (searchKey != null && searchKey.length > 0)
-		{
-			int i = 0;
-			for (String search : searchKey)
-			{
-				if (i == 0)
-				{
-					queryStr.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("question)")
-							.append(" like '%" + search.toLowerCase() + "%'")
-							.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("answer)")
-							.append(" like '%" + search.toLowerCase() + "%'");
-
-				}
-				else
-				{
-					queryStr.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("question)")
-							.append(" like '%" + search.toLowerCase() + "%'")
-							.append(" or ")
-							.append(getDialect().getLowercaseFunction())
-							.append("(_etc_.").append("answer)")
-							.append(" like '%" + search.toLowerCase() + "%'");
-				}
-				i++;
-			}
-		}
-
-		queryStr.append(" and _etc_.deleted= :DELETED");
-
-		if (searchKey != null && searchKey.length > 0 && categoryId != null)
-		{
-			params.put("CATEGORY_ID", categoryId);
-		}
-
+		StringBuilder queryStr = new StringBuilder(AppConstants.FROM);
+		queryStr.append(getEntityClass().getName()).append(" as question");
+		queryStr.append(" join question.categories as categories");
+		queryStr.append(" where question.deleted=").append(":DELETED");
 		params.put("DELETED", Boolean.FALSE);
 
-		// return query.list();
+		if (!StringUtils.isBlank(categoryName))
+		{
+			queryStr.append(" and ")
+					.append(getDialect().getLowercaseFunction()).append("(");
+			queryStr.append("categories.categoryName)=").append(":NAME");
+			params.put("NAME", categoryName.toLowerCase());
+		}
 
-		return (List<QuestionDTO>) HibernateUtil.list(getSessionFactory(),
-				listProp != null ? "select count(question.id)" : null,
-				QUESTION_DTO, queryStr.toString(), params, listProp,
-				QuestionDTO.class);
+		if (searchKey != null && searchKey.length > 0)
+		{
+			int i = 0;
+
+			queryStr.append(" and ");
+			queryStr.append(getDialect().getLowercaseFunction()).append("(")
+					.append("question.question").append(") ")
+					.append(getDialect().getCaseInsensitiveLike())
+					.append(" '%");
+			queryStr.append(searchKey[0].toLowerCase()).append("%'");
+			queryStr.append(" or ");
+			queryStr.append(getDialect().getLowercaseFunction()).append("(")
+					.append("question.answer").append(") ")
+					.append(getDialect().getCaseInsensitiveLike())
+					.append(" '%");
+			queryStr.append(searchKey[0].toLowerCase()).append("%'");
+
+			for (String search : searchKey)
+			{
+				if (i != 0)
+				{
+					queryStr.append(" or");
+					queryStr.append(getDialect().getLowercaseFunction())
+							.append("(").append("question.question")
+							.append(") ")
+							.append(getDialect().getCaseInsensitiveLike())
+							.append(" '%");
+					queryStr.append(search.toLowerCase()).append("%'");
+					queryStr.append(" or ");
+					queryStr.append(getDialect().getLowercaseFunction())
+							.append("(").append("question.answer").append(") ")
+							.append(getDialect().getCaseInsensitiveLike())
+							.append(" '%");
+					queryStr.append(search.toLowerCase()).append("%'");
+				}
+				i++;
+			}
+		}
+
+		return (List<Question>) HibernateUtil.list(getSessionFactory(),
+				"select count(question.id) ", " question ",
+				queryStr.toString(), null, params, listProp, null, false);
 	}
 }

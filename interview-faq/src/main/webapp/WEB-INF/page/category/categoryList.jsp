@@ -48,6 +48,7 @@
 
 				if((${categories.listProp.endIndex} + 1) >= ${categories.listProp.totalRecords}){
 					$('#category_list').stopInfinitePaging();
+					$('.pager').remove();
 				}
 				
 				// code for fade in element by element

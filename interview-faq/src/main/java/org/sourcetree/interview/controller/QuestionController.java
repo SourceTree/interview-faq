@@ -177,7 +177,8 @@ public class QuestionController extends BaseController
 	{
 
 		List<QuestionDTO> questions = new ArrayList<QuestionDTO>();
-		questions = questionService.getQuestionsByCategoryName(categoryName);
+		questions = questionService.getQuestionsByCategoryName(categoryName,
+				null);
 		return new ModelAndView("qestionsExcel", "questions", questions);
 	}
 

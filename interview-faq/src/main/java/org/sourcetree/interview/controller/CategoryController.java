@@ -14,14 +14,17 @@ package org.sourcetree.interview.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.CategoryListDTO;
 import org.sourcetree.interview.dto.ListProp;
+import org.sourcetree.interview.dto.QuestionDTO;
+import org.sourcetree.interview.dto.QuestionListDTO;
 import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
-import org.sourcetree.interview.support.SessionAttributes;
+import org.sourcetree.interview.service.QuestionService;
 import org.sourcetree.interview.support.WebUtil;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
@@ -46,6 +49,9 @@ public class CategoryController extends BaseController
 {
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private QuestionService questionService;
 
 	/**
 	 * Category Form
@@ -171,14 +177,17 @@ public class CategoryController extends BaseController
 	public String categoryDetailsForm(@PathVariable String parenCategoryName,
 			Model model)
 	{
-		setCategoryListAttributes(model, parenCategoryName);
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
+				null, null);
+
+		setCategoryListAttributes(model, null, listProp, parenCategoryName);
 		return "category/categoryDetails";
 
 	}
 
 	/**
 	 * 
-	 * @param sessionAttributes
 	 * @param parentCategoryName
 	 * @param subCategoryName
 	 * @param model
@@ -186,14 +195,49 @@ public class CategoryController extends BaseController
 	 */
 	@RequestMapping(value = "/{parentCategoryName}/{subCategoryName}",
 			method = RequestMethod.GET)
-	public String subCategoryQuestionsList(
-			SessionAttributes sessionAttributes,
-			@PathVariable(value = "parentCategoryName") String parentCategoryName,
+	public String subCategoryQuestionsList(@PathVariable(
+			value = "parentCategoryName") String parentCategoryName,
 			@PathVariable(value = "subCategoryName") String subCategoryName,
 			Model model)
 	{
-		setCategoryListAttributes(model, parentCategoryName, subCategoryName);
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
+				null, null);
+
+		setCategoryListAttributes(model, null, listProp, parentCategoryName,
+				subCategoryName);
 		return "category/categoryDetails";
+	}
+
+	/**
+	 * 
+	 * @param categoryName
+	 * @param page
+	 * @param searchVal
+	 * @return
+	 */
+	@RequestMapping(value = "/searchQuestions/{page}",
+			method = RequestMethod.GET)
+	@ResponseBody
+	public QuestionListDTO searchCategoryQuestionsList(@RequestParam(
+			value = "categoryName") String categoryName, @PathVariable(
+			value = "page") String page, @RequestParam(value = "searchVal",
+			required = false) String searchVal)
+	{
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
+				null, null);
+
+		List<QuestionDTO> questionDTOs = questionService
+				.getQuestionSearchResult(
+						!StringUtils.isBlank(searchVal) ? searchVal.split(" ")
+								: null, categoryName, listProp);
+
+		System.out.println(listProp.getTotalRecords() + " end: "
+				+ listProp.getEndIndex() + " start: "
+				+ listProp.getStartIndex());
+
+		return new QuestionListDTO(questionDTOs, listProp);
 	}
 
 	/**
@@ -247,9 +291,13 @@ public class CategoryController extends BaseController
 	/**
 	 * 
 	 * @param model
+	 * @param searchParam
+	 *            can be null / empty
+	 * @param listProp
 	 * @param categories
 	 */
-	private void setCategoryListAttributes(Model model, String... categories)
+	private void setCategoryListAttributes(Model model, String searchParam,
+			ListProp listProp, String... categories)
 	{
 		String parentCategoryName = categories[0];
 		String subCategoryName = null;
@@ -263,11 +311,15 @@ public class CategoryController extends BaseController
 		model.addAttribute("childCategories", childCategories);
 
 		CategoryDTO categoryDTO = null;
+		List<QuestionDTO> questionDTOs = null;
 		if (subCategoryName != null)
 		{
 			categoryDTO = categoryService.getCategoryDTOByName(subCategoryName);
 			model.addAttribute("parentCategoryName", categoryDTO
 					.getParentCategoryDTO().getCategoryName());
+
+			questionDTOs = questionService.getQuestionSearchResult(null,
+					categoryDTO.getCategoryName(), listProp);
 		}
 		else
 		{
@@ -275,9 +327,16 @@ public class CategoryController extends BaseController
 					.getCategoryDTOByName(parentCategoryName);
 			model.addAttribute("parentCategoryName",
 					categoryDTO.getCategoryName());
+			questionDTOs = questionService.getQuestionSearchResult(null,
+					categoryDTO.getCategoryName(), listProp);
 		}
 
+		System.out.println(listProp.getTotalRecords() + " end: "
+				+ listProp.getEndIndex() + " start: "
+				+ listProp.getStartIndex());
 		model.addAttribute("categoryDTO", categoryDTO);
+		model.addAttribute("questionsList", new QuestionListDTO(questionDTOs,
+				listProp));
 	}
 
 	/**
