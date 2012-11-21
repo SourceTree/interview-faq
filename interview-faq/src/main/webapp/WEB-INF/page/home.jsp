@@ -8,7 +8,7 @@
 <title><s:message code="title.home" /></title>
 <body>
 	<form class="cleanform" id="search" name="search"
-		action="<c:url value="/search/new"/>" method="get">
+		action="<c:url value="/search/searchResult"/>" method="get">
 		<div class="search">
 			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
 				placeholder="Search" /><span id="error_searchString"></span>	

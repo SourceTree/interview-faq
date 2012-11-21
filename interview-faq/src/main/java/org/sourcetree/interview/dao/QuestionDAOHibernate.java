@@ -110,10 +110,12 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 
 	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
-	public List<Question> searchQuestions(String[] searchKey, Long categoryId)
+	public List<QuestionDTO> searchQuestions(String[] searchKey,
+			Long categoryId, ListProp listProp)
 	{
+		Map<String, Object> params = new HashMap<String, Object>();
 		StringBuilder queryStr = new StringBuilder("from ");
-		queryStr.append(Question.class.getName()).append(" as _etc_");
+		queryStr.append(getEntityClass().getName()).append(" as _etc_");
 		queryStr.append(" where ");
 
 		if (searchKey != null && searchKey.length > 0 && categoryId != null)
@@ -126,10 +128,11 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 				{
 					queryStr.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("question)")
-							.append(" like :VAL1" + i).append(" or ")
+							.append(" like '%" + search.toLowerCase() + "%'")
+							.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("answer)")
-							.append(" like :VAL2" + i);
+							.append(" like '%" + search.toLowerCase() + "%'");
 
 				}
 				else
@@ -137,10 +140,11 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 					queryStr.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("question)")
-							.append(" like :VAL1" + i).append(" or ")
+							.append(" like '%" + search.toLowerCase() + "%'")
+							.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("answer)")
-							.append(" like :VAL2" + i);
+							.append(" like '%" + search.toLowerCase() + "%'");
 				}
 				i++;
 			}
@@ -157,10 +161,11 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 				{
 					queryStr.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("question)")
-							.append(" like :VAL1" + i).append(" or ")
+							.append(" like '%" + search.toLowerCase() + "%'")
+							.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("answer)")
-							.append(" like :VAL2" + i);
+							.append(" like '%" + search.toLowerCase() + "%'");
 
 				}
 				else
@@ -168,10 +173,11 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 					queryStr.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("question)")
-							.append(" like :VAL1" + i).append(" or ")
+							.append(" like '%" + search.toLowerCase() + "%'")
+							.append(" or ")
 							.append(getDialect().getLowercaseFunction())
 							.append("(_etc_.").append("answer)")
-							.append(" like :VAL2" + i);
+							.append(" like '%" + search.toLowerCase() + "%'");
 				}
 				i++;
 			}
@@ -179,31 +185,18 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 
 		queryStr.append(" and _etc_.deleted= :DELETED");
 
-		Query query = getSessionFactory().getCurrentSession().createQuery(
-				queryStr.toString());
-
 		if (searchKey != null && searchKey.length > 0 && categoryId != null)
 		{
-			int i = 0;
-			for (String search : searchKey)
-			{
-				query.setParameter("VAL1" + i, search.toLowerCase());
-				query.setParameter("VAL2" + i, search.toLowerCase());
-				i++;
-			}
-			query.setParameter("CATEGORY_ID", categoryId);
-		}
-		else if (searchKey != null && searchKey.length > 0)
-		{
-			int i = 0;
-			for (String search : searchKey)
-			{
-				query.setParameter("VAL1" + i, search.toLowerCase());
-				query.setParameter("VAL2" + i, search.toLowerCase());
-				i++;
-			}
+			params.put("CATEGORY_ID", categoryId);
 		}
 
-		return query.list();
+		params.put("DELETED", Boolean.FALSE);
+
+		// return query.list();
+
+		return (List<QuestionDTO>) HibernateUtil.list(getSessionFactory(),
+				listProp != null ? "select count(question.id)" : null,
+				QUESTION_DTO, queryStr.toString(), params, listProp,
+				QuestionDTO.class);
 	}
 }

@@ -55,7 +55,8 @@ public interface QuestionDAO extends GenericDAO<Question, Long>
 	 * 
 	 * @param searchKey
 	 * @param categoryId
-	 * @return List Question
+	 * @return List QuestionDTO
 	 */
-	List<Question> searchQuestions(String[] searchKey, Long categoryId);
+	List<QuestionDTO> searchQuestions(String[] searchKey, Long categoryId,
+			ListProp listProp);
 }

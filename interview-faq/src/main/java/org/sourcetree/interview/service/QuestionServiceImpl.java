@@ -19,6 +19,7 @@ import java.util.Map;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dao.QuestionDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.entity.Question;
@@ -301,21 +302,10 @@ public class QuestionServiceImpl implements QuestionService
 
 	@Override
 	public List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
-			Long categoryId)
+			Long categoryId, ListProp listProp)
 	{
-		List<Question> list = questionDAO
-				.searchQuestions(searchKey, categoryId);
-		List<QuestionDTO> listDTO = new ArrayList<QuestionDTO>();
-		if (!CoreUtil.isEmpty(list))
-		{
-			for (Question question : list)
-			{
-				QuestionDTO questionDTO = copyEntitytoDTO(question);
-				listDTO.add(questionDTO);
-			}
-		}
 
-		return listDTO;
+		return questionDAO.searchQuestions(searchKey, categoryId, listProp);
 
 	}
 }

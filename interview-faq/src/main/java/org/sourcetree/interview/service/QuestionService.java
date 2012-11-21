@@ -12,6 +12,7 @@ package org.sourcetree.interview.service;
 
 import java.util.List;
 
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Question;
 
@@ -95,5 +96,5 @@ public interface QuestionService
 	 * @return Lit of Question
 	 */
 	List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
-			Long categoryId);
+			Long categoryId, ListProp listProp);
 }
