@@ -10,6 +10,7 @@
  */
 package org.sourcetree.interview.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Question Controller
@@ -159,6 +161,24 @@ public class QuestionController extends BaseController
 				questionService.getQuestionDTOById(questionId));
 
 		return "question/questionDetails";
+	}
+
+	/**
+	 * To export the questions to excel.
+	 * 
+	 * @param categoryName
+	 * @param model
+	 * @return excel with all the questions
+	 */
+	@RequestMapping(value = "/exportToExcel/{categoryName}",
+			method = RequestMethod.GET)
+	public ModelAndView exportQuestionsToExcel(
+			@PathVariable String categoryName, Model model)
+	{
+
+		List<QuestionDTO> questions = new ArrayList<QuestionDTO>();
+		questions = questionService.getQuestionsByCategoryName(categoryName);
+		return new ModelAndView("qestionsExcel", "questions", questions);
 	}
 
 	/**

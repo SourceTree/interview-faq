@@ -39,6 +39,12 @@
 				</c:forEach>
 			</div>
 		</c:if>
+		<c:if test="${!empty categoryDTO.questionDtos}">
+		<div align="right" style="margin-right: 30px">
+			<a
+				href="<c:url value="/question/exportToExcel/"/>${categoryDTO.categoryName}"><strong>Export ${categoryDTO.categoryDisplayName} Questions To Excel</strong></a>
+		</div>
+		</c:if>
 		<div class="<c:if test="${!empty childCategories}">col_75</c:if> col_border">
 	<div>
 		<h2>${categoryDTO.categoryDisplayName}</h2>
@@ -49,7 +55,7 @@
 				varStatus="questionNum">
 				<div>
 					<strong class="question_hightlight">${questionDTO.question}</strong>
-					<br> <strong><em>${questionDTO.answer}</em></strong>
+					<br> ${questionDTO.answer}
 				</div>
 			</c:forEach>
 		</c:when>

@@ -26,8 +26,14 @@
 	</mvc:interceptors>
 
 	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2"
 		p:prefix="/WEB-INF/page/" p:suffix=".jsp" />
+	
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver" p:order="1">
+		<property name="location">
+			<value>classpath:spring-excel-views.xml</value>
+		</property>
+	</bean>
 
 	<bean id="themeSource"
 		class="org.springframework.ui.context.support.ResourceBundleThemeSource"
