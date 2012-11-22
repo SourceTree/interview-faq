@@ -144,7 +144,7 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 			{
 				if (i != 0)
 				{
-					queryStr.append(" or");
+					queryStr.append(" or ");
 					queryStr.append(getDialect().getLowercaseFunction())
 							.append("(").append("question.question")
 							.append(") ")
