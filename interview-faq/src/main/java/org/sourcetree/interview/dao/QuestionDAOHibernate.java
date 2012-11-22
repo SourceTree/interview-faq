@@ -127,7 +127,7 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 		{
 			int i = 0;
 
-			queryStr.append(" and ");
+			queryStr.append(" and (");
 			queryStr.append(getDialect().getLowercaseFunction()).append("(")
 					.append("question.question").append(") ")
 					.append(getDialect().getCaseInsensitiveLike())
@@ -156,14 +156,19 @@ public class QuestionDAOHibernate extends GenericDAOImpl<Question, Long>
 							.append("(").append("question.answer").append(") ")
 							.append(getDialect().getCaseInsensitiveLike())
 							.append(" '%");
-					queryStr.append(search.toLowerCase()).append("%'");
+					queryStr.append(search.toLowerCase()).append("%')");
 				}
 				i++;
+			}
+
+			if (i == 1)
+			{
+				queryStr.append(")");
 			}
 		}
 
 		return (List<Question>) HibernateUtil.list(getSessionFactory(),
-				"select count(question.id) ", " question ",
-				queryStr.toString(), null, params, listProp, null, false);
+				"select count(distinct question.id) ", " question ",
+				queryStr.toString(), null, params, listProp, null, true);
 	}
 }

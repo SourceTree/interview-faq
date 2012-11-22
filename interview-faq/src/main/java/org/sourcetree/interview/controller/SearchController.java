@@ -41,12 +41,13 @@ public class SearchController extends BaseController
 	/**
 	 * @param model
 	 * @param searchValue
-	 * @param categoryId
+	 * @param categoryName
 	 * @return search result page
 	 */
 	@RequestMapping(value = "/searchResult", method = RequestMethod.GET)
 	public String searchPage(Model model, @RequestParam(value = "searchValue",
-			required = true) String searchValue)
+			required = true) String searchValue, @RequestParam(
+			value = "categoryName", required = false) String categoryName)
 	{
 		if (!StringUtils.isBlank(searchValue))
 		{
@@ -57,11 +58,12 @@ public class SearchController extends BaseController
 			String[] searchKey = searchValue.split(" ");
 
 			model.addAttribute("questions",
-					getQuestionList(searchKey, listProp));
+					getQuestionList(searchKey, categoryName, listProp));
 
 			model.addAttribute("searchValue", searchValue);
 		}
 
+		model.addAttribute("categoryName", categoryName);
 		return "search/searchResult";
 	}
 
@@ -75,7 +77,7 @@ public class SearchController extends BaseController
 	 * @param sortOrder
 	 *            - sort order (ASC or DESC)
 	 * @param searchValue
-	 * @param categoryId
+	 * @param categoryName
 	 * @return category list page
 	 */
 	@RequestMapping(value = "/searchResult/{page}", method = RequestMethod.GET)
@@ -84,29 +86,31 @@ public class SearchController extends BaseController
 			@PathVariable(value = "page") String page,
 			@RequestParam(value = "sortProperty", required = false) String sortProperty,
 			@RequestParam(value = "sortOrder", required = false) String sortOrder,
-			@RequestParam(value = "searchValue", required = true) String searchValue)
+			@RequestParam(value = "searchValue", required = true) String searchValue,
+			@RequestParam(value = "categoryName", required = false) String categoryName)
 	{
 		// Initialize ListProp with requested page
 		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
 				null, null);
 		String[] searchKey = searchValue.split(" ");
 
-		return getQuestionList(searchKey, listProp);
+		return getQuestionList(searchKey, categoryName, listProp);
 	}
 
 	/**
 	 * common method to fetch questions list.
 	 * 
 	 * @param listProp
+	 * @param categoryName
 	 * @return question list dto with list of questions and pagination
 	 *         information.
 	 */
 	private QuestionListDTO getQuestionList(String[] searchKey,
-			ListProp listProp)
+			String categoryName, ListProp listProp)
 	{
 		// Retrieve questions
 		List<QuestionDTO> questionDTOs = questionService
-				.getQuestionSearchResult(searchKey, null, listProp);
+				.getQuestionSearchResult(searchKey, categoryName, listProp);
 
 		return new QuestionListDTO(questionDTOs, listProp);
 	}

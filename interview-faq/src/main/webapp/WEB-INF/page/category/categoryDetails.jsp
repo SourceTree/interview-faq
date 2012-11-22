@@ -12,7 +12,7 @@
 		<div class="search">
 			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
 				placeholder="Search" value="${searchValue}" /><span id="error_searchValue"></span>	
-			<input type="hidden" id="catId" name="catId" value="${categoryDTO.id}">	
+			<input type="hidden" id="categoryName" name="categoryName" value="${categoryDTO.categoryName}">	
 			<button type="submit" name="searchBtn" id="searchBtn">Search</button>
 		</div>
 		<br />		
@@ -52,7 +52,7 @@
 	<c:choose>
 		<c:when test="${!empty questionsList.questionDTOs}">
 			<c:forEach items="${questionsList.questionDTOs}" var="questionDTO">
-				<div>
+				<div  class="infinite_grid_item initial_load_item">
 					<strong class="question_hightlight">${questionDTO.question}</strong>
 					<br> <strong><em>${questionDTO.answer}</em></strong>
 				</div>
@@ -66,31 +66,47 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
+		<div class="pager">LoadMore</div>
 	</div>
-	<div class="pager">LoadMore</div>
-	
 	<script type="text/javascript" src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
 	<script type="text/javascript">
 	var curPage = 1;
-	var searchVal = "";
+	var searcVal = "";
+	var pagingObj = null;
 	function showLoader() {
 		$(document.activeElement).blur();
 	}
 	function hideLoader() {
 	}
-	 
-	function resetDefaults()
-	{
-		$('#listing').empty();
-		 curPage = 0;
-	}
-	
+	 	
 	$(document).ready(function() {
+		$('#search').submit(function(){
+			$('#listing').stopInfinitePaging();
+			$('#listing').empty();
+			searchVal = $('#searchValue').val();
+			curPage = 0;
+			$('#listing').infinitePaging({
+				'url' : '<c:url value="/category/searchQuestions"/>',
+				page:curPage,
+				'contentData':{'categoryName':'${categoryDTO.categoryName}', 'searchVal':searchVal},
+				'beforeLoad' : showLoader,
+				'renderData': function (data){
+					return renderData(data);
+				},
+				'afterLoad' : function(elementsLoaded) { // after loading content, you can use this function to animate your new elements
+					hideLoader();
+					$(elementsLoaded).fadeInWithDelay();
+				}
+			});
+			
+			return false;
+		});
+		
 		$(function() {
 			$('#listing').infinitePaging({
 				'url' : '<c:url value="/category/searchQuestions"/>', 
 				page: curPage,
-				'contentData':{'categoryName': '${categoryDTO.categoryName}', 'searchVal' : searchVal},
+				'contentData':{'categoryName': '${categoryDTO.categoryName}'},
 				'beforeLoad' : showLoader,
 				'renderData': function (data){
 					return renderData(data);
@@ -114,13 +130,14 @@
 						opacity : 1
 					}, 200);
 					delay += 100;
+					$(this).attr('rel', 'loaded');
 				});
 			};
 			
 			renderData = function(data) {
 				var htmlStr = [];
 				$.each(data.questionDTOs, function(i, questionDTO){
-					htmlStr.push('<div><strong class="question_hightlight">');
+					htmlStr.push('<div  class="infinite_grid_item"><strong class="question_hightlight">');
 					htmlStr.push(questionDTO.question);
 					htmlStr.push('</strong><br> <strong><em>');
 					htmlStr.push(questionDTO.answer);

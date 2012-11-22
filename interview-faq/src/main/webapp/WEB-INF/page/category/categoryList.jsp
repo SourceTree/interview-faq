@@ -59,6 +59,7 @@
 							opacity : 1
 						}, 200);
 						delay += 100;
+						$(this).attr('rel', 'loaded');
 					});
 				};
 				

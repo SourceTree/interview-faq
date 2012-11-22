@@ -11,8 +11,7 @@
 		action="<c:url value="/search/searchResult"/>" method="get">
 		<div class="search">
 			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
-				placeholder="Search" /><span id="error_searchString"></span>	
-			<input type="hidden" id="categoryId" name="categoryId">	
+				placeholder="Search" /><span id="error_searchString"></span>
 			<button type="submit" name="searchBtn" id="searchBtn">Search</button>
 		</div>
 		<br />		

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dao.QuestionDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
@@ -122,21 +123,22 @@ public class QuestionServiceImpl implements QuestionService
 	public List<QuestionDTO> getQuestionsByCategoryName(String categoryName,
 			ListProp listProp)
 	{
-
-		List<Question> questionList = questionDAO.getQuestionsByCategoryName(
-				categoryName, listProp);
-		if (!CoreUtil.isEmpty(questionList))
+		if (!StringUtils.isBlank(categoryName))
 		{
-			List<QuestionDTO> questionDtos = new ArrayList<QuestionDTO>();
-			for (Question question : questionList)
+			List<Question> questionList = questionDAO
+					.getQuestionsByCategoryName(categoryName, listProp);
+			if (!CoreUtil.isEmpty(questionList))
 			{
-				QuestionDTO questionDTO = copyEntitytoDTO(question);
-				questionDtos.add(questionDTO);
+				List<QuestionDTO> questionDtos = new ArrayList<QuestionDTO>();
+				for (Question question : questionList)
+				{
+					QuestionDTO questionDTO = copyEntitytoDTO(question);
+					questionDtos.add(questionDTO);
 
+				}
+				return questionDtos;
 			}
-			return questionDtos;
 		}
-
 		return null;
 	}
 
@@ -302,6 +304,7 @@ public class QuestionServiceImpl implements QuestionService
 				categoryDto.setCategoryName(category.getCategoryName());
 				categoryDto.setCategoryDisplayName(category
 						.getCategoryDisplayName());
+
 				categoryDTOs.add(categoryDto);
 			}
 			return categoryDTOs;

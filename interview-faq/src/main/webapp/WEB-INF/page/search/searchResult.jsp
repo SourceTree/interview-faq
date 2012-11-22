@@ -12,29 +12,25 @@
 		<div class="search">
 			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
 				placeholder="Search" value="${searchValue}" /><span id="error_searchValue"></span>	
-			<input type="hidden" id="catId" name="catId" <c:if test="${categoryId!=null}">value="${categoryId}"</c:if>>	
+			<input type="hidden" id="categoryName" name="categoryName" <c:if test="${!empty categoryName}">value="${categoryName}"</c:if>>	
 			<button type="submit" name="searchBtn" id="searchBtn">Search</button>
 		</div>
 		<br />		
 </form>
-<ul id="search_list" class="infinite_grid">
+<div id="search_list" class="col_border">
 		<c:forEach items="${questions.questionDTOs}" var="questionDTO">
-			<li class="infinite_grid_item initial_load_item">
-				<div>
+				<div class="infinite_grid_item initial_load_item">
 					<strong class="question_hightlight">${questionDTO.question}</strong><br/>
-					<em>${questionDTO.answer}</em>
-					<c:if test="${not empty questionsDTO.categoryDTOs}">
-						<c:forEach items="${questionsDTO.categoryDTOs}" var="categoryDTO">
-							<span class="tag-name">${categoryDTO.categoryName}</span>
-						</c:forEach>
-						<div class="tags"></div>
-					</c:if>
+					<em>${questionDTO.answer}</em><br />
+					<span class="tags">
+					<c:forEach items="${questionDTO.categoryDTOs}" var="categoryDTO">
+						<span class="tag-name">${categoryDTO.categoryName}</span>
+					</c:forEach>
+					</span>
 				</div>
-			</li>
 		</c:forEach>
-	</ul>
-	<div class="pager">LoadMore</div>
-
+		<div class="pager">LoadMore</div>
+</div>
 	<script type="text/javascript"
 		src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
 	<script type="text/javascript">
@@ -52,7 +48,7 @@
 				$('#search_list').infinitePaging({
 					'url' : '<c:url value="/search/searchResult"/>', 
 					page: curPage,
-					contentData:{"searchValue": "${searchValue}", "catId" : "${categoryId}"},
+					contentData:{"searchValue": "${searchValue}" <c:if test="${!empty categoryName}">,"categoryName" : "${categoryName}"</c:if>},
 					'beforeLoad' : showLoader,
 					'renderData': function (data){
 						return renderData(data);
@@ -76,19 +72,24 @@
 							opacity : 1
 						}, 200);
 						delay += 100;
+						$(this).attr('rel', 'loaded');
 					});
 				};
 				
 				renderData = function(data) {
 					var htmlStr = [];
 					$.each(data.questionDTOs, function(i, questionDTO){
-						htmlStr.push('<li class="infinite_grid_item">');
-						htmlStr.push('<div><strong class="question_hightlight">');
+						htmlStr.push('<div class="infinite_grid_item"><strong class="question_hightlight">');
 						htmlStr.push(questionDTO.question);
 						htmlStr.push('</strong><br/><em>');
 						htmlStr.push(questionDTO.answer);
-						htmlStr.push('</em></div>');
-						htmlStr.push('</li>');	
+						htmlStr.push('</em><br /><span class="tags">');
+						$.each(questionDTO.categoryDTOs, function(i, categoryDTO){
+							htmlStr.push('<span class="tag-name">');
+							htmlStr.push(categoryDTO.categoryDisplayName);
+							htmlStr.push('</span>');
+						});
+						htmlStr.push('</span></div>');	
 					});
 					
 					return htmlStr.join('');

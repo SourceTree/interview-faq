@@ -62,6 +62,9 @@
 					$(obj).stopInfinitePaging();
 				} else {
 					$(obj).append('<div class="pager">LoadMore</div>');
+					$('.pager').bind('click', function(){
+						$(obj).loadMore(opts);
+					});
 				}
 			  }
 		 });
@@ -69,6 +72,10 @@
   
   $.fn.infinitePaging.init = function(obj, opts){
 	 $(obj).attr('infinitePaging', 'enabled');	 
+	 
+	 if(opts.page == 0){
+		 $(obj).loadMore(opts);
+	}
 	 
 	 $('.pager').bind('click', function(){
 			$(obj).loadMore(opts);

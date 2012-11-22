@@ -220,9 +220,9 @@ public class CategoryController extends BaseController
 			method = RequestMethod.GET)
 	@ResponseBody
 	public QuestionListDTO searchCategoryQuestionsList(@RequestParam(
-			value = "categoryName") String categoryName, @PathVariable(
-			value = "page") String page, @RequestParam(value = "searchVal",
-			required = false) String searchVal)
+			value = "categoryName", required = true) String categoryName,
+			@PathVariable(value = "page") String page, @RequestParam(
+					value = "searchVal", required = false) String searchVal)
 	{
 		// Initialize ListProp with first page
 		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
@@ -232,10 +232,6 @@ public class CategoryController extends BaseController
 				.getQuestionSearchResult(
 						!StringUtils.isBlank(searchVal) ? searchVal.split(" ")
 								: null, categoryName, listProp);
-
-		System.out.println(listProp.getTotalRecords() + " end: "
-				+ listProp.getEndIndex() + " start: "
-				+ listProp.getStartIndex());
 
 		return new QuestionListDTO(questionDTOs, listProp);
 	}
@@ -331,9 +327,6 @@ public class CategoryController extends BaseController
 					categoryDTO.getCategoryName(), listProp);
 		}
 
-		System.out.println(listProp.getTotalRecords() + " end: "
-				+ listProp.getEndIndex() + " start: "
-				+ listProp.getStartIndex());
 		model.addAttribute("categoryDTO", categoryDTO);
 		model.addAttribute("questionsList", new QuestionListDTO(questionDTOs,
 				listProp));
