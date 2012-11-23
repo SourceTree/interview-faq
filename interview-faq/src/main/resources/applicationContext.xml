@@ -45,7 +45,7 @@
 	<context:component-scan base-package="org.sourcetree.interview.service" />
 	<context:component-scan base-package="org.sourcetree.interview.support" />
 
-	<bean id="defaultDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${dbDriverClass}" p:url="${dbURL}"
 		p:username="${dbUser}" p:password="${dbUserPasswd}" p:maxActive="20"
 		p:maxWait="180000" p:validationQuery="select 1 from dual"
@@ -53,7 +53,7 @@
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
-		p:dataSource-ref="defaultDataSource" p:configLocation="classpath:hibernate.cfg.xml"/>
+		p:dataSource-ref="dataSource" p:configLocation="classpath:hibernate.cfg.xml"/>
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager" />
