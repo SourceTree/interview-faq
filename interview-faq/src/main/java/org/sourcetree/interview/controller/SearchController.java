@@ -12,7 +12,7 @@ package org.sourcetree.interview.controller;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.dto.QuestionListDTO;
@@ -89,12 +89,16 @@ public class SearchController extends BaseController
 			@RequestParam(value = "searchValue", required = true) String searchValue,
 			@RequestParam(value = "categoryName", required = false) String categoryName)
 	{
-		// Initialize ListProp with requested page
-		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
-				null, null);
-		String[] searchKey = searchValue.split(" ");
+		if (!StringUtils.isBlank(searchValue))
+		{
+			// Initialize ListProp with requested page
+			ListProp listProp = WebUtil.initListProp(page,
+					getDefaultPageSize(), null, null);
+			String[] searchKey = searchValue.split(" ");
 
-		return getQuestionList(searchKey, categoryName, listProp);
+			return getQuestionList(searchKey, categoryName, listProp);
+		}
+		return null;
 	}
 
 	/**
