@@ -1,13 +1,14 @@
 @import url("../default.css");
 /* Skin "Simple" by Renat Rafikov */
-body{width:1024px;font-size:13px;font-family:Helvetica, arial, freesans, clean, sans-serif;color:#6D6D6D;line-height: 19px;margin:0 auto;}
+body{width:1024px;font-size:13px;font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;color:#6D6D6D;line-height: 19px;margin:0 auto;}
 a{color:#53C9F6;}
 a:hover{text-decoration:none;}
 a:visited{color:#53C9F6;}
 ul li,ol li{padding:0 0 .4em 0}
 .container{background-color:#53C9F6; margin:0 auto;padding-top: 5px;}
 .header{padding:30px 2px 10px 2px;}
-.logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;}
+.logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;margin-left:10px;color:#53C9F6;text-align: center;}
+.logo span{font-style: italic;font-size: 11px;color:#F79621;}
 #main{border:1px solid #DDDDE0; border-radius:8px;margin-bottom:10px;}
 .menu_main{float:right;text-align:right;margin:.3em 0 0 0;font-size:12px}
 .menu_main li{display:inline-block;margin:0 auto;}
@@ -80,7 +81,7 @@ box-shadow:0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);}
 .cleanform .area .error {float:none;}
 .cleanform textarea {width:400px;resize:none;overflow:auto;}
 .buttons-wrapper{text-align:right; position:relative;}
-.question_hightlight{color:#f79621;}
+.question_hightlight{color:#f79621;font-weight: normal;}
 .cleanform button, .cleanform input[type="button"], .cleanform input[type="reset"], input[type="submit"]{background:url(../../images/bg_menu.jpg) 0 bottom repeat-x #58C9F5;margin-right:10px;font-weight:bold;padding:10px;cursor:pointer;border:1px solid #52C7F5; color:#fff;display: inline-block;border-radius:8px;}
 .cleanform button:hover{background:#178AB6;}
 .search{text-align: center;}
@@ -115,4 +116,4 @@ background: linear-gradient(to bottom,  #f79621 0%,#f9c667 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f79621', endColorstr='#f9c667',GradientType=0 ); /* IE6-9 */
 padding:3px 5px 3px 5px;font-weight: bold;color:#333;border-radius:8px;-webkit-border-radius:8px;-moz-border-radius:8px;border:1px solid #FF9D1C;
 margin-right: 3px;}
-.pager{cursor: pointer;}
+.pager{cursor: pointer;text-align: center;margin:10px 0 10px 0;font-weight: bold;}
