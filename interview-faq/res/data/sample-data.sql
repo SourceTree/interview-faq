@@ -28,7 +28,7 @@ INSERT INTO category (id, created_date, deleted, modified_date, version, categor
 	(24, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for core spring framework', 'Spring','Spring'),
 	(25, '2012-11-09 17:53:05', '\0', NULL, 0, 'category for Spring MVC Framework', 'Spring MVC','SpringMVC');
 
-INSERT INTO parent_category(parent_category_id, category_id) VALUES (1, 20), (18, 19), (1, 21), (1, 22), (1, 23), (1, 24), (1, 25); 
+INSERT INTO PARENT_CATEGORY(parent_category_id, category_id) VALUES (1, 20), (18, 19), (1, 21), (1, 22), (1, 23), (1, 24), (1, 25); 
 
 INSERT INTO question(id, created_date, deleted, modified_date, version, answer,question) VALUES
 	(1, '2012-11-09 17:52:15', '\0', NULL, 0, 'Hello welcome to java answer','What is Java'),
@@ -52,5 +52,5 @@ INSERT INTO question(id, created_date, deleted, modified_date, version, answer,q
 	(19, '2012-11-09 17:53:05', '\0', NULL, 0, 'A brief description of answer 19', 'Welcome Myquestion 19?'),
 	(20, '2012-11-09 17:53:05', '\0', NULL, 0, 'A brief description of answer 20', 'Welcome Myquestion 20?');
 
-INSERT INTO category_question(question_id,category_id) VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),
+INSERT INTO CATEGORY_QUESTION(question_id,category_id) VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1),(11,1),(12,1),(13,1),(14,1),
 (15,1),(16,2),(17,2),(18,2),(19,2),(12,2),(1,2),(2,3),(14,3),(15,3),(16,3),(17,3),(18,3),(19,3),(11,4),(12,4),(1,20),(2,20),(3,20),(4,21),(5,21),(6,21);	
