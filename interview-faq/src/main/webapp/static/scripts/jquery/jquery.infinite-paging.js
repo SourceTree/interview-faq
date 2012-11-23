@@ -61,7 +61,7 @@
 				if((data.listProp.endIndex +1) >= data.listProp.totalRecords){
 					$(obj).stopInfinitePaging();
 				} else {
-					$(obj).append('<div class="pager">LoadMore</div>');
+					$(obj).append('<div class="pager question_hightlight">LoadMore</div>');
 					$('.pager').bind('click', function(){
 						$(obj).loadMore(opts);
 					});
