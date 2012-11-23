@@ -18,10 +18,12 @@
 		<br />		
 </form>
 <div id="search_list" class="col_border">
+	<c:choose>
+		<c:when test="${!empty questions && !empty questions.questionDTOs }">
 		<c:forEach items="${questions.questionDTOs}" var="questionDTO">
 				<div class="infinite_grid_item initial_load_item">
 					<strong class="question_hightlight">${questionDTO.question}</strong><br/>
-					<em>${questionDTO.answer}</em><br />
+					${questionDTO.answer}<br />
 					<span class="tags">
 					<c:forEach items="${questionDTO.categoryDTOs}" var="categoryDTO">
 						<span class="tag-name">${categoryDTO.categoryName}</span>
@@ -29,7 +31,14 @@
 					</span>
 				</div>
 		</c:forEach>
-		<div class="pager">LoadMore</div>
+		<div class="pager question_hightlight">LoadMore</div>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<strong class="question_hightlight">No Results Found!</strong>
+			</div>
+		</c:otherwise>
+		</c:choose>
 </div>
 	<script type="text/javascript"
 		src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
@@ -58,11 +67,11 @@
 						$(elementsLoaded).fadeInWithDelay();
 					}
 				});
-
-				if((${questions.listProp.endIndex} + 1) >= ${questions.listProp.totalRecords}){
+				
+				<c:if test="${empty questions || empty questions.listProp || !empty questions && !empty questions.listProp && (questions.listProp.endIndex + 1) >= questions.listProp.totalRecords}">
 					$('#search_list').stopInfinitePaging();
 					$('.pager').remove();
-				}
+				</c:if>
 				
 				// code for fade in element by element
 				$.fn.fadeInWithDelay = function() {
@@ -81,9 +90,9 @@
 					$.each(data.questionDTOs, function(i, questionDTO){
 						htmlStr.push('<div class="infinite_grid_item"><strong class="question_hightlight">');
 						htmlStr.push(questionDTO.question);
-						htmlStr.push('</strong><br/><em>');
+						htmlStr.push('</strong><br/>');
 						htmlStr.push(questionDTO.answer);
-						htmlStr.push('</em><br /><span class="tags">');
+						htmlStr.push('<br /><span class="tags">');
 						$.each(questionDTO.categoryDTOs, function(i, categoryDTO){
 							htmlStr.push('<span class="tag-name">');
 							htmlStr.push(categoryDTO.categoryDisplayName);

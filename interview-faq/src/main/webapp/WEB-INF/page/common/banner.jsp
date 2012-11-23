@@ -6,7 +6,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
 <div class="container_col content">
-	<div class="logo" style="border: 1px solid;">Logo</div>
+	<div class="logo">FAQ Masters <br /><span>sees all.knows all</span></div>
 	
 	<div class="clearfix" style="text-align: right;">
 		<c:if test="${not empty sessionScope.sess_vars && sessionScope.sess_vars.role eq 'ADMIN'}">

@@ -54,9 +54,11 @@
 			<c:forEach items="${questionsList.questionDTOs}" var="questionDTO">
 				<div  class="infinite_grid_item initial_load_item">
 					<strong class="question_hightlight">${questionDTO.question}</strong>
-					<br> <strong><em>${questionDTO.answer}</em></strong>
+					<br>${questionDTO.answer}
 				</div>
 			</c:forEach>
+			
+			<div class="pager question_hightlight">LoadMore</div>
 		</c:when>
 		<c:otherwise>
 			<div>
@@ -66,7 +68,6 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
-		<div class="pager">LoadMore</div>
 	</div>
 	<script type="text/javascript" src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
 	<script type="text/javascript">
@@ -117,10 +118,10 @@
 				}
 			});
 
-			if((${questionsList.listProp.endIndex} + 1) >= ${questionsList.listProp.totalRecords}){
+			<c:if test="${empty questionsList || empty questionsList.listProp || !empty questionsList && !empty questionsList.listProp && (questionsList.listProp.endIndex + 1) >= questionsList.listProp.totalRecords}">
 				$('#listing').stopInfinitePaging();
 				$('.pager').remove();
-			}
+			</c:if>
 			
 			// code for fade in element by element
 			$.fn.fadeInWithDelay = function() {
@@ -139,9 +140,9 @@
 				$.each(data.questionDTOs, function(i, questionDTO){
 					htmlStr.push('<div  class="infinite_grid_item"><strong class="question_hightlight">');
 					htmlStr.push(questionDTO.question);
-					htmlStr.push('</strong><br> <strong><em>');
+					htmlStr.push('</strong><br>');
 					htmlStr.push(questionDTO.answer);
-					htmlStr.push('</em></strong></div>');
+					htmlStr.push('</div>');
 				});
 				
 				return htmlStr.join('');
