@@ -10,13 +10,14 @@
  */
 package org.sourcetree.interview.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.dto.QuestionExcelFileUploadDTO;
@@ -25,6 +26,7 @@ import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.service.QuestionService;
+import org.sourcetree.interview.support.CoreUtil;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/question")
 public class QuestionController extends BaseController
 {
-	protected static final Logger LOG = Logger
+	private static final Logger LOG = Logger
 			.getLogger(QuestionController.class);
 
 	@Autowired
@@ -69,7 +71,7 @@ public class QuestionController extends BaseController
 	}
 
 	/**
-	 * to handle new partner request. this method will be invoked in the event
+	 * to handle new question request. this method will be invoked in the event
 	 * of form submissions from the client which will contains the
 	 * <b>application/x-www-form-urlencoded</b> as the content-type header
 	 * 
@@ -170,6 +172,21 @@ public class QuestionController extends BaseController
 	}
 
 	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String exportForm(Model model)
+	{
+		model.addAttribute("categories", categoryService.findAllCategories());
+
+		return "question/exportQuestions";
+	}
+
+	/**
 	 * To export the questions to excel.
 	 * 
 	 * @param categoryName
@@ -178,14 +195,13 @@ public class QuestionController extends BaseController
 	 */
 	@RequestMapping(value = "/exportToExcel/{categoryName}",
 			method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
 	public ModelAndView exportQuestionsToExcel(
 			@PathVariable String categoryName, Model model)
 	{
-
-		List<QuestionDTO> questions = new ArrayList<QuestionDTO>();
-		questions = questionService.getQuestionsByCategoryName(categoryName,
-				null);
-		return new ModelAndView("qestionsExcel", "questions", questions);
+		return new ModelAndView("qestionsExcel", "questions",
+				questionService.getQuestionsByCategoryName(categoryName, null));
 	}
 
 	@RequestMapping(value = "/uploadExcel", method = RequestMethod.GET)
@@ -201,6 +217,8 @@ public class QuestionController extends BaseController
 	 * 
 	 * @param questionExcelFileUploadDTO
 	 * @return
+	 * @throws IOException
+	 *             in case of any file input stream read errors.
 	 */
 	@RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
@@ -208,33 +226,33 @@ public class QuestionController extends BaseController
 	@ResponseBody
 	public ResponseDTO processexcelUploadForm(
 			@ModelAttribute QuestionExcelFileUploadDTO questionExcelFileUploadDTO)
+			throws IOException
 	{
 		ResponseDTO response = new ResponseDTO();
-
+		MultipartFile multipartFile = null;
 		Map<String, String> errors = ValidationUtil.validate(
 				questionExcelFileUploadDTO, validator, messageSource);
 
-		MultipartFile multipartFile = questionExcelFileUploadDTO.getFile();
-		if (multipartFile != null)
+		if (!CoreUtil.isEmpty(errors))
 		{
+			multipartFile = questionExcelFileUploadDTO.getFile();
 			LOG.info("File Name = " + multipartFile.getOriginalFilename());
-			if (multipartFile.getOriginalFilename().toLowerCase()
+			if (!multipartFile.getOriginalFilename().toLowerCase()
 					.endsWith(".xls")
-					|| multipartFile.getOriginalFilename().toLowerCase()
+					|| !multipartFile.getOriginalFilename().toLowerCase()
 							.endsWith(".xlsx"))
-			{
-				questionService.uploadquestionExcel(multipartFile);
-			}
-			else
 			{
 				errors.put("typeMismatch", "Please Enter Valid Excel File");
 				LOG.error(" Your file is invalid ");
-
 			}
-
 		}
 
-		if (!errors.isEmpty())
+		if (!CoreUtil.isEmpty(errors))
+		{
+			questionService.uploadquestionExcel(new HSSFWorkbook(multipartFile
+					.getInputStream()));
+		}
+		else
 		{
 			response.setErrors(errors);
 			response.setStatus(OutcomeStatus.FAILURE);

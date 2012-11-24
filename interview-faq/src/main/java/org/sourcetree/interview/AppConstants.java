@@ -100,7 +100,12 @@ public final class AppConstants
 	 */
 	public static final Pattern VALIDATION_URL = Pattern
 			.compile("^(https?|ftp|file)://.+$");
-	
+
+	/**
+	 * 
+	 */
+	public static final String EXCEL_SHEET_NAME = "questions";
+
 	/**
 	 * Constructor. Private to prevent unnecessary instantiation.
 	 */

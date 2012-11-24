@@ -6,21 +6,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title><s:message code="questionEdit.title" /></title>
+<title>Upload Questions</title>
 </head>
 <body>
 	<form id="uploadQuestionExcel" name="uploadQuestionExcel" method="post"
 		class="cleanform" enctype="multipart/form-data"
 		action="<c:url value="/question/uploadExcel"/>">
-
-		   <p>
+		<p>
 			<input type="file" id="file" name="file"
 				 /> <span
-				id="error_uploadExcel"></span>
+				id="error_uploadExcel"></span><span id="error_typeMismatch"></span>
 		</p>
-		
 		<p>
 			<label for="submit"></label>
 			<button type="submit" id="btnSubmit" name="btnSubmit">
@@ -64,7 +61,6 @@ function regFormResponse(data) {
 		$('.warning').show();
 	}
 }
-
 $(document).ready(function() {
 	var options = {
 		success : regFormResponse,
@@ -77,6 +73,5 @@ $(document).ready(function() {
 	$("#uploadQuestionExcel").ajaxForm(options);
 });
 </script>
-
 </body>
 </html>

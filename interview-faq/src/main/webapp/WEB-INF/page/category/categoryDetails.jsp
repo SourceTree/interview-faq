@@ -11,12 +11,15 @@
 		action="<c:url value="/category/searchQuestions"/>" method="GET">
 		<div class="search">
 			<input type="text" class="search_big" title="Search" id="searchValue" name="searchValue"
-				placeholder="Search" value="${searchValue}" /><span id="error_searchValue"></span>	
+				placeholder="Search ${categoryDTO.categoryDisplayName}" value="${searchValue}" /><span id="error_searchValue"></span>	
 			<input type="hidden" id="categoryName" name="categoryName" value="${categoryDTO.categoryName}">	
 			<button type="submit" name="searchBtn" id="searchBtn">Search</button>
 		</div>
 		<br />		
 	</form>
+	<div>
+			<h2>${categoryDTO.categoryDisplayName}</h2>
+	</div>
 		<c:if test="${!empty childCategories}">
 			<div class="col_25 col_border">
 
@@ -39,14 +42,6 @@
 
 				</c:forEach>
 			</div>
-		</c:if>
-		<div>
-			<h2>${categoryDTO.categoryDisplayName}</h2>
-		</div>
-		<c:if test="${!empty questionsList.questionDTOs}">
-		<div align="right" style="margin-right: 30px">
-			<a href="<c:url value="/question/exportToExcel/"/>${categoryDTO.categoryName}"><strong>Export ${categoryDTO.categoryDisplayName} Questions To Excel</strong></a>
-		</div>
 		</c:if>
 		<div id="listing" class="<c:if test="${!empty childCategories}">col_75</c:if> col_border">
 	<c:choose>

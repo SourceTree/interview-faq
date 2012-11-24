@@ -32,9 +32,11 @@
 				<em><s:message code="console.faqManagement.description"/></em>
 				<br /><br/>
 				<a class="link_font11" href="<c:url value="/question/addNew"/>">Add New Question</a><br/>
-				<a class="link_font11" href="#">View all Questions</a><br/>
+				<a class="link_font11" href="<c:url value="/question/export"/>">Download Questions</a><br/>
+				<a class="link_font11" href="<c:url value="/question/uploadExcel"/>">Upload Questions</a><br/>
 			</div>
 		</div>
+		<div class="clearfix"></div>
 	</form>
 </body>
 </html>

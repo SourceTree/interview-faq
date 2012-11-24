@@ -10,8 +10,6 @@
  */
 package org.sourcetree.interview.service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,6 +23,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.sourcetree.interview.AppConstants;
 import org.sourcetree.interview.dao.CategoryDAO;
 import org.sourcetree.interview.dao.QuestionDAO;
 import org.sourcetree.interview.dto.CategoryDTO;
@@ -34,9 +33,9 @@ import org.sourcetree.interview.entity.Category;
 import org.sourcetree.interview.entity.Question;
 import org.sourcetree.interview.support.CoreUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Question service implementation
@@ -48,13 +47,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class QuestionServiceImpl implements QuestionService
 {
 
-	protected static final Logger LOG = Logger
+	private static final Logger LOG = Logger
 			.getLogger(QuestionServiceImpl.class);
 
 	private static final int QUESTIONID_CELLNUM = 0;
 	private static final int QUESTION_CELLNUM = 1;
 	private static final int ANSWER_CELLNUM = 2;
 	private static final int CATEGORIES_CELLNUM = 3;
+	private static final String COMMA = ",";
 
 	@Autowired
 	private QuestionDAO questionDAO;
@@ -206,160 +206,128 @@ public class QuestionServiceImpl implements QuestionService
 	 */
 	@Override
 	@Transactional(readOnly = false)
-	public void uploadquestionExcel(MultipartFile multipartFile)
+	@Async
+	public void uploadquestionExcel(HSSFWorkbook hssfWorkbook)
 	{
+		HSSFSheet sheet = hssfWorkbook.getSheet(AppConstants.EXCEL_SHEET_NAME);
 
-		try
+		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++)
 		{
-			InputStream input = multipartFile.getInputStream();
-			HSSFWorkbook wb = new HSSFWorkbook(input);
-			HSSFSheet sheet = wb.getSheetAt(0);
+			QuestionDTO questionDTO = null;
 
-			for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++)
+			HSSFRow dataRow = sheet.getRow(i);
+
+			// Question Id value
+			HSSFCell questionIdValue = dataRow.getCell(QUESTIONID_CELLNUM);
+			if (questionIdValue != null)
 			{
-				boolean saveNewRecord = false;
-				boolean isValidRecord = true;
-
-				int excelRowNum = (i + 1);
-
-				QuestionDTO questionDTO = new QuestionDTO();
-
-				HSSFRow dataRow = sheet.getRow(i);
-
-				// Question Id value
-				HSSFCell questionIdValue = dataRow.getCell(QUESTIONID_CELLNUM);
-				if (questionIdValue != null)
+				if (questionIdValue.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
 				{
-					if (questionIdValue.getCellType() == HSSFCell.CELL_TYPE_NUMERIC)
+					Long id = Long
+							.valueOf(questionIdValue.getStringCellValue());
+					questionDTO = getQuestionDTOById(id);
+					if (questionDTO == null)
 					{
-						Long id = (long) questionIdValue.getNumericCellValue();
-						QuestionDTO questionById = getQuestionDTOById(id);
-						if (questionById != null)
-						{
-							questionDTO.setId(id);
-						}
-						else
-						{
-							isValidRecord = false;
-							LOG.error(" No Record Exists With Question id '"
-									+ id + "' at row :" + excelRowNum);
-						}
-
-					}
-					else
-					{
-						isValidRecord = false;
-						LOG.error("Invalid Id format at row : " + excelRowNum);
-					}
-
-				}
-				else
-				{
-					saveNewRecord = true;
-					LOG.info("Empty Id ,create a record at row : "
-							+ excelRowNum);
-				}
-
-				// Question Value
-				HSSFCell questionValue = dataRow.getCell(QUESTION_CELLNUM);
-				if (questionValue != null
-						&& questionValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
-				{
-					String question = questionValue.getStringCellValue();
-					if (!StringUtils.isEmpty(question.trim()))
-					{
-						questionDTO.setQuestion(question);
-					}
-					else
-					{
-						isValidRecord = false;
-						LOG.error("Question Cannot be empty, please enter a question at row : "
-								+ excelRowNum);
+						LOG.error(" No Record Exists With Question id '" + id
+								+ "' at row :" + (i + 1));
+						continue;
 					}
 				}
 				else
 				{
-					isValidRecord = false;
-					LOG.error("Null or Invalid Question format at row : "
-							+ excelRowNum);
+					LOG.error("Invalid Id format at row : " + (i + 1));
+					continue;
 				}
+			}
+			else
+			{
+				questionDTO = new QuestionDTO();
+				LOG.info("Empty Id ,create a record at row : " + (i + 1));
+			}
 
-				// Question Value
-				HSSFCell answerValue = dataRow.getCell(ANSWER_CELLNUM);
-				if (answerValue != null
-						&& answerValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
+			// Question Value
+			HSSFCell questionValue = dataRow.getCell(QUESTION_CELLNUM);
+			if (questionValue != null
+					&& questionValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
+			{
+				String question = questionValue.getStringCellValue();
+				if (!StringUtils.isBlank(question))
 				{
-					String answer = answerValue.getStringCellValue();
-					if (!StringUtils.isEmpty(answer.trim()))
-					{
-						questionDTO.setAnswer(answer);
-					}
-					else
-					{
-						isValidRecord = false;
-						LOG.error("Answer Cannot be empty, please enter an answer at row : "
-								+ excelRowNum);
-					}
+					questionDTO.setQuestion(question);
 				}
 				else
 				{
-					isValidRecord = false;
-					LOG.error("Null or Invalid Answer format at row : "
-							+ excelRowNum);
+					LOG.error("Question Cannot be empty, please enter a question at row : "
+							+ (i + 1));
+					continue;
 				}
+			}
+			else
+			{
+				LOG.error("Null or Invalid Question format at row : " + (i + 1));
+				continue;
+			}
 
-				// Categories Value
-				HSSFCell catogriesValue = dataRow.getCell(CATEGORIES_CELLNUM);
-				if (catogriesValue != null
-						&& catogriesValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
+			// Question Value
+			HSSFCell answerValue = dataRow.getCell(ANSWER_CELLNUM);
+			if (answerValue != null
+					&& answerValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
+			{
+				String answer = answerValue.getStringCellValue();
+				if (!StringUtils.isBlank(answer))
 				{
-					String categories = catogriesValue.getStringCellValue();
-					List<String> categoryNameList = parseList(categories, ",");
-					List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
-					for (String categoryName : categoryNameList)
-					{
-						CategoryDTO categoryDTO = categoryDAO
-								.getCategoryDTOByName(categoryName);
-						if (categoryDTO != null)
-						{
-							categoryDTOs.add(categoryDTO);
-						}
-						else
-						{
-							LOG.error(" No Category with name :  '"
-									+ categoryName + "' exists at row : "
-									+ excelRowNum);
-							isValidRecord = false;
-						}
-					}
-					questionDTO.setCategoryDTOs(categoryDTOs);
-
+					questionDTO.setAnswer(answer);
 				}
 				else
 				{
-					isValidRecord = false;
-					LOG.error("Null or Invalid Categories format at row : "
-							+ excelRowNum);
+					LOG.error("Answer Cannot be empty, please enter an answer at row : "
+							+ (i + 1));
+					continue;
 				}
-				if (isValidRecord)
+			}
+			else
+			{
+				LOG.error("Null or Invalid Answer format at row : " + (i + 1));
+				continue;
+			}
+
+			// Categories Value
+			HSSFCell catogriesValue = dataRow.getCell(CATEGORIES_CELLNUM);
+			if (catogriesValue != null
+					&& catogriesValue.getCellType() == HSSFCell.CELL_TYPE_STRING)
+			{
+				String categories = catogriesValue.getStringCellValue();
+
+				if (!StringUtils.isBlank(categories))
 				{
-					if (saveNewRecord)
-					{
-						create(questionDTO);
-					}
-					else
-					{
-						update(questionDTO);
-					}
+					questionDTO.setCategoryDTOs(parseCategoriesString(
+							categories, COMMA));
+				}
+				else
+				{
+					LOG.error("Null category value suppied at row : " + (i + 1));
+					continue;
+				}
+			}
+			else
+			{
+				LOG.error("Null or Invalid Categories format at row : "
+						+ (i + 1));
+				continue;
+			}
+
+			if (questionDTO != null)
+			{
+				if (questionDTO.getId() != null)
+				{
+					update(questionDTO);
+				}
+				else
+				{
+					create(questionDTO);
 				}
 			}
 		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
@@ -380,21 +348,25 @@ public class QuestionServiceImpl implements QuestionService
 				if (!catMap.containsKey(categoryDto.getId().toString()))
 				{
 					Category category = categoryDAO.find(categoryDto.getId());
-					categories.add(category);
 
-					catMap.put(category.getId().toString(),
-							category.getCategoryName());
-
-					// Checks for Sub Category
-					if (category.getParentCategory() != null)
+					if (category != null)
 					{
-						if (!catMap.containsKey(category.getParentCategory()
-								.getId().toString()))
+						categories.add(category);
+
+						catMap.put(category.getId().toString(),
+								category.getCategoryName());
+
+						// Checks for Sub Category
+						if (category.getParentCategory() != null)
 						{
-							categories.add(category.getParentCategory());
-							catMap.put(category.getParentCategory().getId()
-									.toString(), category.getParentCategory()
-									.getCategoryName());
+							if (!catMap.containsKey(category
+									.getParentCategory().getId().toString()))
+							{
+								categories.add(category.getParentCategory());
+								catMap.put(category.getParentCategory().getId()
+										.toString(), category
+										.getParentCategory().getCategoryName());
+							}
 						}
 					}
 				}
@@ -492,18 +464,24 @@ public class QuestionServiceImpl implements QuestionService
 	}
 
 	/**
+	 * parses categories string (sepearted by passed in delim string) into
+	 * Category DTO objects. Initializes a new category dto object for every
+	 * category with category name value set into dto object.
+	 * 
 	 * @param list
 	 * @param delim
-	 * @return
+	 * @return list category dto's
 	 */
-	private List<String> parseList(String list, String delim)
+	private List<CategoryDTO> parseCategoriesString(String list, String delim)
 	{
-		List<String> result = new ArrayList<String>();
+		List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
 		StringTokenizer tokenizer = new StringTokenizer(list, delim);
 		while (tokenizer.hasMoreTokens())
 		{
-			result.add(tokenizer.nextToken());
+			CategoryDTO categoryDTO = new CategoryDTO();
+			categoryDTO.setCategoryName(tokenizer.nextToken());
 		}
-		return result;
+
+		return categoryDTOs;
 	}
 }

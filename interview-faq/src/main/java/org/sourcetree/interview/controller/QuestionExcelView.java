@@ -21,6 +21,8 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.sourcetree.interview.AppConstants;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.support.CoreUtil;
@@ -38,91 +40,112 @@ public class QuestionExcelView extends AbstractExcelView
 	private static final int ANSWER_CELLNUM = 2;
 	private static final int CATEGORIES_CELLNUM = 3;
 
-	/*
-	 * (non-Javadoc)
+	private static final String COMMA = ",";
+
+	/**
+	 * to build the response as excel file.
 	 * 
 	 * @see org.springframework.web.servlet.view.document.AbstractExcelView#
-	 * buildExcelDocument(java.util.Map,
-	 * org.apache.poi.hssf.usermodel.HSSFWorkbook,
-	 * javax.servlet.http.HttpServletRequest,
-	 * javax.servlet.http.HttpServletResponse)
+	 *      buildExcelDocument(java.util.Map,
+	 *      org.apache.poi.hssf.usermodel.HSSFWorkbook,
+	 *      javax.servlet.http.HttpServletRequest,
+	 *      javax.servlet.http.HttpServletResponse)
 	 */
+	@SuppressWarnings(AppConstants.SUPPRESS_WARNINGS_UNCHECKED)
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model,
 			HSSFWorkbook myWorkBook, HttpServletRequest arg2,
 			HttpServletResponse arg3) throws Exception
 	{
-		@SuppressWarnings("unchecked")
 		List<QuestionDTO> questionDTOs = (List<QuestionDTO>) model
 				.get("questions");
 
-		HSSFSheet mySheet = myWorkBook.createSheet();
-		HSSFRow headerRow = mySheet.createRow(0);
-		// mySheet.protectSheet("");
-		HSSFCellStyle readOnlyCellStyle = myWorkBook.createCellStyle();
-		readOnlyCellStyle.setLocked(true);
+		HSSFSheet questionsSheet = myWorkBook
+				.createSheet(AppConstants.EXCEL_SHEET_NAME);
+
+		HSSFRow headerRow = questionsSheet.createRow(0);
+
 		HSSFCellStyle wrapCellStyle = myWorkBook.createCellStyle();
 		wrapCellStyle.setWrapText(true);
+		wrapCellStyle.setAlignment(CellStyle.ALIGN_JUSTIFY);
 
-		headerRow.createCell(QUESTIONID_CELLNUM).setCellValue("QuestionID");
-		headerRow.createCell(QUESTION_CELLNUM).setCellValue("Question");
-		headerRow.createCell(ANSWER_CELLNUM).setCellValue("Answer");
-		headerRow.createCell(CATEGORIES_CELLNUM).setCellValue(
-				"Categories (Category seperated by comma)");
+		createNewCell(headerRow, QUESTIONID_CELLNUM, "Question ID",
+				wrapCellStyle);
+		createNewCell(headerRow, QUESTIONID_CELLNUM, "Question", wrapCellStyle);
+		createNewCell(headerRow, QUESTIONID_CELLNUM, "Answer", wrapCellStyle);
+		createNewCell(headerRow, QUESTIONID_CELLNUM,
+				"Categories (Category seperated by comma)", wrapCellStyle);
 
 		HSSFRow dataRow = null;
 
 		if (!CoreUtil.isEmpty(questionDTOs))
 		{
-
-			for (int i = 0; i < questionDTOs.size(); i++)
+			int i = 0;
+			for (QuestionDTO questionDTO : questionDTOs)
 			{
+				dataRow = questionsSheet.createRow(i + 1);
 
-				dataRow = mySheet.createRow(i + 1);
-				QuestionDTO questionDTO = questionDTOs.get(i);
+				createNewCell(dataRow, QUESTIONID_CELLNUM,
+						Long.toString(questionDTO.getId()), null);
 
-				dataRow.createCell(QUESTIONID_CELLNUM).setCellValue(
-						questionDTO.getId());
+				createNewCell(dataRow, QUESTION_CELLNUM,
+						questionDTO.getQuestion(), wrapCellStyle);
 
-				HSSFCell questionDataCell = dataRow
-						.createCell(QUESTION_CELLNUM);
-				questionDataCell.setCellValue(questionDTO.getQuestion());
-				questionDataCell.setCellStyle(wrapCellStyle);
+				createNewCell(dataRow, ANSWER_CELLNUM, questionDTO.getAnswer(),
+						wrapCellStyle);
 
-				HSSFCell answerDataCell = dataRow.createCell(ANSWER_CELLNUM);
-				answerDataCell.setCellValue(questionDTO.getAnswer());
-				answerDataCell.setCellStyle(wrapCellStyle);
-				String categoryExcelData = "";
-				if (!CoreUtil.isEmpty(questionDTO.getCategoryDTOs()))
-				{
-					StringBuilder sb = new StringBuilder();
-					for (CategoryDTO questionCategoryDTO : questionDTO
-							.getCategoryDTOs())
-					{
-						sb.append(questionCategoryDTO.getCategoryName())
-								.append(",");
-					}
-					categoryExcelData = sb.substring(0, sb.length() - 1)
-							.toString();
+				createNewCell(dataRow, CATEGORIES_CELLNUM,
+						parseCategoryDTOs(questionDTO.getCategoryDTOs()),
+						wrapCellStyle);
 
-				}
-				HSSFCell categoriesDataCell = dataRow
-						.createCell(CATEGORIES_CELLNUM);
-				categoriesDataCell.setCellValue(categoryExcelData);
-				categoriesDataCell.setCellStyle(wrapCellStyle);
-
+				// Increment row
+				i = i + 1;
 			}
 		}
 
-		mySheet.autoSizeColumn(QUESTIONID_CELLNUM);
-		mySheet.autoSizeColumn(QUESTION_CELLNUM);
-		mySheet.autoSizeColumn(ANSWER_CELLNUM);
-		mySheet.autoSizeColumn(CATEGORIES_CELLNUM);
-		// mySheet.setDefaultColumnStyle(QUESTIONID_CELLNUM, readonlyCellStyle);
-		mySheet.setDefaultColumnStyle(QUESTION_CELLNUM, wrapCellStyle);
-		mySheet.setDefaultColumnStyle(ANSWER_CELLNUM, wrapCellStyle);
-		mySheet.setDefaultColumnStyle(CATEGORIES_CELLNUM, wrapCellStyle);
+		questionsSheet.autoSizeColumn(QUESTIONID_CELLNUM);
+		questionsSheet.autoSizeColumn(QUESTION_CELLNUM);
+		questionsSheet.autoSizeColumn(ANSWER_CELLNUM);
+		questionsSheet.autoSizeColumn(CATEGORIES_CELLNUM);
 
+		questionsSheet.setDefaultColumnStyle(QUESTION_CELLNUM, wrapCellStyle);
+		questionsSheet.setDefaultColumnStyle(ANSWER_CELLNUM, wrapCellStyle);
+		questionsSheet.setDefaultColumnStyle(CATEGORIES_CELLNUM, wrapCellStyle);
 	}
 
+	private HSSFCell createNewCell(HSSFRow row, int cellNum, String value,
+			HSSFCellStyle cellStyle)
+	{
+		HSSFCell hssfCell = row.createCell(cellNum);
+		hssfCell.setCellValue(value);
+
+		if (cellStyle != null)
+		{
+			hssfCell.setCellStyle(cellStyle);
+		}
+
+		return hssfCell;
+	}
+
+	/**
+	 * parses category DTO and returns comma separated categories.
+	 * 
+	 * @param categoryDTOs
+	 * @return
+	 */
+	private String parseCategoryDTOs(List<CategoryDTO> categoryDTOs)
+	{
+		String categoryColumnData = "";
+		if (!CoreUtil.isEmpty(categoryDTOs))
+		{
+			StringBuilder sb = new StringBuilder();
+			for (CategoryDTO questionCategoryDTO : categoryDTOs)
+			{
+				sb.append(questionCategoryDTO.getCategoryName()).append(COMMA);
+			}
+			categoryColumnData = sb.substring(0, sb.length() - 1).toString();
+		}
+
+		return categoryColumnData;
+	}
 }
