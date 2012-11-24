@@ -16,8 +16,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.sourcetree.interview.dto.CategoryDTO;
 import org.sourcetree.interview.dto.QuestionDTO;
+import org.sourcetree.interview.dto.QuestionExcelFileUploadDTO;
 import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
@@ -36,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -47,6 +50,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/question")
 public class QuestionController extends BaseController
 {
+	protected static final Logger LOG = Logger
+			.getLogger(QuestionController.class);
+
 	@Autowired
 	private QuestionService questionService;
 
@@ -182,6 +188,61 @@ public class QuestionController extends BaseController
 		return new ModelAndView("qestionsExcel", "questions", questions);
 	}
 
+	@RequestMapping(value = "/uploadExcel", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	String excelUploadForm(Model model)
+	{
+		return "question/uploadQuestionExcelForm";
+	}
+
+	/**
+	 * Upload question excel file
+	 * 
+	 * @param questionExcelFileUploadDTO
+	 * @return
+	 */
+	@RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public ResponseDTO processexcelUploadForm(
+			@ModelAttribute QuestionExcelFileUploadDTO questionExcelFileUploadDTO)
+	{
+		ResponseDTO response = new ResponseDTO();
+
+		Map<String, String> errors = ValidationUtil.validate(
+				questionExcelFileUploadDTO, validator, messageSource);
+
+		MultipartFile multipartFile = questionExcelFileUploadDTO.getFile();
+		if (multipartFile != null)
+		{
+			LOG.info("File Name = " + multipartFile.getOriginalFilename());
+			if (multipartFile.getOriginalFilename().toLowerCase()
+					.endsWith(".xls")
+					|| multipartFile.getOriginalFilename().toLowerCase()
+							.endsWith(".xlsx"))
+			{
+				questionService.uploadquestionExcel(multipartFile);
+			}
+			else
+			{
+				errors.put("typeMismatch", "Please Enter Valid Excel File");
+				LOG.error(" Your file is invalid ");
+
+			}
+
+		}
+
+		if (!errors.isEmpty())
+		{
+			response.setErrors(errors);
+			response.setStatus(OutcomeStatus.FAILURE);
+		}
+
+		return response;
+	}
+
 	/**
 	 * Custom property editor for the Category DTO
 	 * 
@@ -210,4 +271,5 @@ public class QuestionController extends BaseController
 					}
 				});
 	}
+
 }

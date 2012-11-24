@@ -15,6 +15,7 @@ import java.util.List;
 import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.entity.Question;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Question related services reside here
@@ -92,4 +93,11 @@ public interface QuestionService
 	 */
 	List<QuestionDTO> getQuestionSearchResult(String[] searchKey,
 			String categoryName, ListProp listProp);
+
+	/**
+	 * Upload the question excel
+	 * 
+	 * @param multipartFile
+	 */
+	void uploadquestionExcel(MultipartFile multipartFile);
 }
