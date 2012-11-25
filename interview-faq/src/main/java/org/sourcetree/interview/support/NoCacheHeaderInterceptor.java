@@ -10,6 +10,10 @@
  */
 package org.sourcetree.interview.support;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +29,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class NoCacheHeaderInterceptor extends HandlerInterceptorAdapter
 {
+	private List<String> excludeURI;
+
+	private Map<String, String> excludeMap;
+
 	/**
 	 * Intercept the execution of a handler. Called after handler execution,
 	 * allow manipulate the ModelAndView object before render it to view page.
@@ -45,14 +53,55 @@ public class NoCacheHeaderInterceptor extends HandlerInterceptorAdapter
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView)
 	{
-		// HTTP 1.1
-		response.setHeader("Cache-Control",
-				"no-cache, no-store, must-revalidate");
+		String uri = request.getRequestURI();
+		int index = uri.lastIndexOf('.');
 
-		// HTTP 1.0
-		response.setHeader("Pragma", "no-cache");
+		if (index < 0
+				|| (index > 0 && !excludeMap.containsKey(uri.substring(index))))
+		{
+			// HTTP 1.1
+			response.setHeader("Cache-Control",
+					"no-cache, no-store, must-revalidate");
 
-		// Proxies
-		response.setHeader("Expires", "0");
+			// HTTP 1.0
+			response.setHeader("Pragma", "no-cache");
+
+			// Proxies
+			response.setHeader("Expires", "0");
+		}
+	}
+
+	/**
+	 * @return the excludeURI
+	 */
+	public List<String> getExcludeURI()
+	{
+		return excludeURI;
+	}
+
+	/**
+	 * @param excludeURI
+	 *            the excludeURI to set
+	 */
+	public void setExcludeURI(List<String> excludeURI)
+	{
+		this.excludeURI = excludeURI;
+	}
+
+	/**
+	 * 
+	 */
+	public void initializeMap()
+	{
+		if (!CoreUtil.isEmpty(excludeURI))
+		{
+			excludeMap = new HashMap<String, String>();
+
+			for (String uri : excludeURI)
+			{
+				System.out.println(uri);
+				excludeMap.put(uri, uri);
+			}
+		}
 	}
 }

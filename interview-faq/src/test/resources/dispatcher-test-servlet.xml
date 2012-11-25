@@ -19,8 +19,20 @@
 
 	<mvc:interceptors>
 		<bean id="noCache"
-			class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" />
-
+			class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" init-method="initializeMap">
+			<property name="excludeURI">
+				<list>
+					<value>.css</value>
+					<value>.js</value>
+					<value>.jpg</value>
+					<value>.png</value>
+					<value>.gif</value>
+					<value>.JPEG</value>
+					<value>.PNG</value>
+				</list>
+			</property>
+		</bean>
+		
 		<bean id="themeChangeInterceptor"
 			class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"
 			p:paramName="mitrace-theme" />

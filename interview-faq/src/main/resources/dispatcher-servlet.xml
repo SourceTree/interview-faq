@@ -18,7 +18,20 @@
 	<aop:aspectj-autoproxy />
 
 	<mvc:interceptors>
-		<bean id="noCache" class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" />
+		<bean id="noCache"
+			class="org.sourcetree.interview.support.NoCacheHeaderInterceptor" init-method="initializeMap">
+			<property name="excludeURI">
+				<list>
+					<value>.css</value>
+					<value>.js</value>
+					<value>.jpg</value>
+					<value>.png</value>
+					<value>.gif</value>
+					<value>.JPEG</value>
+					<value>.PNG</value>
+				</list>
+			</property>
+		</bean>
 
 		<bean id="themeChangeInterceptor"
 			class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"
@@ -26,10 +39,11 @@
 	</mvc:interceptors>
 
 	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2"
-		p:prefix="/WEB-INF/page/" p:suffix=".jsp" />
-	
-	<bean class="org.springframework.web.servlet.view.XmlViewResolver" p:order="1">
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="2" p:prefix="/WEB-INF/page/" p:suffix=".jsp" />
+
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
+		p:order="1">
 		<property name="location">
 			<value>classpath:spring-excel-views.xml</value>
 		</property>
@@ -54,8 +68,9 @@
 	<mvc:view-controller path="/" view-name="redirect:/home" />
 	<mvc:view-controller path="/about" view-name="about" />
 	<mvc:view-controller path="/contact" view-name="contactus" />
-	<mvc:view-controller path="/admin/dashboard" view-name="admin/console" />
-	
+	<mvc:view-controller path="/admin/dashboard"
+		view-name="admin/console" />
+
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
@@ -102,7 +117,8 @@
 		p:basenames="classpath:messages,classpath:app" p:fileEncodings="UTF-8"
 		p:defaultEncoding="UTF-8" />
 
-	<bean id="jaxbJacksonObjectMapper" class="org.sourcetree.interview.support.JaxbJacksonObjectMapper" />
+	<bean id="jaxbJacksonObjectMapper"
+		class="org.sourcetree.interview.support.JaxbJacksonObjectMapper" />
 
 	<bean
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
