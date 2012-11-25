@@ -35,7 +35,7 @@
 			opts.beforeLoad(); 
 		 
 		 }
-		 $('.pager').remove();
+		 $('.pagination').remove();
 		 $(obj).children().attr('rel', 'loaded');
 		 var localUrl = opts.url + '/' + (opts.page + 1);
 		 if(opts.sortProperty != null){
@@ -55,13 +55,13 @@
 				opts.isLoading = false;
 				if (opts.afterLoad != null){
 					opts.afterLoad(objectsRendered);
-				} 
+				}
 				
+				$(obj).append('<div class="pagination"> <span class="pagination_total">Total Records :'+data.listProp.totalRecords+'</span><span class="pager">LoadMore</span><span class="pagination_page">Page '+ data.listProp.page +' of'+(data.listProp.totalRecords/10)+' </span></div>');
 				//Logic to stop paging
 				if((data.listProp.endIndex +1) >= data.listProp.totalRecords){
 					$(obj).stopInfinitePaging();
 				} else {
-					$(obj).append('<div class="pager question_hightlight">LoadMore</div>');
 					$('.pager').bind('click', function(){
 						$(obj).loadMore(opts);
 					});
@@ -82,6 +82,7 @@
 		});
  };
 	
+
  $.fn.infinitePaging.defaults = {
       	 'url' : null,
       	 'page': 0,

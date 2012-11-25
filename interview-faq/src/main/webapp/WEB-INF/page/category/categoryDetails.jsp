@@ -53,7 +53,7 @@
 				</div>
 			</c:forEach>
 			
-			<div class="pager question_hightlight">LoadMore</div>
+			<div class="pagination"></div>
 		</c:when>
 		<c:otherwise>
 			<div>
@@ -112,7 +112,7 @@
 					$(elementsLoaded).fadeInWithDelay();
 				}
 			});
-
+			$('.pagination').html('<span class="pagination_total">Total Records : ${questionsList.listProp.totalRecords} </span><span class="pager">LoadMore</span><span class="pagination_page">Page  ${questionsList.listProp.page} of  ${questionsList.listProp.totalRecords/10} </span>');
 			<c:if test="${empty questionsList || empty questionsList.listProp || !empty questionsList && !empty questionsList.listProp && (questionsList.listProp.endIndex + 1) >= questionsList.listProp.totalRecords}">
 				$('#listing').stopInfinitePaging();
 				$('.pager').remove();
