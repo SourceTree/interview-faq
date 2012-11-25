@@ -30,12 +30,23 @@
 	  }
   };
   
+  $.fn.renderPaging = function(opts, listProp, localUrl){
+	  var str = ['<div class="' + opts.paginationDivClass + '">'];
+	  str.push('<span class="pagination_total">'+opts.totalRecordsText + '&nbsp;' + listProp.totalRecords+'</span>');
+	  str.push('<a class="' + opts.pagerClass + '">LoadMore</a>');
+	  str.push('<span class="pagination_page">Page '+ listProp.page +' of '+ listProp.totalPages+'</span>');
+	  str.push('</div>');
+	  
+	  $(this).append(str.join(''));  
+  };
+ 
   $.fn.infinitePaging.loadContent = function(obj, opts){
 		 if (opts.beforeLoad != null){
 			opts.beforeLoad(); 
-		 
 		 }
-		 $('.pagination').remove();
+		 
+		 $('.'+ opts.paginationDivClass).remove();
+		 
 		 $(obj).children().attr('rel', 'loaded');
 		 var localUrl = opts.url + '/' + (opts.page + 1);
 		 if(opts.sortProperty != null){
@@ -57,12 +68,14 @@
 					opts.afterLoad(objectsRendered);
 				}
 				
-				$(obj).append('<div class="pagination"> <span class="pagination_total">Total Records :'+data.listProp.totalRecords+'</span><span class="pager">LoadMore</span><span class="pagination_page">Page '+ data.listProp.page +' of'+(data.listProp.totalRecords/10)+' </span></div>');
+				$(obj).renderPaging(opts, data.listProp, localUrl);
+				
 				//Logic to stop paging
 				if((data.listProp.endIndex +1) >= data.listProp.totalRecords){
 					$(obj).stopInfinitePaging();
+					$('.' + opts.pagerClass).remove();
 				} else {
-					$('.pager').bind('click', function(){
+					$('.' + opts.pagerClass).bind('click', function(){
 						$(obj).loadMore(opts);
 					});
 				}
@@ -78,10 +91,10 @@
 	}
 	 
 	 $('.pager').bind('click', function(){
-			$(obj).loadMore(opts);
-		});
+		$(obj).loadMore(opts);
+	});
  };
-	
+
 
  $.fn.infinitePaging.defaults = {
       	 'url' : null,
@@ -95,6 +108,10 @@
 		 'ajaxType':'GET',
 		 'totalPages':null,
 		 'renderData':null,
-		 'isLoading':false
+		 'isLoading':false,
+		 'moreText':'Load More',
+		 'paginationDivClass':'pagination',
+		 'totalRecordsText':'Total Records:',
+		 'pagerClass':'pager'
  };	
 })( jQuery );
