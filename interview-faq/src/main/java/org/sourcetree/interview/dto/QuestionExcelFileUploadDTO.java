@@ -5,7 +5,7 @@
  * Modification History
  * *************************************************************
  * Date				Author						Comment
- * Nov 22, 2012			chalam						Created
+ * Nov 22, 2012		chalam						Created
  * *************************************************************
  */
 package org.sourcetree.interview.dto;
@@ -18,9 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
  * @author chalam
  * 
  */
-// @XmlRootElement(name = "questionexcelfileupload")
 public class QuestionExcelFileUploadDTO extends BaseDTO
 {
+	private static final long serialVersionUID = 1L;
 
 	@NotNull(message = "typeMismatch.questionExcelFileUploadDTO.file")
 	private MultipartFile file;
