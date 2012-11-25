@@ -18,6 +18,8 @@ ul li,ol li{padding:0 0 .4em 0}
 .hero h1{font-size:24px;font-size:18px;color:#3d3d3d}
 .article{background:#fff;padding:15px 0 15px 2%;}
 .footer{padding:1em 3% 3em 3%;background-color: #53C9F6;color:#FFF;}
+.footer a{color:white;text-decoration: none;}
+.footer a:hover{color:white;text-decoration: underline;}
 .copyright{float:left;padding-top:4px;}
 h1{font-size:22px}
 h1,h2,h3,h4{font-weight:normal}
