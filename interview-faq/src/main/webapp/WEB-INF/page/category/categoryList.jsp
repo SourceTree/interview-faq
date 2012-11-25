@@ -17,7 +17,7 @@
 			</li>
 		</c:forEach>
 	</ul>
-	<div class="pager">LoadMore</div>
+	<div class="pagination"></div>
 
 	<script type="text/javascript"
 		src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
@@ -33,6 +33,8 @@
 
 		$(document).ready(function() {
 			$(function() {
+				$('.pagination').html('<span class="pagination_total">Total Records : ${categories.listProp.totalRecords} </span><a class="pager">LoadMore</a><span class="pagination_page">Page  ${categories.listProp.page} of ${categories.listProp.totalPages}</span>');
+				
 				$('#category_list').infinitePaging({
 					'url' : '<c:url value="/category/list"/>', 
 					page: curPage,
@@ -45,7 +47,7 @@
 						$(elementsLoaded).fadeInWithDelay();
 					}
 				});
-
+				
 				if((${categories.listProp.endIndex} + 1) >= ${categories.listProp.totalRecords}){
 					$('#category_list').stopInfinitePaging();
 					$('.pager').remove();

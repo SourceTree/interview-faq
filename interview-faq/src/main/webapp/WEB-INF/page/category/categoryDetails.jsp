@@ -99,6 +99,9 @@
 		});
 		
 		$(function() {
+			
+			$('.pagination').html('<span class="pagination_total">Total Records : ${questionsList.listProp.totalRecords} </span><a class="pager">LoadMore</a><span class="pagination_page">Page  ${questionsList.listProp.page} of ${questionsList.listProp.totalPages}</span>');
+			
 			$('#listing').infinitePaging({
 				'url' : '<c:url value="/category/searchQuestions"/>', 
 				page: curPage,
@@ -112,7 +115,7 @@
 					$(elementsLoaded).fadeInWithDelay();
 				}
 			});
-			$('.pagination').html('<span class="pagination_total">Total Records : ${questionsList.listProp.totalRecords} </span><span class="pager">LoadMore</span><span class="pagination_page">Page  ${questionsList.listProp.page} of  ${questionsList.listProp.totalRecords/10} </span>');
+			
 			<c:if test="${empty questionsList || empty questionsList.listProp || !empty questionsList && !empty questionsList.listProp && (questionsList.listProp.endIndex + 1) >= questionsList.listProp.totalRecords}">
 				$('#listing').stopInfinitePaging();
 				$('.pager').remove();

@@ -31,7 +31,7 @@
 					</span>
 				</div>
 		</c:forEach>
-		<div class="pager question_hightlight">LoadMore</div>
+		<div class="pagination"></div>
 		</c:when>
 		<c:otherwise>
 			<div>
@@ -54,6 +54,8 @@
 
 		$(document).ready(function() {
 			$(function() {
+				$('.pagination').html('<span class="pagination_total">Total Records : ${questions.listProp.totalRecords} </span><a class="pager">LoadMore</a><span class="pagination_page">Page  ${questions.listProp.page} of ${questions.listProp.totalPages}</span>');
+				
 				$('#search_list').infinitePaging({
 					'url' : '<c:url value="/search/searchResult"/>', 
 					page: curPage,
