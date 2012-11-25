@@ -64,6 +64,7 @@ public final class WebUtil
 		startIndexLong = (pageSize * listProp.getPage()) - pageSize;
 		long endIndexLong = startIndexLong + pageSize - 1;
 
+		listProp.setPageSize(pageSize);
 		listProp.setStartIndex(startIndexLong);
 		listProp.setEndIndex(endIndexLong);
 

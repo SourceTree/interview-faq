@@ -26,6 +26,9 @@ public class ListProp implements Serializable
 	private long page;
 	private String sortProperty = null;
 	private boolean sortAscending = true;
+	private int pageSize;
+
+	// private long totalPages;
 
 	/**
 	 * @return the startIndex
@@ -128,5 +131,37 @@ public class ListProp implements Serializable
 	public void setSortAscending(boolean sortAscending)
 	{
 		this.sortAscending = sortAscending;
+	}
+
+	/**
+	 * @return the pageSize
+	 */
+	public int getPageSize()
+	{
+		return pageSize;
+	}
+
+	/**
+	 * @param pageSize
+	 *            the pageSize to set
+	 */
+	public void setPageSize(int pageSize)
+	{
+		this.pageSize = pageSize;
+	}
+
+	/**
+	 * calculates the total pages
+	 * 
+	 * @return total pages
+	 */
+	public long getTotalPages()
+	{
+		if (this.totalRecords % this.pageSize != 0)
+		{
+			return (long) (Math.floor(this.totalRecords / this.pageSize) + 1);
+		}
+
+		return this.totalRecords / this.pageSize;
 	}
 }
