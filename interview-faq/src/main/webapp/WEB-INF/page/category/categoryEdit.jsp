@@ -121,7 +121,6 @@
 	
 	<p><label for="submit"></label>
 		<button type="submit" id="btnSubmit" name="btnSubmit"><s:message code="categoryForm.btn.save"/></button>
-		<button type="button" id="btnBack" name="btnBack" onclick=""><s:message code="btn.back"/></button>
 	</p>
 </form>
 <script src="<c:url value="/static/scripts/jquery/jquery.form.js"/>"
