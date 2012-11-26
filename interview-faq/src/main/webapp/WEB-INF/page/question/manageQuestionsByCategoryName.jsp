@@ -8,6 +8,8 @@
 <head>
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
+<link rel="stylesheet" type="text/css" media="screen"
+	href="<c:url value="/"/><s:theme code='iconStyleSheet'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Manage Questions</title>
 </head>
@@ -53,7 +55,7 @@
 							</span>
 							<span class="pagination_page edit_viewLinkPlacement">
 								<a href="<c:url value="/question/edit/"/>${questionDTO.id}"><strong>Edit</strong></a> 
-								<a href="<c:url value="/question/view/"/>${questionDTO.id}"><strong>View Details</strong></a>
+								<%--<a href="<c:url value="/question/view/"/>${questionDTO.id}"><strong>View Details</strong></a>--%>
 							</span>
 						</div>
 					</div>
@@ -152,8 +154,8 @@
 					});
 					htmlStr.push('</span>');
 					htmlStr.push('<span class="pagination_page edit_viewLinkPlacement">');
-					htmlStr.push('<a href="<c:url value="/question/edit/"/>'+questionDTO.id+'"><strong>Edit</strong></a> ');
-					htmlStr.push('<a href="<c:url value="/question/view/"/>'+questionDTO.id+'"><strong>View Details</strong></a>');
+					htmlStr.push('<a id="editIcon" class="edit" href="<c:url value="/question/edit/"/>'+questionDTO.id+'">Edit</a> ');
+					//htmlStr.push('<a href="<c:url value="/question/view/"/>'+questionDTO.id+'"><strong>View Details</strong></a>');
 					htmlStr.push('</span>');
 					htmlStr.push('</div>');
 					htmlStr.push('</div> ');
