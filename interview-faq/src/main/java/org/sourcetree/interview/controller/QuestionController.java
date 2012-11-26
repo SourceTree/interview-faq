@@ -209,16 +209,12 @@ public class QuestionController extends BaseController
 		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
 				null, null);
 
-		List<QuestionDTO> questionDTOs = null;
-		CategoryDTO categoryDTO = null;
-		categoryDTO = categoryService.getCategoryDTOByName(categoryName);
-
-		questionDTOs = questionService.getQuestionSearchResult(null,
-				categoryName, listProp);
-
-		model.addAttribute("categoryDTO", categoryDTO);
-		model.addAttribute("questionsList", new QuestionListDTO(questionDTOs,
-				listProp));
+		model.addAttribute("categoryDTO",
+				categoryService.getCategoryDTOByName(categoryName));
+		model.addAttribute(
+				"questionsList",
+				new QuestionListDTO(questionService.getQuestionSearchResult(
+						null, categoryName, listProp), listProp));
 
 		return "question/manageQuestionsByCategoryName";
 	}

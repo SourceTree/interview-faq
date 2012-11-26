@@ -131,10 +131,6 @@
 			<button type="submit" id="btnSubmit" name="btnSubmit">
 				<s:message code="question.update.btn" />
 			</button>
-			<button type="reset" id="btnReset" name="btnReset"
-				onclick="$('.warning').remove();">
-				<s:message code="btn.reset" />
-			</button>
 		</p>
 	</form>
 	<script src="<c:url value="/static/scripts/jquery/jquery.form.js"/>"
@@ -182,9 +178,11 @@
 
 				$("#questionEdit").ajaxForm(options);
 
+				var multiSelect = new Array();
 				<c:forEach items="${question.categoryDTOs}" var="selectedCategory">
-					$('#categoryDTOs').val('${selectedCategory.id}');
+					multiSelect.push('${selectedCategory.id}');
 				</c:forEach>
+				$('#categoryDTOs').val(multiSelect);
 				
 				cachedScript(
 						"<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>")
