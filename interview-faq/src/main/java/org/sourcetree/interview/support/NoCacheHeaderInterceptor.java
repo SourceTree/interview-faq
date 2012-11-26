@@ -99,7 +99,6 @@ public class NoCacheHeaderInterceptor extends HandlerInterceptorAdapter
 
 			for (String uri : excludeURI)
 			{
-				System.out.println(uri);
 				excludeMap.put(uri, uri);
 			}
 		}
