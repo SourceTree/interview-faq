@@ -1,6 +1,6 @@
 @import url("../default.css");
 /* Skin "Simple" by Renat Rafikov */
-body{width:1024px;font-size:13px;font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;color:#6D6D6D;line-height: 19px;margin:0 auto;}
+body{width:1024px;font-size:14px;font-family:"Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;color:#6D6D6D;line-height: 20px;margin:0 auto;}
 a{color:#53C9F6;}
 a:hover{text-decoration:none;}
 a:visited{color:#53C9F6;}
@@ -10,12 +10,12 @@ ul li,ol li{padding:0 0 .4em 0}
 .logo{float:left;font-size:18px;text-shadow:1px 1px 1px #fff;margin-left:10px;color:#53C9F6;text-align: center;}
 .logo span{font-style: italic;font-size: 11px;color:#F79621;}
 #main{border:1px solid #DDDDE0; border-radius:8px;margin-bottom:10px;}
-.menu_main{float:right;text-align:right;margin:.3em 0 0 0;font-size:12px}
+.menu_main{float:right;text-align:right;margin:.3em 0 0 0;}
 .menu_main li{display:inline-block;margin:0 auto;}
 .menu_main li.active,.menu_main li.active a{text-decoration:none;}
 .info{padding:0 1% 1em 1%}
 .hero{background:#fff;padding:15px 0 15px 2%;margin:0 0 15px 0;}
-.hero h1{font-size:24px;font-size:18px;color:#3d3d3d}
+.hero h1{font-size:24px;color:#3d3d3d;}
 .article{background:#fff;padding:15px 0 15px 2%;}
 .footer{padding:1em 3% 3em 3%;background-color: #53C9F6;color:#FFF;}
 .footer a{color:white;text-decoration: none;}
@@ -107,7 +107,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f79621', end
 .infinite_grid_item.initial_load_item{opacity:1;-moz-opacity: 1;filter: alpha(opacity=1);}
 .infinite_grid_item{list-style: none;opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);}
 .ads_top{height:96px;width:100%;}
-.link_font11{font-size: 12px;}
+.link_font12{font-size: 12px;}
 .tag-name{background: #f79621; /* Old browsers */
 background: -moz-linear-gradient(top,  #f79621 0%, #f9c667 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f79621), color-stop(100%,#f9c667)); /* Chrome,Safari4+ */

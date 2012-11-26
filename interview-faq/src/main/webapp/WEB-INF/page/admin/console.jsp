@@ -20,8 +20,8 @@
 				<em><s:message code="console.categoryManagement.description"/></em>
 				
 				<br /><br/>
-				<a class="link_font11" href="<c:url value="/category/new"/>">Add New Category</a><br/>
-				<a class="link_font11" href="<c:url value="/category/list"/>">View All Categories</a>
+				<a class="link_font12" href="<c:url value="/category/new"/>">Add New Category</a><br/>
+				<a class="link_font12" href="<c:url value="/category/list"/>">View All Categories</a>
 			</div>
 		</div>
 		
@@ -31,9 +31,9 @@
 				<br> 
 				<em><s:message code="console.faqManagement.description"/></em>
 				<br /><br/>
-				<a class="link_font11" href="<c:url value="/question/addNew"/>">Add New Question</a><br/>
-				<a class="link_font11" href="<c:url value="/question/export"/>">Download Questions</a><br/>
-				<a class="link_font11" href="<c:url value="/question/uploadExcel"/>">Upload Questions</a><br/>
+				<a class="link_font12" href="<c:url value="/question/addNew"/>">Add New Question</a><br/>
+				<a class="link_font12" href="<c:url value="/question/export"/>">Download Questions</a><br/>
+				<a class="link_font12" href="<c:url value="/question/uploadExcel"/>">Upload Questions</a><br/>
 			</div>
 		</div>
 		<div class="clearfix"></div>
