@@ -19,14 +19,17 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.sourcetree.interview.dto.CategoryDTO;
+import org.sourcetree.interview.dto.ListProp;
 import org.sourcetree.interview.dto.QuestionDTO;
 import org.sourcetree.interview.dto.QuestionExcelFileUploadDTO;
+import org.sourcetree.interview.dto.QuestionListDTO;
 import org.sourcetree.interview.dto.ResponseDTO;
 import org.sourcetree.interview.enums.OutcomeStatus;
 import org.sourcetree.interview.enums.UserRoleEnum;
 import org.sourcetree.interview.service.CategoryService;
 import org.sourcetree.interview.service.QuestionService;
 import org.sourcetree.interview.support.CoreUtil;
+import org.sourcetree.interview.support.WebUtil;
 import org.sourcetree.interview.support.annotation.Restricted;
 import org.sourcetree.interview.support.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,6 +172,55 @@ public class QuestionController extends BaseController
 				questionService.getQuestionDTOById(questionId));
 
 		return "question/questionDetails";
+	}
+
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/manageQuestions", method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String searchQuestionsByCategoryName(Model model)
+	{
+		model.addAttribute("categories", categoryService.findAllCategories());
+
+		return "question/manageQuestionsByCategoryName";
+	}
+
+	/**
+	 * To list and manage the questions based on category name.
+	 * 
+	 * @param categoryName
+	 * @param model
+	 * @return list all the questions
+	 */
+	@RequestMapping(value = "/manageQuestions/{categoryName}",
+			method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	public String manageQuestionsByCategoryName(
+			@PathVariable String categoryName, Model model)
+	{
+		model.addAttribute("categories", categoryService.findAllCategories());
+
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
+				null, null);
+
+		List<QuestionDTO> questionDTOs = null;
+		CategoryDTO categoryDTO = null;
+		categoryDTO = categoryService.getCategoryDTOByName(categoryName);
+
+		questionDTOs = questionService.getQuestionSearchResult(null,
+				categoryName, listProp);
+
+		model.addAttribute("categoryDTO", categoryDTO);
+		model.addAttribute("questionsList", new QuestionListDTO(questionDTOs,
+				listProp));
+
+		return "question/manageQuestionsByCategoryName";
 	}
 
 	/**

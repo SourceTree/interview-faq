@@ -21,7 +21,8 @@
 				
 				<br /><br/>
 				<a class="link_font12" href="<c:url value="/category/new"/>">Add New Category</a><br/>
-				<a class="link_font12" href="<c:url value="/category/list"/>">View All Categories</a>
+				<a class="link_font12" href="<c:url value="/category/list"/>">View All Categories</a><br/>
+				<a class="link_font12" href="<c:url value="/question/manageQuestions"/>">Manage Questions By CategoryName</a>
 			</div>
 		</div>
 		
