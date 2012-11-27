@@ -13,9 +13,10 @@
 <body>
 	<div id="listing">
 			<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-				<div  class="infinite_grid_item initial_load_item col_border">
-					<strong class="question_hightlight">${categoryDTO.categoryDisplayName}</strong>
-					<br>${categoryDTO.categoryDescription}
+				<div  class="infinite_grid_item initial_load_item col_50 col_border">
+					<a href="<c:url value="/category/"/>${categoryDTO.categoryName}"><strong>${categoryDTO.categoryDisplayName}</strong></a>
+					<br><em>${categoryDTO.categoryDescription}</em>
+					<br><a href="<c:url value="/category/edit/"/>${categoryDTO.id}">Edit</a>
 				</div>
 			</c:forEach>
 			
@@ -71,10 +72,16 @@
 				renderData = function(data) {
 					var htmlStr = [];
 					$.each(data.categoryDTOs, function(i, categoryDTO){
-						htmlStr.push('<div  class="infinite_grid_item initial_load_item col_border"><strong class="question_hightlight">');
+						htmlStr.push('<div  class="infinite_grid_item initial_load_item col_50 col_border">');
+						htmlStr.push('<a href="<c:url value="/category/"/>');
+						htmlStr.push(categoryDTO.categoryName);
+						htmlStr.push('"><strong>');
 						htmlStr.push(categoryDTO.categoryDisplayName);
-						htmlStr.push('</strong><br>');
+						htmlStr.push('</strong></a><br>');
 						htmlStr.push(categoryDTO.categoryDescription);
+						htmlStr.push('<br><a href="<c:url value="/category/edit/"/>');
+						htmlStr.push(categoryDTO.id);
+						htmlStr.push('">Edit</a>');
 						htmlStr.push('</div>');
 					});
 					

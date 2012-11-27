@@ -252,7 +252,7 @@ public class CategoryController extends BaseController
 		ListProp listProp = WebUtil.initListProp("1", getDefaultPageSize(),
 				null, null);
 
-		model.addAttribute("categories", getCategoryList(listProp));
+		model.addAttribute("categories", getAllCategoryList(listProp));
 
 		return "category/categoryList";
 	}
@@ -281,7 +281,7 @@ public class CategoryController extends BaseController
 		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
 				null, null);
 
-		return getCategoryList(listProp);
+		return getAllCategoryList(listProp);
 	}
 
 	/**
@@ -342,6 +342,19 @@ public class CategoryController extends BaseController
 		// Retrieve categories
 		List<CategoryDTO> categoryDTOs = categoryService
 				.findAllParentCategories(listProp);
+		return new CategoryListDTO(categoryDTOs, listProp);
+	}
+
+	/**
+	 * 
+	 * @param listProp
+	 * @return
+	 */
+	private CategoryListDTO getAllCategoryList(ListProp listProp)
+	{
+		// Retrieve categories
+		List<CategoryDTO> categoryDTOs = categoryService
+				.findAllCategories(listProp);
 		return new CategoryListDTO(categoryDTOs, listProp);
 	}
 }
