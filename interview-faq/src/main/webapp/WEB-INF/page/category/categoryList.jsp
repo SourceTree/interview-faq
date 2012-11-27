@@ -11,9 +11,9 @@
 <title>Category</title>
 </head>
 <body>
-	<div id="listing" class="col_100 col_border">
+	<div id="listing">
 			<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-				<div  class="infinite_grid_item initial_load_item">
+				<div  class="infinite_grid_item initial_load_item col_border">
 					<strong class="question_hightlight">${categoryDTO.categoryDisplayName}</strong>
 					<br>${categoryDTO.categoryDescription}
 				</div>
@@ -71,7 +71,7 @@
 				renderData = function(data) {
 					var htmlStr = [];
 					$.each(data.categoryDTOs, function(i, categoryDTO){
-						htmlStr.push('<div  class="infinite_grid_item"><strong class="question_hightlight">');
+						htmlStr.push('<div  class="infinite_grid_item initial_load_item col_border"><strong class="question_hightlight">');
 						htmlStr.push(categoryDTO.categoryDisplayName);
 						htmlStr.push('</strong><br>');
 						htmlStr.push(categoryDTO.categoryDescription);
