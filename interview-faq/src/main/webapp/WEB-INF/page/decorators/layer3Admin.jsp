@@ -1,7 +1,7 @@
 <%--
 	Copyright © 2012, Source Tree, All Rights Reserved
 --%><%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
-<page:applyDecorator name="layer2">
+<page:applyDecorator name="layer2Admin">
 	<decorator:usePage id="decoratorPage" />
 	<html>
 <head>
@@ -11,15 +11,19 @@
 <body
 	<decorator:getProperty property="body.onload" writeEntireProperty="true"/>
 	<decorator:getProperty property="body.onunload" writeEntireProperty="true"/>>
-	<div id="ads" class="container_col left">&nbsp;</div>
-	<div id="main" class="container_col content">
-		<div id="info" class="info">
+	<c:set var="sidemenu">
+		<decorator:getProperty property="meta.sidemenu"></decorator:getProperty>
+	</c:set>
+	<div id="main" class="container_col admin_content">
+		<c:if test="${sidemenu ne ''}">
+			<div class="sidemenu"><jsp:include page="/WEB-INF/page/admin/${sidemenu}.jsp"/></div>
+		</c:if>
+		<div id="info" class="info <c:if test="${empty sidemenu}">nosidemenu</c:if>">
 			<article class="hero clearfix">
 				<decorator:body />
 			</article>
 		</div>
 	</div>
-	<div id="ads" class="container_col right">&nbsp;</div>
 	<div class="clearfix"></div>
 </body>
 	</html>

@@ -13,8 +13,8 @@ ul li,ol li{padding:0 0 .4em 0}
 .menu_main{float:right;text-align:right;margin:.3em 0 0 0;}
 .menu_main li{display:inline-block;margin:0 auto;}
 .menu_main li.active,.menu_main li.active a{text-decoration:none;}
-.info{padding:0 1% 1em 1%}
-.hero{background:#fff;padding:15px 0 15px 2%;margin:0 0 15px 0;}
+.info{padding:8px;}
+.hero{background:#fff;padding:15px 0 15px;}
 .hero h1{font-size:24px;color:#3d3d3d;}
 .article{background:#fff;padding:15px 0 15px 2%;}
 .footer{padding:1em 3% 3em 3%;background-color: #53C9F6;color:#FFF;}
@@ -40,6 +40,7 @@ h5,h6{font-weight:bold}
 .container_col.right{padding-right:2px;}
 .container_col.content{width:702px;}
 .header .container_col.content{width:1020px;}
+.container_col.admin_content{width:1000px;float:left;margin-left:10px;margin-right:10px;}
 .tags{padding:0;}
 /* Columns */
 .col_12{width:10%;margin:0 2% 0 0;float:left}
@@ -57,7 +58,7 @@ h5,h6{font-weight:bold}
 .col_75.wrap{width:75%;margin:0}
 .col_100.wrap{width:100%;margin:0}
 .col_border{border: 1px solid #DDDDE0; border-radius: 8px;margin:0 1% 2% 0;}
-.col_border div{padding: 2%;};
+.col_border div{padding: 10px;};
 .col_border .questionsSeperator{border-bottom: 1px solid; padding:8px 0px 6px 0px;}
 /* End Columns */
 /* Helper classes */
@@ -124,3 +125,7 @@ margin-right: 3px;}
 .pagination_page{float: right;}
 .pagination_total{float: left;}
 .edit_viewLinkPlacement{padding-top: 6px;margin-right: 4px;}
+.sidemenu{float:left;width:234px;padding:8px;}
+.sidemenu .sidemenucontent{padding-left:10px;margin-top:35px;}
+.admin_content .info{float: left;width:734px;padding:8px;}
+.admin_content .info.nosidemenu{width:984px;}

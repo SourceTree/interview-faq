@@ -12,7 +12,18 @@
 	<decorator name="layer2" page="layer2.jsp">
 	</decorator>
 
+	<decorator name="layer2Admin" page="layer2Admin.jsp">
+	</decorator>
+	
 	<decorator name="layer3" page="layer3.jsp">
 		<pattern>/WEB-INF/page/*.jsp</pattern>
+	</decorator>
+	
+	<decorator name="layer3Admin" page="layer3Admin.jsp">
+		<pattern>/WEB-INF/page/admin/*.jsp</pattern>
+		<pattern>/WEB-INF/page/question/*.jsp</pattern>
+		<pattern>/WEB-INF/page/category/categoryEdit.jsp</pattern>
+		<pattern>/WEB-INF/page/category/categoryForm.jsp</pattern>
+		<pattern>/WEB-INF/page/category/categoryList.jsp</pattern>
 	</decorator>
 </decorators>

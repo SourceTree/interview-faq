@@ -1,7 +1,5 @@
 <%--
-
 	Copyright © 2012, Source Tree, All Rights Reserved
-
 --%><%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
 <page:applyDecorator name="layer1Default">
 	<decorator:usePage id="decoratorPage" />

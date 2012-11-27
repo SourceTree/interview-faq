@@ -1,8 +1,9 @@
 <%--
 	Copyright © 2012, Source Tree, All Rights Reserved
 --%><%@ include file="/WEB-INF/page/common/taglibs.jsp"%>
-<page:applyDecorator name="layer2">
+<page:applyDecorator name="layer1Default">
 	<decorator:usePage id="decoratorPage" />
+
 	<html>
 <head>
 <decorator:head />
@@ -11,16 +12,13 @@
 <body
 	<decorator:getProperty property="body.onload" writeEntireProperty="true"/>
 	<decorator:getProperty property="body.onunload" writeEntireProperty="true"/>>
-	<div id="ads" class="container_col left">&nbsp;</div>
-	<div id="main" class="container_col content">
-		<div id="info" class="info">
-			<article class="hero clearfix">
-				<decorator:body />
-			</article>
-		</div>
+	<div id="container" class="container">
+		<header class="header clearfix">
+			<%@include file="/WEB-INF/page/common/banner.jsp"%>
+		</header>
+		<decorator:body />
+	<%@include file="/WEB-INF/page/common/footer.jsp"%>
 	</div>
-	<div id="ads" class="container_col right">&nbsp;</div>
-	<div class="clearfix"></div>
 </body>
 	</html>
 </page:applyDecorator>
