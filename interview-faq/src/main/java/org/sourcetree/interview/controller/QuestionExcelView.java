@@ -71,9 +71,9 @@ public class QuestionExcelView extends AbstractExcelView
 
 		createNewCell(headerRow, QUESTIONID_CELLNUM, "Question ID",
 				wrapCellStyle);
-		createNewCell(headerRow, QUESTIONID_CELLNUM, "Question", wrapCellStyle);
-		createNewCell(headerRow, QUESTIONID_CELLNUM, "Answer", wrapCellStyle);
-		createNewCell(headerRow, QUESTIONID_CELLNUM,
+		createNewCell(headerRow, QUESTION_CELLNUM, "Question", wrapCellStyle);
+		createNewCell(headerRow, ANSWER_CELLNUM, "Answer", wrapCellStyle);
+		createNewCell(headerRow, CATEGORIES_CELLNUM,
 				"Categories (Category seperated by comma)", wrapCellStyle);
 
 		HSSFRow dataRow = null;
