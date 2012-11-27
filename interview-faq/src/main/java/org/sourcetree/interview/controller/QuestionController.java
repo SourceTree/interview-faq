@@ -281,7 +281,7 @@ public class QuestionController extends BaseController
 		Map<String, String> errors = ValidationUtil.validate(
 				questionExcelFileUploadDTO, validator, messageSource);
 
-		if (!CoreUtil.isEmpty(errors))
+		if (CoreUtil.isEmpty(errors))
 		{
 			multipartFile = questionExcelFileUploadDTO.getFile();
 			LOG.info("File Name = " + multipartFile.getOriginalFilename());
@@ -295,7 +295,7 @@ public class QuestionController extends BaseController
 			}
 		}
 
-		if (!CoreUtil.isEmpty(errors))
+		if (CoreUtil.isEmpty(errors))
 		{
 			questionService.uploadquestionExcel(new HSSFWorkbook(multipartFile
 					.getInputStream()));

@@ -71,7 +71,6 @@ function regFormResponse(data) {
 
 $(document).ready(function() {
 	var options = {
-		//beforeSubmit:validateRegForm,
 		success : regFormResponse,
 		beforeSend : showLoader,
 		complete : hideLoader,

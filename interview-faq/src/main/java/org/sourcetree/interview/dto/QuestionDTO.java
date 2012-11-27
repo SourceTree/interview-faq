@@ -39,6 +39,7 @@ public class QuestionDTO extends BaseDTO
 	@Size(max = 5000, message = "answer.length", groups = SecondGroup.class)
 	private String answer;
 
+	@NotEmpty(message = "categoryDTOs.null")
 	private List<CategoryDTO> categoryDTOs;
 
 	/**
