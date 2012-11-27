@@ -11,8 +11,8 @@
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="categorySideMenu">
 <title><s:message code="categoryForm.title"/></title>
-
 </head>
 <body>
 	<form id="categoryForm" name="categoryForm" method="post" class="cleanform" action="<c:url value="/category/new"/>">

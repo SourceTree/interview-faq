@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="categorySideMenu">
 <title>Category</title>
 </head>
 <body>

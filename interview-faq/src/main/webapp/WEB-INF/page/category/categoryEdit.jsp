@@ -11,6 +11,7 @@
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="categorySideMenu">
 <title><s:message code="categoryEdit.title"/> - ${category.categoryDisplayName}</title>
 </head>
 <body>
@@ -120,7 +121,7 @@
 	</p>
 	
 	<p><label for="submit"></label>
-		<button type="submit" id="btnSubmit" name="btnSubmit"><s:message code="categoryForm.btn.save"/></button>
+		<button type="submit" id="btnSubmit" name="btnSubmit">Update</button>
 	</p>
 </form>
 <script src="<c:url value="/static/scripts/jquery/jquery.form.js"/>"
