@@ -6,23 +6,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
 <link rel="stylesheet"
 	href="<c:url value="/static/styles/wysiwyg.css"/>">
 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="questionSideMenu">
 <title><s:message code="questionEdit.title" /></title>
 </head>
 <body>
 	<form id="questionEdit" name="questionEdit" method="post"
 		class="cleanform" action="<c:url value="/question/edit"/>">
 
-		<h2>
-			<strong><s:message code="questionEdit.title" /></strong>
-		</h2>
+		<h2><s:message code="questionEdit.title" /></h2>
 		<p>
 			<input type="hidden" id="id" name="id" value="${question.id}" /> <input
 				type="text" id="question" maxlength="200" name="question"
@@ -30,7 +27,6 @@
 				placeholder="<s:message code="questionForm.question"/>"
 				value="${question.question}" /> <span id="error_question"></span>
 		</p>
-
 
 		<div id="wysihtml5-editor-toolbar">
 			<header class="img_header">

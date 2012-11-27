@@ -9,15 +9,13 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='chosenStyleSheet'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="questionSideMenu"> 
 <title>Download Questions</title>
 </head>
 <body>
 	<form id="questionForm" name="questionForm" method="post"
 		class="cleanform" action="<c:url value="/exportToExcel/"/>">
-
-		<h2>
-			<strong>Download Questions</strong>
-		</h2>
+		<h2>Download Questions</h2>
 		<p>
 			<select name="category" id="category"
 				class="chzn-select"
@@ -27,10 +25,6 @@
 					<option value="${categories.categoryName}">${categories.categoryDisplayName}</option>
 				</c:forEach>
 			</select>
-		</p>
-
-		<p>
-			<label for="submit"></label>
 			<button type="submit" id="btnSubmit" name="btnSubmit">
 				Download
 			</button>

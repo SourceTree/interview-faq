@@ -11,14 +11,15 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="<c:url value="/"/><s:theme code='iconStyleSheet'/>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Manage Questions</title>
+<meta name="sidemenu" content="categorySideMenu">
+<title>Manage Questions (By Category)</title>
 </head>
 <body>
 	<form id="questionForm" name="questionForm" method="post"
 		class="cleanform" action="<c:url value="/manageQuestions"/>">
 
 		<h2>
-			<strong>Manage Questions</strong>
+			<strong>Manage Questions (By Category)</strong>
 		</h2>
 		<p>
 			<select name="category" id="category"
@@ -29,10 +30,6 @@
 					<option value="${categories.categoryName}">${categories.categoryDisplayName}</option>
 				</c:forEach>
 			</select>
-		</p>
-
-		<p>
-			<label for="submit"></label>
 			<button type="submit" id="btnSubmit" name="btnSubmit">
 				Search
 			</button>
@@ -85,6 +82,8 @@
 				}
 			});
 
+			$('#category').val('${categoryDTO.categoryName}');
+			
 			cachedScript("<c:url value="/static/scripts/jquery/chosen.jquery.min.js"/>").done(function() {
 				$(".chzn-select").chosen();
 			});

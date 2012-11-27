@@ -7,25 +7,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="sidemenu" content="questionSideMenu"> 
 <title>Upload Questions</title>
 </head>
 <body>
 	<form id="uploadQuestionExcel" name="uploadQuestionExcel" method="post"
 		class="cleanform" enctype="multipart/form-data"
 		action="<c:url value="/question/uploadExcel"/>">
+		<h2>Upload Questions (via Excel file)</h2>
+		<span id="error_uploadExcel"></span><span id="error_typeMismatch"></span>
 		<p>
 			<input type="file" id="file" name="file"
-				 /> <span
-				id="error_uploadExcel"></span><span id="error_typeMismatch"></span>
-		</p>
-		<p>
-			<label for="submit"></label>
+				 />
+		
 			<button type="submit" id="btnSubmit" name="btnSubmit">
 				<s:message code="question.upload.btn" />
-			</button>
-			<button type="reset" id="btnReset" name="btnReset"
-				onclick="$('.warning').remove();">
-				<s:message code="btn.reset" />
 			</button>
 		</p>
 	</form>
@@ -42,7 +38,7 @@ function showLoader() {
 	$(document.activeElement).blur();
 }
 function hideLoader() {
-	$(".loading").hide();
+	$(".loading").remove();
 	$("#btnSubmit").show();
 	$("#btnReset").show();
 }
@@ -61,8 +57,17 @@ function regFormResponse(data) {
 		$('.warning').show();
 	}
 }
+
+function validateUploadForm(formData, jqForm, options){
+	if(!$('#file').val()){
+		return false;
+	}
+	return true;
+}
+
 $(document).ready(function() {
 	var options = {
+		beforeSubmit:validateUploadForm,
 		success : regFormResponse,
 		beforeSend : showLoader,
 		complete : hideLoader,
