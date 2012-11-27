@@ -11,15 +11,17 @@
 <title>Category</title>
 </head>
 <body>
-	<ul id="category_list" class="infinite_grid">
-		<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
-			<li class="infinite_grid_item initial_load_item">${categoryDTO.categoryDisplayName}<br />
-				<span>${categoryDTO.categoryDescription}</span>
-			</li>
-		</c:forEach>
-	</ul>
-	<div class="pagination"></div>
-
+	<div id="listing" class="col_100 col_border">
+			<c:forEach items="${categories.categoryDTOs}" var="categoryDTO">
+				<div  class="infinite_grid_item initial_load_item">
+					<strong class="question_hightlight">${categoryDTO.categoryDisplayName}</strong>
+					<br>${categoryDTO.categoryDescription}
+				</div>
+			</c:forEach>
+			
+			<div class="pagination"></div>
+	</div>
+	
 	<script type="text/javascript"
 		src="<c:url value="/static/scripts/jquery/jquery.infinite-paging.js"/>"></script>
 	<script type="text/javascript">
@@ -36,7 +38,7 @@
 			$(function() {
 				$('.pagination').html('<span class="pagination_total">Total Records : ${categories.listProp.totalRecords} </span><a class="pager">LoadMore</a><span class="pagination_page">Page  ${categories.listProp.page} of ${categories.listProp.totalPages}</span>');
 				
-				$('#category_list').infinitePaging({
+				$('#listing').infinitePaging({
 					'url' : '<c:url value="/category/list"/>', 
 					page: curPage,
 					'beforeLoad' : showLoader,
@@ -50,7 +52,7 @@
 				});
 				
 				if((${categories.listProp.endIndex} + 1) >= ${categories.listProp.totalRecords}){
-					$('#category_list').stopInfinitePaging();
+					$('#listing').stopInfinitePaging();
 					$('.pager').remove();
 				}
 				
@@ -69,12 +71,11 @@
 				renderData = function(data) {
 					var htmlStr = [];
 					$.each(data.categoryDTOs, function(i, categoryDTO){
-						htmlStr.push('<li class="infinite_grid_item">');
+						htmlStr.push('<div  class="infinite_grid_item"><strong class="question_hightlight">');
 						htmlStr.push(categoryDTO.categoryDisplayName);
-						htmlStr.push('<br /><span>');
+						htmlStr.push('</strong><br>');
 						htmlStr.push(categoryDTO.categoryDescription);
-						htmlStr.push('</span>');
-						htmlStr.push('</li>');	
+						htmlStr.push('</div>');
 					});
 					
 					return htmlStr.join('');
