@@ -12,7 +12,7 @@
 <body>
 	<c:choose>
 		<c:when test="${not empty sessionScope.sess_vars}">
-			<c:redirect url="/" />
+			<c:redirect url="/admin/dashboard" />
 		</c:when>
 		<c:otherwise>
 		<div class="col_25">&nbsp;</div>
