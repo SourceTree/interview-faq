@@ -108,9 +108,8 @@
 			$('.pagination').html('<span class="pagination_total">Total Records : ${questionsList.listProp.totalRecords} </span><a class="pager">LoadMore</a><span class="pagination_page">Page  ${questionsList.listProp.page} of ${questionsList.listProp.totalPages}</span>');
 			
 			$('#listing').infinitePaging({
-				'url' : '<c:url value="/category/searchQuestions"/>', 
+				'url' : '<c:url value="/question/manageQuestions/${categoryDTO.categoryName}"/>', 
 				page: curPage,
-				'contentData':{'categoryName': '${categoryDTO.categoryName}'},
 				'beforeLoad' : showLoader,
 				'renderData': function (data){
 					return renderData(data);

@@ -121,7 +121,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f79621', end
 padding:3px 5px 3px 5px;font-weight: bold;color:#333;border-radius:8px;-webkit-border-radius:8px;-moz-border-radius:8px;border:1px solid #FF9D1C;
 margin-right: 3px;}
 .pager{cursor: pointer;text-align: center;font-weight: bold;}
-.pagination{color: #F79621;text-align: center;margin:10px 0 10px 0;width:100%;float:left;}
+.pagination{color: #F79621;text-align: center;margin:10px 0 10px 0;width:100%;float:left;display:inline-table;}
 .pagination_page{float: right;}
 .pagination_total{float: left;}
 .edit_viewLinkPlacement{padding-top: 6px;margin-right: 4px;}

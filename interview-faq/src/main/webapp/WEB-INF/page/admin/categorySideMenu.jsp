@@ -6,5 +6,5 @@
 <div class="sidemenucontent col_border">
 	<a href="<c:url value="/category/new"/>">Add New Category</a><br/>
 	<a href="<c:url value="/category/list"/>">View All Categories</a><br/>
-	<a href="<c:url value="/question/manageQuestions"/>">Manage Questions (By Category)</a>
+	<a href="<c:url value="/question/manageQuestionsByCategory"/>">Manage Questions (By Category)</a>
 </div>

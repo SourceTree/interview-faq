@@ -44,7 +44,6 @@ public class HomeController extends BaseController
 	 */
 	private CategoryListDTO getCategoryList()
 	{
-		return new CategoryListDTO(categoryService.findAllParentCategories(),
-				null);
+		return new CategoryListDTO(categoryService.findAllCategories(), null);
 	}
 }

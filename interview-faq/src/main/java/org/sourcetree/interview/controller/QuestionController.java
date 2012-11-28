@@ -179,7 +179,8 @@ public class QuestionController extends BaseController
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/manageQuestions", method = RequestMethod.GET)
+	@RequestMapping(value = "/manageQuestionsByCategory",
+			method = RequestMethod.GET)
 	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
 			setSessionAttributes = false)
 	public String searchQuestionsByCategoryName(Model model)
@@ -217,6 +218,30 @@ public class QuestionController extends BaseController
 						null, categoryName, listProp), listProp));
 
 		return "question/manageQuestionsByCategoryName";
+	}
+
+	/**
+	 * To list and manage the questions based on category name.
+	 * 
+	 * @param categoryName
+	 * @param page
+	 * @return list all the questions
+	 */
+	@RequestMapping(value = "/manageQuestions/{categoryName}/{page}",
+			method = RequestMethod.GET)
+	@Restricted(rolesAllowed = { UserRoleEnum.ADMIN },
+			setSessionAttributes = false)
+	@ResponseBody
+	public QuestionListDTO manageQuestionsByCategoryPaging(@PathVariable(
+			value = "categoryName") String categoryName, @PathVariable(
+			value = "page") String page)
+	{
+		// Initialize ListProp with first page
+		ListProp listProp = WebUtil.initListProp(page, getDefaultPageSize(),
+				null, null);
+
+		return new QuestionListDTO(questionService.getQuestionSearchResult(
+				null, categoryName, listProp), listProp);
 	}
 
 	/**

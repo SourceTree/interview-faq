@@ -17,9 +17,9 @@
 			<em><s:message code="console.categoryManagement.description"/></em>
 			
 			<br /><br/>
-			<a class="link_font12" href="<c:url value="/category/new"/>">Add New Category</a><br/>
-			<a class="link_font12" href="<c:url value="/category/list"/>">View All Categories</a><br/>
-			<a class="link_font12" href="<c:url value="/question/manageQuestions"/>">Manage Questions (By Category)</a>
+			<a class="link_font12" href="<c:url value="/category/new"/>"><strong>Add New Category</strong></a><br/>
+			<a class="link_font12" href="<c:url value="/category/list"/>"><strong>View All Categories</strong></a><br/>
+			<a class="link_font12" href="<c:url value="/question/manageQuestionsByCategory"/>"><strong>Manage Questions (By Category)</strong></a>
 		</div>
 	</div>
 	
@@ -29,9 +29,9 @@
 			<br> 
 			<em><s:message code="console.faqManagement.description"/></em>
 			<br /><br/>
-			<a class="link_font12" href="<c:url value="/question/addNew"/>">Add New Question</a><br/>
-			<a class="link_font12" href="<c:url value="/question/export"/>">Download Questions</a><br/>
-			<a class="link_font12" href="<c:url value="/question/uploadExcel"/>">Upload Questions</a><br/>
+			<a class="link_font12" href="<c:url value="/question/addNew"/>"><strong>Add New Question</strong></a><br/>
+			<a class="link_font12" href="<c:url value="/question/export"/>"><strong>Download Questions</strong></a><br/>
+			<a class="link_font12" href="<c:url value="/question/uploadExcel"/>"><strong>Upload Questions</strong></a><br/>
 		</div>
 	</div>
 	<div class="clearfix"></div>
