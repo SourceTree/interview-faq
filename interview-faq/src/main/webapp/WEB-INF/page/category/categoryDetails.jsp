@@ -51,7 +51,9 @@
 					<br>${questionDTO.answer}
 				</div>
 			</c:forEach>
-			<paging:paginate listProp="${questionsList.listProp}" urlPrefix="<c:url value="/category/${categoryDTO.categoryName}/"/>" searchValue="${searchValue}"/>		
+			 <c:url var="itemUrl" value="/category/${categoryDTO.categoryName}/"/>
+			<paging:paginate listProp="${questionsList.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
+		
 		</c:when>
 		<c:otherwise>
 			<div>

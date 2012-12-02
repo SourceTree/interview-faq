@@ -30,7 +30,9 @@
 					</span>
 				</div>
 		</c:forEach>
-		<paging:paginate listProp="${questions.listProp}" urlPrefix="<c:url value="/search/"/>" searchValue="${searchValue}"/>
+		 <c:url var="itemUrl" value="/search/"/>
+		<paging:paginate listProp="${questions.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
+
 		</c:when>
 		<c:otherwise>
 			<div>
