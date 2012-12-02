@@ -30,9 +30,7 @@
 					</span>
 				</div>
 		</c:forEach>
-		 <c:url var="itemUrl" value="/search/"/>
-		<paging:paginate listProp="${questions.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
-
+		<paging:paginate listProp="${questions.listProp}" urlPrefix="<c:url value="/search/"/>" searchValue="${searchValue}"/>
 		</c:when>
 		<c:otherwise>
 			<div>
@@ -41,12 +39,5 @@
 		</c:otherwise>
 		</c:choose>
 </div>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			<c:if test="${empty questions || empty questions.listProp || !empty questions && !empty questions.listProp && questions.listProp.page eq questions.listProp.totalPages}">
-				$('.pager').remove();
-			</c:if>
-		});
-	</script>
 </body>
 </html>

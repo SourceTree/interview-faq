@@ -9,7 +9,7 @@
 	<tag>
 		<name>paginate</name>
 		<tagclass>org.sourcetree.interview.tags.PaginationTag</tagclass>
-		<info>Pagination logic.</info>
+		<info>Generates pagination</info>
 		<attribute>
 			<name>listProp</name>
 			<required>true</required>

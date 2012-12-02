@@ -51,9 +51,7 @@
 					<br>${questionDTO.answer}
 				</div>
 			</c:forEach>
-			 <c:url var="itemUrl" value="/category/${categoryDTO.categoryName}/"/>
-			<paging:paginate listProp="${questionsList.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
-		
+			<paging:paginate listProp="${questionsList.listProp}" urlPrefix="<c:url value="/category/${categoryDTO.categoryName}/"/>" searchValue="${searchValue}"/>		
 		</c:when>
 		<c:otherwise>
 			<div>
@@ -76,10 +74,6 @@
 					return true;
 				}
 			});
-	
-			<c:if test="${empty questionsList || empty questionsList.listProp || !empty questionsList && !empty questionsList.listProp && questionsList.listProp.page eq questionsList.listProp.totalPages}">
-				$('.pager').remove();
-			</c:if>
 		});
 	</script>
 </body>
