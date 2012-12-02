@@ -43,7 +43,7 @@ public class JobsInitializerBean
 	@Value("#{'email.server'}")
 	private String emailServer;
 
-	@Value("#{'email.port}")
+	@Value("#{'email.port'}")
 	private String emailServerPort;
 
 	@Value("#{'email.login.id'}")
