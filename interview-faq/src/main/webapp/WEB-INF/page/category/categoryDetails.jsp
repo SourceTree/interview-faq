@@ -51,12 +51,9 @@
 					<br>${questionDTO.answer}
 				</div>
 			</c:forEach>
-			
-			<div class="pagination">
-				<span class="pagination_total">Total Records : ${questionsList.listProp.totalRecords} </span>
-				<a class="pager" href="<c:url value="/category/${categoryDTO.categoryName}/${questionsList.listProp.page + 1}?searchValue=${searchValue}"/>">LoadMore</a>
-				<span class="pagination_page">Page  ${questionsList.listProp.page} of ${questionsList.listProp.totalPages}</span>
-			</div>
+			 <c:url var="itemUrl" value="/category/${categoryDTO.categoryName}/"/>
+			<paging:paginate listProp="${questionsList.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
+		
 		</c:when>
 		<c:otherwise>
 			<div>

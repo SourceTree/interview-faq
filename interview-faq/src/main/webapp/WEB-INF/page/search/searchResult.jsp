@@ -30,11 +30,9 @@
 					</span>
 				</div>
 		</c:forEach>
-		<div class="pagination">
-				<span class="pagination_total">Total Records : ${questions.listProp.totalRecords} </span>
-				<a class="pager" href="<c:url value="/search/${questions.listProp.page + 1}?searchValue=${searchValue}"/>">LoadMore</a>
-				<span class="pagination_page">Page  ${questions.listProp.page} of ${questions.listProp.totalPages}</span>
-			</div>
+		 <c:url var="itemUrl" value="/search/"/>
+		<paging:paginate listProp="${questions.listProp}" urlPrefix="${itemUrl}" searchValue="${searchValue}"/>
+
 		</c:when>
 		<c:otherwise>
 			<div>

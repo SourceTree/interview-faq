@@ -13,7 +13,12 @@
 		classpath:applicationContext.xml
 		</param-value>
 	</context-param>
-
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://org.sourcetree.interview/pagination</taglib-uri>
+			<taglib-location>/WEB-INF/classes/pagination.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
