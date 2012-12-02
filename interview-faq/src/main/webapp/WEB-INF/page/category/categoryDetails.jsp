@@ -17,7 +17,13 @@
 		<br />		
 	</form>
 	<div>
-			<h2>${categoryDTO.categoryDisplayName}</h2>
+			<strong><a href="<c:url value="/home"/>">Home</a>
+			<c:if  test="${categoryDTO.parentCategoryDTO!=null}">
+				&gt;<a href="<c:url value="/category/"/>${categoryDTO.parentCategoryDTO.categoryName}">${categoryDTO.parentCategoryDTO.categoryDisplayName}</a>
+			</c:if>	
+			&gt;${categoryDTO.categoryDisplayName}
+			</strong>
+			
 	</div>
 		<c:if test="${!empty childCategories}">
 			<div class="col_25 col_border">
