@@ -120,7 +120,7 @@ public class PaginationTag extends TagSupport
 		}
 
 		if (listProp.getTotalPages() > 1
-				&& listProp.getTotalPages() >= listProp.getPage())
+				&& listProp.getTotalPages() > listProp.getPage())
 		{
 			sb.append("&nbsp;<a class='pager pagination_page' href='");
 			sb.append(urlPrefix);
