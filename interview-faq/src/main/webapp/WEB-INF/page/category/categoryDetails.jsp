@@ -16,12 +16,12 @@
 		</div>
 		<br />		
 	</form>
-	<div>
+	<div class="breadcrumb">
 			<strong><a href="<c:url value="/home"/>">Home</a>
-			<c:if  test="${categoryDTO.parentCategoryDTO!=null}">
-				&gt;<a href="<c:url value="/category/"/>${categoryDTO.parentCategoryDTO.categoryName}">${categoryDTO.parentCategoryDTO.categoryDisplayName}</a>
+			<c:if  test="${!empty categoryDTO.parentCategoryDTO}">
+				&nbsp;&gt;&nbsp;<a href="<c:url value="/category/"/>${categoryDTO.parentCategoryDTO.categoryName}">${categoryDTO.parentCategoryDTO.categoryDisplayName}</a>
 			</c:if>	
-			&gt;${categoryDTO.categoryDisplayName}
+			&nbsp;&gt;&nbsp;${categoryDTO.categoryDisplayName}
 			</strong>
 			
 	</div>
