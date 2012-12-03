@@ -37,40 +37,40 @@ public class JobsInitializerBean
 {
 	private static final Log LOG = LogFactory.getLog(JobsInitializerBean.class);
 
-	@Value("#{'emailjob.cron.expression'}")
+	@Value("#{appProps['emailjob.cron.expression']}")
 	private String emailJobCronExpression;
 
-	@Value("#{'email.server'}")
+	@Value("#{appProps['email.server']}")
 	private String emailServer;
 
-	@Value("#{'email.port'}")
+	@Value("#{appProps['email.port']}")
 	private String emailServerPort;
 
-	@Value("#{'email.login.id'}")
+	@Value("#{appProps['email.login.id']}")
 	private String emailLoginId;
 
-	@Value("#{'email.login.password'}")
+	@Value("#{appProps['email.login.password']}")
 	private String emailLoginPassword;
 
-	@Value("#{'email.starttls'}")
+	@Value("#{appProps['email.starttls']}")
 	private String emailStartTls;
 
-	@Value("#{'email.origin'}")
+	@Value("#{appProps['email.origin']}")
 	private String emailOrigin;
 
-	@Value("#{'email.origin.name'}")
+	@Value("#{appProps['email.origin.name']}")
 	private String emailOriginName;
 
-	@Value("#{'admin.email.enabled'}")
+	@Value("#{appProps['admin.email.enabled']}")
 	private String adminEmailEnabled;
 
-	@Value("#{'admin.email'}")
+	@Value("#{appProps['admin.email']}")
 	private String adminEmail;
 
-	@Value("#{'admin.email.prefix'}")
+	@Value("#{appProps['admin.email.prefix']}")
 	private String adminEmailPrefix;
 
-	@Value("#{'email.signature'}")
+	@Value("#{appProps['email.signature']}")
 	private String emailSignature;
 
 	private Scheduler scheduler;
